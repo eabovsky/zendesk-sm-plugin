@@ -111,7 +111,7 @@
     }
 
     self.navigationItem.hidesBackButton       = YES;
-//    self.navigationItem.leftBarButtonItem     = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed)];
+    self.navigationItem.leftBarButtonItem     = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed)];
 
     self.roomPassword                         = @"";
     self.roomNameLabel.text                   = [[ScreenMeet sharedInstance] getRoomName];

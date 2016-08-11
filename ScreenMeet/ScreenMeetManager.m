@@ -11,7 +11,6 @@
 #import "SMSettingsViewController.h"
 #import "SMAccountViewController.h"
 
-
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 
 
@@ -50,6 +49,23 @@ static ScreenMeetManager *manager = nil;
 {
     self = [super init];
     if (self) {
+//        ACTouchRecognizer *recognizer   = [[ACTouchRecognizer alloc] init];
+//        recognizer.cancelsTouchesInView = NO;
+//        recognizer.delegate             = self;
+//        
+//        [self.appDelegate.window addGestureRecognizer:recognizer];
+        
+//        UIScreenEdgePanGestureRecognizer *swipeRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUpGesture:)];
+//        swipeRecognizer.edges                             = UIRectEdgeBottom;
+//        swipeRecognizer.delegate                          = self;
+//        
+//        [self.appDelegate.window addGestureRecognizer:swipeRecognizer];
+        
+        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap)];
+        doubleTapGestureRecognizer.numberOfTapsRequired    = 2;
+        doubleTapGestureRecognizer.cancelsTouchesInView    = NO;
+        
+        [self.appDelegate.window addGestureRecognizer:doubleTapGestureRecognizer];
         
     }
     return self;
@@ -67,6 +83,17 @@ static ScreenMeetManager *manager = nil;
 
 #pragma mark - Private Methods
 
++ (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action
+{
+    UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tempButton setFrame:CGRectMake(0, 0, 24.0f, 24.0f)];
+    [tempButton setImage:[[UIImage imageNamed:@"close_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [tempButton setTintColor:[UIColor whiteColor]];
+    [tempButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:tempButton];
+    return button;
+}
+
 - (void)initiateScreenMeetinProd:(BOOL)inProd
 {
     if (inProd) {
@@ -74,6 +101,16 @@ static ScreenMeetManager *manager = nil;
     } else {
         [ScreenMeet initSharedInstance:@"19ef50c67e8648f08dfc4702f992159d" environment:EnvironmentTypeSANDBOX];
     }
+}
+
+- (void)handleSwipeUpGesture:(UIScreenEdgePanGestureRecognizer *)gesture
+{
+    NSLog(@"SWIPE UP!!");
+}
+
+- (void)handleDoubleTap
+{
+    [self showMenu];
 }
 
 - (void)showMenu
@@ -196,9 +233,9 @@ static ScreenMeetManager *manager = nil;
             UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:[[SMSettingsViewController alloc] init]];
             
             
-            [self.appDelegate.window.rootViewController presentViewController:navVC animated:YES completion:^{
-                
-            }];
+//            [[GGUIManager sharedManager] presentViewController:navVC animated:YES completion:^{
+//                
+//            }];
         }];
         
         [alert addAction:settingsAction];
@@ -210,6 +247,11 @@ static ScreenMeetManager *manager = nil;
                 
                 self.tokenAlert = [[UIAlertView alloc] initWithTitle:@"Enter Token" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login",nil];
                 self.tokenAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                
+//                UITextField *aTextField = [self.tokenAlert textFieldAtIndex:0];
+//                if (aTextField) {
+//                    aTextField.text = @"3gfl0w8eeisks8o4cwsoco4cc0owsss88wcs4ookkoccgk4844";
+//                }
                 
                 [self.tokenAlert show];
             }];
@@ -265,17 +307,6 @@ static ScreenMeetManager *manager = nil;
 }
 
 #pragma mark - Public Methods
-
-+ (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action
-{
-    UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [tempButton setFrame:CGRectMake(0, 0, 24.0f, 24.0f)];
-    [tempButton setImage:[[UIImage imageNamed:@"close_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [tempButton setTintColor:[UIColor whiteColor]];
-    [tempButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:tempButton];
-    return button;
-}
 
 - (void)showWelcomeDialog
 {

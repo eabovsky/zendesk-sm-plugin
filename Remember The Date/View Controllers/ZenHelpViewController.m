@@ -283,7 +283,8 @@
     }
 
     // present as new modal using global pre-chat config and whatever visitor info has been persisted
-    [ZDCChat startChat:nil];
+//    [ZDCChat startChat:nil];
+    
 }
 
 -(NSString *) userEmail {
