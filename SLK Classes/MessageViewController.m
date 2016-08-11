@@ -434,13 +434,13 @@
     Message *message = [Message new];
     message.username = [ZDCChat instance].session.visitorInfo.name;
     message.text = [self.textView.text copy];
-    [self insertMessageToUI:message];
+//    [self insertMessageToUI:message];
     
     [super didPressRightButton:sender];
     
     NSLog(@"Session status: %lul", (unsigned long)[[ZDCChat instance].session status]);
     
-    [[ZDCChat instance].session sendChatMessage:[self.textView.text copy]];
+    [[ZDCChat instance].session sendChatMessage:message.text];
 }
 
 - (void)insertMessageToUI:(Message *)message
