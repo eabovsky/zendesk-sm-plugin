@@ -390,13 +390,12 @@
 - (void)didChangeKeyboardStatus:(SLKKeyboardStatus)status
 {
     // Notifies the view controller that the keyboard changed status.
-    
-    switch (status) {
-        case SLKKeyboardStatusWillShow:     return NSLog(@"Will Show");
-        case SLKKeyboardStatusDidShow:      return NSLog(@"Did Show");
-        case SLKKeyboardStatusWillHide:     return NSLog(@"Will Hide");
-        case SLKKeyboardStatusDidHide:      return NSLog(@"Did Hide");
-    }
+//    switch (status) {
+//        case SLKKeyboardStatusWillShow:     return NSLog(@"Will Show");
+//        case SLKKeyboardStatusDidShow:      return NSLog(@"Did Show");
+//        case SLKKeyboardStatusWillHide:     return NSLog(@"Will Hide");
+//        case SLKKeyboardStatusDidHide:      return NSLog(@"Did Hide");
+//    }
 }
 
 - (void)textWillUpdate
@@ -777,9 +776,10 @@
 
 - (void)chatEvent:(id)event
 {
-    NSLog(@"Event: %@, event class: %@", event, [event class]);
     ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource lastChatMessage];
     
+    // only show messages for events verified by the server
+    // we can also add here timestamp filters
     if (chatEvent.verified) {
         
         Message *message = [Message new];
@@ -790,15 +790,14 @@
             message.username = chatEvent.displayName;
         }
         
+        // Check message
         
         if ([chatEvent.message containsString:@"requestScreenShare"]) {
             message.text     = @"requested a screen share...";
-            
             [self showRequestAlertforMessage:chatEvent];
         } else {
             message.text     = chatEvent.message;
         }
-        
         
         [self insertMessageToUI:message];
     }
@@ -824,7 +823,12 @@
                                  {
                                      NSLog(@"Share action");
                                      
+                                     // extract token from the message
+                                     // to do: add checks if valid message format
+                                     
                                      NSString *token = [[event.message componentsSeparatedByString:@"|"] lastObject];
+                                     
+                                     // Authenticate with token
                                      [[ScreenMeetManager sharedManager] loginWithToken:token callback:^(enum CallStatus status) {
                                          if (status == CallStatusSUCCESS) {
                                              NSLog(@"login with token was successful...");
@@ -841,8 +845,12 @@
                                                      [[ZDCChat instance].session sendChatMessage:message.text];
                                                      
                                                      [[[UIAlertView alloc] initWithTitle:@"" message:@"Screen share started" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                                                 } else {
+                                                     [[ScreenMeetManager sharedManager] showDefaultError];
                                                  }
                                              }];
+                                         } else {
+                                             [[ScreenMeetManager sharedManager] showDefaultError];
                                          }
                                      }];
                                  }];

@@ -131,14 +131,8 @@ NSString * const APNS_ID_KEY  = @"APNS_ID_KEY";
     //
     //  The rest of the Mobile SDK code can be found in ZenHelpViewController.m
     //
-    [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
     
     return YES;
-}
-
-- (void)chatEvent:(id)event
-{
-    NSLog(@"Event: %@, event class: %@", event, [event class]);
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
