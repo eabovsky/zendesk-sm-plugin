@@ -1,0 +1,9 @@
+/* 
+  custom_requests.strings
+  Remember The Date
+
+  Created by Adrian Cayaco on 10/08/2016.
+  Copyright © 2016 RememberTheDate. All rights reserved.
+*/
+
+"^requestScreenShare\\|([\\w\\d]+)$" = "Agent is requesting for a screen share.";
