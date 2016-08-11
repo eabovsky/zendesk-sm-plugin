@@ -778,12 +778,13 @@
     NSLog(@"Event: %@, event class: %@", event, [event class]);
     ZDCChatEvent *zMessage = [[ZDCChat instance].session.dataSource lastChatMessage];
     
-    
-    Message *message = [Message new];
-    message.username = zMessage.displayName;
-    message.text = zMessage.message;
-    
-    [self insertMessageToUI:message];
+    if (zMessage.verified) {
+        Message *message = [Message new];
+        message.username = zMessage.displayName;
+        message.text = zMessage.message;
+        
+        [self insertMessageToUI:message];
+    }
 }
 
 @end
