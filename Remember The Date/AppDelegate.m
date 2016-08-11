@@ -57,9 +57,6 @@ NSString * const APNS_ID_KEY  = @"APNS_ID_KEY";
 
     // chat SDK
     [[ZDCChatOverlay appearance] setInsets:[NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(75.0f, 15.0f, 70.0f, 15.0f)]];
-    [ZDKLocalization registerTableName:@"custom_requests"];
-    
-    [ZDKLocalization printAllKeys];
 }
 
 

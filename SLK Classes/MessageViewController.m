@@ -12,6 +12,9 @@
 #import "TypingIndicatorView.h"
 #import "Message.h"
 
+#import <ZendeskSDK/ZendeskSDK.h>
+#import <ZDCChat/ZDCChat.h>
+
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 @interface MessageViewController ()
@@ -68,6 +71,11 @@
     // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
     [self registerClassForTypingIndicatorView:[TypingIndicatorView class]];
 #endif
+    
+    NSLog(@"Session config: %@", [[[ZDCChat instance] session] config]);
+    [[ZDCChat instance].session connect];
+    
+    [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
 }
 
 
@@ -130,24 +138,30 @@
     [super viewDidAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
+}
+
 
 #pragma mark - Example's Configuration
 
 - (void)configureDataSource
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < 100; i++) {
-        NSInteger words = (arc4random() % 40)+1;
-        
-        Message *message = [Message new];
+//
+//    for (int i = 0; i < 100; i++) {
+//        NSInteger words = (arc4random() % 40)+1;
+//        
+//        Message *message = [Message new];
 //        message.username = [LoremIpsum name];
 //        message.text = [LoremIpsum wordsWithNumber:words];
-        [array addObject:message];
-    }
+//        [array addObject:message];
+//    }
     
     NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
-    
     self.messages = [[NSMutableArray alloc] initWithArray:reversed];
     
     self.users = @[@"Allen", @"Anna", @"Alicia", @"Arnold", @"Armando", @"Antonio", @"Brad", @"Catalaya", @"Christoph", @"Emerson", @"Eric", @"Everyone", @"Steve"];
@@ -418,9 +432,19 @@
     [self.textView refreshFirstResponder];
     
     Message *message = [Message new];
-//    message.username = [LoremIpsum name];
+    message.username = [ZDCChat instance].session.visitorInfo.name;
     message.text = [self.textView.text copy];
+    [self insertMessageToUI:message];
     
+    [super didPressRightButton:sender];
+    
+    NSLog(@"Session status: %lul", (unsigned long)[[ZDCChat instance].session status]);
+    
+    [[ZDCChat instance].session sendChatMessage:[self.textView.text copy]];
+}
+
+- (void)insertMessageToUI:(Message *)message
+{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
@@ -435,8 +459,6 @@
     // Fixes the cell from blinking (because of the transform, when using translucent cells)
     // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [super didPressRightButton:sender];
 }
 
 - (void)didPressArrowKey:(UIKeyCommand *)keyCommand
@@ -747,6 +769,21 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - ZDCChat Events
+
+- (void)chatEvent:(id)event
+{
+    NSLog(@"Event: %@, event class: %@", event, [event class]);
+    ZDCChatEvent *zMessage = [[ZDCChat instance].session.dataSource lastChatMessage];
+    
+    
+    Message *message = [Message new];
+    message.username = zMessage.displayName;
+    message.text = zMessage.message;
+    
+    [self insertMessageToUI:message];
 }
 
 @end

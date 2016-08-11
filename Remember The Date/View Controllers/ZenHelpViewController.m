@@ -283,9 +283,10 @@
         }];
     }
 
+//    [ZDCChat startChatIn:self.navigationController withConfig:nil];
     // present as new modal using global pre-chat config and whatever visitor info has been persisted
 //    [ZDCChat startChat:nil];
-    MessageViewController *mVC = [[MessageViewController alloc] initWithTableViewStyle:UITableViewStylePlain];
+    MessageViewController *mVC = [[MessageViewController alloc] init];
     
     [self showViewController:mVC sender:self];
 }
