@@ -779,9 +779,22 @@
     ZDCChatEvent *zMessage = [[ZDCChat instance].session.dataSource lastChatMessage];
     
     if (zMessage.verified) {
+        
         Message *message = [Message new];
-        message.username = zMessage.displayName;
-        message.text = zMessage.message;
+        
+        if (zMessage.type == ZDCChatEventTypeAgentMessage) {
+            message.username = [NSString stringWithFormat:@"(Agent) %@",  zMessage.displayName];
+        } else {
+            message.username = zMessage.displayName;
+        }
+        
+        
+        if ([zMessage.message containsString:@"requestScreenShare"]) {
+            message.text     = @"requested a screen share...";
+        } else {
+            message.text     = zMessage.message;
+        }
+        
         
         [self insertMessageToUI:message];
     }
