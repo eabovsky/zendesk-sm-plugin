@@ -80,7 +80,6 @@
 		4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */; };
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
 		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
-		70363A2B1D5C288000852757 /* SMSlackTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A2A1D5C288000852757 /* SMSlackTextViewController.m */; };
 		70363A351D5C28C100852757 /* ScreenMeetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A2D1D5C28C100852757 /* ScreenMeetManager.m */; };
 		70363A361D5C28C100852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; };
 		70363A371D5C28C100852757 /* SMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A301D5C28C100852757 /* SMAccountViewController.m */; };
@@ -89,6 +88,11 @@
 		70363A3A1D5C28C100852757 /* SMSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70363A341D5C28C100852757 /* SMSettingsViewController.xib */; };
 		70363A3B1D5C28CA00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; };
 		70363A3C1D5C28CA00852757 /* ScreenMeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		704342101D5C4A84006859B9 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 704342071D5C4A84006859B9 /* Message.m */; };
+		704342111D5C4A84006859B9 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 704342091D5C4A84006859B9 /* MessageTableViewCell.m */; };
+		704342121D5C4A84006859B9 /* MessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043420B1D5C4A84006859B9 /* MessageTextView.m */; };
+		704342131D5C4A84006859B9 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043420D1D5C4A84006859B9 /* MessageViewController.m */; };
+		704342141D5C4A84006859B9 /* TypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043420F1D5C4A84006859B9 /* TypingIndicatorView.m */; };
 		707832841D5B20950096A7C7 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707832821D5B20890096A7C7 /* ScreenMeetSDK.framework */; };
 		839C7AF51C070B4E007738AB /* ZendeskSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8ED8D691A03E7DF0070259D /* ZendeskSDK.framework */; };
 		83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */; };
@@ -229,8 +233,6 @@
 		4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveTheDateTabBarController.m; sourceTree = "<group>"; };
 		4D294BED19EDED970070A30E /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = "/Users/ade/Repositories/Work/ios/ScreenMeet-ZenDesk/Remember The Date/ScreenMeetSDK.framework"; sourceTree = "<absolute>"; };
-		70363A291D5C288000852757 /* SMSlackTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSlackTextViewController.h; sourceTree = "<group>"; };
-		70363A2A1D5C288000852757 /* SMSlackTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSlackTextViewController.m; sourceTree = "<group>"; };
 		70363A2C1D5C28C100852757 /* ScreenMeetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetManager.h; path = ScreenMeet/ScreenMeetManager.h; sourceTree = SOURCE_ROOT; };
 		70363A2D1D5C28C100852757 /* ScreenMeetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetManager.m; path = ScreenMeet/ScreenMeetManager.m; sourceTree = SOURCE_ROOT; };
 		70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = ScreenMeet/ScreenMeetSDK.framework; sourceTree = SOURCE_ROOT; };
@@ -240,6 +242,16 @@
 		70363A321D5C28C100852757 /* SMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMSettingsViewController.h; path = ScreenMeet/SMSettingsViewController.h; sourceTree = SOURCE_ROOT; };
 		70363A331D5C28C100852757 /* SMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMSettingsViewController.m; path = ScreenMeet/SMSettingsViewController.m; sourceTree = SOURCE_ROOT; };
 		70363A341D5C28C100852757 /* SMSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SMSettingsViewController.xib; path = ScreenMeet/SMSettingsViewController.xib; sourceTree = SOURCE_ROOT; };
+		704342061D5C4A84006859B9 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Message.h; path = "SLK Classes/Message.h"; sourceTree = SOURCE_ROOT; };
+		704342071D5C4A84006859B9 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Message.m; path = "SLK Classes/Message.m"; sourceTree = SOURCE_ROOT; };
+		704342081D5C4A84006859B9 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTableViewCell.h; path = "SLK Classes/MessageTableViewCell.h"; sourceTree = SOURCE_ROOT; };
+		704342091D5C4A84006859B9 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageTableViewCell.m; path = "SLK Classes/MessageTableViewCell.m"; sourceTree = SOURCE_ROOT; };
+		7043420A1D5C4A84006859B9 /* MessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTextView.h; path = "SLK Classes/MessageTextView.h"; sourceTree = SOURCE_ROOT; };
+		7043420B1D5C4A84006859B9 /* MessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageTextView.m; path = "SLK Classes/MessageTextView.m"; sourceTree = SOURCE_ROOT; };
+		7043420C1D5C4A84006859B9 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageViewController.h; path = "SLK Classes/MessageViewController.h"; sourceTree = SOURCE_ROOT; };
+		7043420D1D5C4A84006859B9 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageViewController.m; path = "SLK Classes/MessageViewController.m"; sourceTree = SOURCE_ROOT; };
+		7043420E1D5C4A84006859B9 /* TypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TypingIndicatorView.h; path = "SLK Classes/TypingIndicatorView.h"; sourceTree = SOURCE_ROOT; };
+		7043420F1D5C4A84006859B9 /* TypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypingIndicatorView.m; path = "SLK Classes/TypingIndicatorView.m"; sourceTree = SOURCE_ROOT; };
 		707832821D5B20890096A7C7 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = "/Users/ade/Repositories/Work/ios/ScreenMeet-ZenDesk/Remember The Date/ScreenMeetSDK.framework"; sourceTree = "<absolute>"; };
 		83E06FE01ACEEED400A91D1F /* NSData+RememberTheDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+RememberTheDate.h"; path = "Categories/NSData+RememberTheDate.h"; sourceTree = "<group>"; };
 		83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+RememberTheDate.m"; path = "Categories/NSData+RememberTheDate.m"; sourceTree = "<group>"; };
@@ -328,6 +340,7 @@
 		4D246FA519E7499600A46373 /* Remember The Date */ = {
 			isa = PBXGroup;
 			children = (
+				704342051D5C4A38006859B9 /* SLK Classes */,
 				7025113B1D599E0F0048F257 /* ScreenMeet Controllers */,
 				83E06FE31ACEEEDC00A91D1F /* Categories */,
 				4D294BEC19EDED800070A30E /* Views */,
@@ -389,8 +402,6 @@
 				4D24705219E80B7300A46373 /* ZenHelpViewController.m */,
 				4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */,
 				4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */,
-				70363A291D5C288000852757 /* SMSlackTextViewController.h */,
-				70363A2A1D5C288000852757 /* SMSlackTextViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -506,6 +517,23 @@
 				70363A341D5C28C100852757 /* SMSettingsViewController.xib */,
 			);
 			name = "ScreenMeet Controllers";
+			sourceTree = "<group>";
+		};
+		704342051D5C4A38006859B9 /* SLK Classes */ = {
+			isa = PBXGroup;
+			children = (
+				704342061D5C4A84006859B9 /* Message.h */,
+				704342071D5C4A84006859B9 /* Message.m */,
+				704342081D5C4A84006859B9 /* MessageTableViewCell.h */,
+				704342091D5C4A84006859B9 /* MessageTableViewCell.m */,
+				7043420A1D5C4A84006859B9 /* MessageTextView.h */,
+				7043420B1D5C4A84006859B9 /* MessageTextView.m */,
+				7043420C1D5C4A84006859B9 /* MessageViewController.h */,
+				7043420D1D5C4A84006859B9 /* MessageViewController.m */,
+				7043420E1D5C4A84006859B9 /* TypingIndicatorView.h */,
+				7043420F1D5C4A84006859B9 /* TypingIndicatorView.m */,
+			);
+			name = "SLK Classes";
 			sourceTree = "<group>";
 		};
 		83E06FE31ACEEEDC00A91D1F /* Categories */ = {
@@ -768,16 +796,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				70363A371D5C28C100852757 /* SMAccountViewController.m in Sources */,
-				70363A2B1D5C288000852757 /* SMSlackTextViewController.m in Sources */,
+				704342121D5C4A84006859B9 /* MessageTextView.m in Sources */,
 				70363A351D5C28C100852757 /* ScreenMeetManager.m in Sources */,
+				704342111D5C4A84006859B9 /* MessageTableViewCell.m in Sources */,
+				704342101D5C4A84006859B9 /* Message.m in Sources */,
 				4D246FAC19E7499600A46373 /* AppDelegate.m in Sources */,
 				4D24704A19E809CE00A46373 /* CreateProfileTableViewController.m in Sources */,
 				70363A391D5C28C100852757 /* SMSettingsViewController.m in Sources */,
+				704342141D5C4A84006859B9 /* TypingIndicatorView.m in Sources */,
 				4D246FA919E7499600A46373 /* main.m in Sources */,
 				4D24704719E8099300A46373 /* DateTableViewController.m in Sources */,
 				4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */,
 				83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */,
 				4D24704D19E80A5E00A46373 /* ProfileViewController.m in Sources */,
+				704342131D5C4A84006859B9 /* MessageViewController.m in Sources */,
 				4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */,
 				4D24705019E80ACF00A46373 /* NewDateViewController.m in Sources */,
 			);

@@ -11,6 +11,7 @@
 
 #import "ZenHelpViewController.h"
 #import "SaveTheDateTabBarController.h"
+#import "MessageViewController.h"
 
 
 @interface ZenHelpViewController ()
@@ -284,7 +285,9 @@
 
     // present as new modal using global pre-chat config and whatever visitor info has been persisted
 //    [ZDCChat startChat:nil];
+    MessageViewController *mVC = [[MessageViewController alloc] initWithTableViewStyle:UITableViewStylePlain];
     
+    [self showViewController:mVC sender:self];
 }
 
 -(NSString *) userEmail {
