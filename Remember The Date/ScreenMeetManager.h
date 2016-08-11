@@ -6,11 +6,15 @@
 //  Copyright © 2016 Stratpoint. All rights reserved.
 //
 
+@class UIBarButtonItem;
+
 #import <Foundation/Foundation.h>
 
 @interface ScreenMeetManager : NSObject
 
 + (ScreenMeetManager *)sharedManager;
+
++ (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action;
 
 - (void)showDefaultError;
 - (void)loginWithToken:(NSString *)token;

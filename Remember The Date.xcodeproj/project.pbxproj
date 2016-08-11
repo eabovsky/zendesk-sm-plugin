@@ -79,9 +79,19 @@
 		4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705219E80B7300A46373 /* ZenHelpViewController.m */; };
 		4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */; };
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
+		70363A201D5C1E2200852757 /* ScreenMeetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A181D5C1E2200852757 /* ScreenMeetManager.m */; };
+		70363A211D5C1E2200852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
+		70363A221D5C1E2200852757 /* SMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A1B1D5C1E2200852757 /* SMAccountViewController.m */; };
+		70363A231D5C1E2200852757 /* SMAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70363A1C1D5C1E2200852757 /* SMAccountViewController.xib */; };
+		70363A241D5C1E2200852757 /* SMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A1E1D5C1E2200852757 /* SMSettingsViewController.m */; };
+		70363A251D5C1E2200852757 /* SMSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70363A1F1D5C1E2200852757 /* SMSettingsViewController.xib */; };
+		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
+		70363A271D5C1E3A00852757 /* ScreenMeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		707832841D5B20950096A7C7 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707832821D5B20890096A7C7 /* ScreenMeetSDK.framework */; };
 		839C7AF51C070B4E007738AB /* ZendeskSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8ED8D691A03E7DF0070259D /* ZendeskSDK.framework */; };
 		83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */; };
 		83ECC7BD1BFC9BF000963E82 /* ZendeskProviderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */; };
+		A0FFCE8D63E718C2B0E2C504 /* libPods-Remember The Date.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE92F7D965AEFDD8A3228D51 /* libPods-Remember The Date.a */; };
 		B837E5DA19EFDD0A00075019 /* btnContactSupport.png in Resources */ = {isa = PBXBuildFile; fileRef = B837E5CB19EFDD0A00075019 /* btnContactSupport.png */; };
 		B837E5DB19EFDD0A00075019 /* btnContactSupport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B837E5CC19EFDD0A00075019 /* btnContactSupport@2x.png */; };
 		B837E5DC19EFDD0A00075019 /* btnContactSupport@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B837E5CD19EFDD0A00075019 /* btnContactSupport@3x.png */; };
@@ -117,7 +127,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		70363A281D5C1E3A00852757 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				70363A271D5C1E3A00852757 /* ScreenMeetSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0EB43F34C4D0A99AC3EC3053 /* Pods-Remember The Date.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remember The Date.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Remember The Date/Pods-Remember The Date.debug.xcconfig"; sourceTree = "<group>"; };
 		21B920A71B3D3F8B00DF2F0B /* ZDCChat.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZDCChat.bundle; path = Framework/ZDCChat.bundle; sourceTree = "<group>"; };
 		21B920A81B3D3F8B00DF2F0B /* ZDCChatStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZDCChatStrings.bundle; path = Framework/ZDCChatStrings.bundle; sourceTree = "<group>"; };
 		21B920AB1B3D3F9700DF2F0B /* ZDCChat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZDCChat.framework; path = "Remember The Date/Framework/ZDCChat.framework"; sourceTree = "<group>"; };
@@ -201,9 +226,20 @@
 		4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveTheDateTabBarController.h; sourceTree = "<group>"; };
 		4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveTheDateTabBarController.m; sourceTree = "<group>"; };
 		4D294BED19EDED970070A30E /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		70363A171D5C1E2200852757 /* ScreenMeetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenMeetManager.h; sourceTree = "<group>"; };
+		70363A181D5C1E2200852757 /* ScreenMeetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenMeetManager.m; sourceTree = "<group>"; };
+		70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ScreenMeetSDK.framework; sourceTree = "<group>"; };
+		70363A1A1D5C1E2200852757 /* SMAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAccountViewController.h; sourceTree = "<group>"; };
+		70363A1B1D5C1E2200852757 /* SMAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMAccountViewController.m; sourceTree = "<group>"; };
+		70363A1C1D5C1E2200852757 /* SMAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMAccountViewController.xib; sourceTree = "<group>"; };
+		70363A1D1D5C1E2200852757 /* SMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSettingsViewController.h; sourceTree = "<group>"; };
+		70363A1E1D5C1E2200852757 /* SMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSettingsViewController.m; sourceTree = "<group>"; };
+		70363A1F1D5C1E2200852757 /* SMSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMSettingsViewController.xib; sourceTree = "<group>"; };
+		707832821D5B20890096A7C7 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = "/Users/ade/Repositories/Work/ios/ScreenMeet-ZenDesk/Remember The Date/ScreenMeetSDK.framework"; sourceTree = "<absolute>"; };
 		83E06FE01ACEEED400A91D1F /* NSData+RememberTheDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+RememberTheDate.h"; path = "Categories/NSData+RememberTheDate.h"; sourceTree = "<group>"; };
 		83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+RememberTheDate.m"; path = "Categories/NSData+RememberTheDate.m"; sourceTree = "<group>"; };
 		83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZendeskProviderSDK.framework; path = "Remember The Date/Framework/ZendeskProviderSDK.framework"; sourceTree = "<group>"; };
+		B82FCD224F59CFE683D17882 /* Pods-Remember The Date.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remember The Date.release.xcconfig"; path = "Pods/Target Support Files/Pods-Remember The Date/Pods-Remember The Date.release.xcconfig"; sourceTree = "<group>"; };
 		B837E5CB19EFDD0A00075019 /* btnContactSupport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnContactSupport.png; sourceTree = "<group>"; };
 		B837E5CC19EFDD0A00075019 /* btnContactSupport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btnContactSupport@2x.png"; sourceTree = "<group>"; };
 		B837E5CD19EFDD0A00075019 /* btnContactSupport@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btnContactSupport@3x.png"; sourceTree = "<group>"; };
@@ -228,6 +264,7 @@
 		B8ED8D691A03E7DF0070259D /* ZendeskSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZendeskSDK.framework; path = "Remember The Date/Framework/ZendeskSDK.framework"; sourceTree = "<group>"; };
 		B8ED8D6B1A03E7E90070259D /* ZendeskSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZendeskSDK.bundle; path = Framework/ZendeskSDK.bundle; sourceTree = "<group>"; };
 		B8F46E3D19EEC94000E6D8EF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BE92F7D965AEFDD8A3228D51 /* libPods-Remember The Date.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Remember The Date.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,11 +272,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */,
 				839C7AF51C070B4E007738AB /* ZendeskSDK.framework in Frameworks */,
+				70363A211D5C1E2200852757 /* ScreenMeetSDK.framework in Frameworks */,
+				707832841D5B20950096A7C7 /* ScreenMeetSDK.framework in Frameworks */,
 				83ECC7BD1BFC9BF000963E82 /* ZendeskProviderSDK.framework in Frameworks */,
 				21B920AE1B3D3FBA00DF2F0B /* MobileCoreServices.framework in Frameworks */,
 				21B920AC1B3D3F9700DF2F0B /* ZDCChat.framework in Frameworks */,
 				B8F46E3E19EEC94000E6D8EF /* SystemConfiguration.framework in Frameworks */,
+				A0FFCE8D63E718C2B0E2C504 /* libPods-Remember The Date.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +305,8 @@
 				4D246FA519E7499600A46373 /* Remember The Date */,
 				4D246FC219E7499600A46373 /* Remember The DateTests */,
 				4D246FA419E7499600A46373 /* Products */,
+				AAFDC7F134625327BE3E1A96 /* Pods */,
+				68CC200803B3AA404826A786 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -279,6 +322,7 @@
 		4D246FA519E7499600A46373 /* Remember The Date */ = {
 			isa = PBXGroup;
 			children = (
+				7025113B1D599E0F0048F257 /* ScreenMeet Controllers */,
 				83E06FE31ACEEEDC00A91D1F /* Categories */,
 				4D294BEC19EDED800070A30E /* Views */,
 				4D246FD619E74EDF00A46373 /* Images */,
@@ -432,6 +476,30 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		68CC200803B3AA404826A786 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE92F7D965AEFDD8A3228D51 /* libPods-Remember The Date.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7025113B1D599E0F0048F257 /* ScreenMeet Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				70363A171D5C1E2200852757 /* ScreenMeetManager.h */,
+				70363A181D5C1E2200852757 /* ScreenMeetManager.m */,
+				70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */,
+				70363A1A1D5C1E2200852757 /* SMAccountViewController.h */,
+				70363A1B1D5C1E2200852757 /* SMAccountViewController.m */,
+				70363A1C1D5C1E2200852757 /* SMAccountViewController.xib */,
+				70363A1D1D5C1E2200852757 /* SMSettingsViewController.h */,
+				70363A1E1D5C1E2200852757 /* SMSettingsViewController.m */,
+				70363A1F1D5C1E2200852757 /* SMSettingsViewController.xib */,
+			);
+			name = "ScreenMeet Controllers";
+			sourceTree = "<group>";
+		};
 		83E06FE31ACEEEDC00A91D1F /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,6 +509,15 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		AAFDC7F134625327BE3E1A96 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0EB43F34C4D0A99AC3EC3053 /* Pods-Remember The Date.debug.xcconfig */,
+				B82FCD224F59CFE683D17882 /* Pods-Remember The Date.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -448,9 +525,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D246FC919E7499600A46373 /* Build configuration list for PBXNativeTarget "Remember The Date" */;
 			buildPhases = (
+				DA8D5A00D60CEE731DC91D93 /* [CP] Check Pods Manifest.lock */,
 				4D246F9F19E7499600A46373 /* Sources */,
 				4D246FA019E7499600A46373 /* Frameworks */,
 				4D246FA119E7499600A46373 /* Resources */,
+				70363A281D5C1E3A00852757 /* Embed Frameworks */,
+				F9AFFD4D8BA01E6B646DBCF3 /* [CP] Embed Pods Frameworks */,
+				8AAFE23AFC7A33082D80819F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -572,10 +653,12 @@
 				4D24704319E74EED00A46373 /* icon512.png in Resources */,
 				4D24702A19E74EED00A46373 /* icoAdd@3x.png in Resources */,
 				4D24703E19E74EED00A46373 /* icon114.png in Resources */,
+				70363A251D5C1E2200852757 /* SMSettingsViewController.xib in Resources */,
 				4D24701919E74EED00A46373 /* icoHomeActive.png in Resources */,
 				4D24701619E74EED00A46373 /* icoPhoto@3x.png in Resources */,
 				4D24701F19E74EED00A46373 /* icoHelpActive@2x.png in Resources */,
 				4D24701D19E74EED00A46373 /* icoHome.png in Resources */,
+				70363A231D5C1E2200852757 /* SMAccountViewController.xib in Resources */,
 				4D24702D19E74EED00A46373 /* emtpy@2x.png in Resources */,
 				4D24702719E74EED00A46373 /* icoAddActive@3x.png in Resources */,
 				4D24702519E74EED00A46373 /* icoClose@2x.png in Resources */,
@@ -623,6 +706,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8AAFE23AFC7A33082D80819F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Remember The Date/Pods-Remember The Date-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA8D5A00D60CEE731DC91D93 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F9AFFD4D8BA01E6B646DBCF3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Remember The Date/Pods-Remember The Date-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4D246F9F19E7499600A46373 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -630,11 +761,14 @@
 			files = (
 				4D246FAC19E7499600A46373 /* AppDelegate.m in Sources */,
 				4D24704A19E809CE00A46373 /* CreateProfileTableViewController.m in Sources */,
+				70363A221D5C1E2200852757 /* SMAccountViewController.m in Sources */,
 				4D246FA919E7499600A46373 /* main.m in Sources */,
 				4D24704719E8099300A46373 /* DateTableViewController.m in Sources */,
 				4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */,
 				83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */,
+				70363A201D5C1E2200852757 /* ScreenMeetManager.m in Sources */,
 				4D24704D19E80A5E00A46373 /* ProfileViewController.m in Sources */,
+				70363A241D5C1E2200852757 /* SMSettingsViewController.m in Sources */,
 				4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */,
 				4D24705019E80ACF00A46373 /* NewDateViewController.m in Sources */,
 			);
@@ -759,11 +893,13 @@
 		};
 		4D246FCA19E7499600A46373 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EB43F34C4D0A99AC3EC3053 /* Pods-Remember The Date.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
@@ -780,9 +916,15 @@
 					"$(PROJECT_DIR)/Remember",
 					The,
 					Date/Framework,
+					"$(PROJECT_DIR)/Remember",
+					The,
+					Date,
+					"$(PROJECT_DIR)/Remember",
+					The,
+					Date,
 				);
 				INFOPLIST_FILE = "Remember The Date/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.mobilesdk.rememberthedate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -793,11 +935,13 @@
 		};
 		4D246FCB19E7499600A46373 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B82FCD224F59CFE683D17882 /* Pods-Remember The Date.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
@@ -814,9 +958,15 @@
 					"$(PROJECT_DIR)/Remember",
 					The,
 					Date/Framework,
+					"$(PROJECT_DIR)/Remember",
+					The,
+					Date,
+					"$(PROJECT_DIR)/Remember",
+					The,
+					Date,
 				);
 				INFOPLIST_FILE = "Remember The Date/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.mobilesdk.rememberthedate;
 				PRODUCT_NAME = "$(TARGET_NAME)";

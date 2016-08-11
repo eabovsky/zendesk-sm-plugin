@@ -23,11 +23,11 @@
 #define NAVBAR_COLOR [UIColor colorWithRed:240.0f/255.f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f]
 #define EMAIL_COLOR [UIColor colorWithRed:214.0f/255.f green:214.0f/255.0f blue:214.0f/255.0f alpha:1.0f]
 
-static NSString * APP_ID = @"e5dd7520b178e21212f5cc2751a28f4b5a7dc76698dc79bd";
-static NSString * ZENDESK_URL = @"https://rememberthedate.zendesk.com";
-static NSString * CLIENT_ID = @"client_for_rtd_jwt_endpoint";
+static NSString * APP_ID      = @"8ecc5e5b0177e72437db6ee0c0889ea6b87023348faeb750";
+static NSString * ZENDESK_URL = @"https://screenmeetdev.zendesk.com";
+static NSString * CLIENT_ID   = @"mobile_sdk_client_a224f34d64dae33a666a";
 
-NSString * const APNS_ID_KEY = @"APNS_ID_KEY";
+NSString * const APNS_ID_KEY  = @"APNS_ID_KEY";
 
 @interface AppDelegate ()
 
@@ -57,6 +57,9 @@ NSString * const APNS_ID_KEY = @"APNS_ID_KEY";
 
     // chat SDK
     [[ZDCChatOverlay appearance] setInsets:[NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(75.0f, 15.0f, 70.0f, 15.0f)]];
+    [ZDKLocalization registerTableName:@"custom_requests"];
+    
+    [ZDKLocalization printAllKeys];
 }
 
 
@@ -93,6 +96,7 @@ NSString * const APNS_ID_KEY = @"APNS_ID_KEY";
         
         [application registerForRemoteNotificationTypes:types];
     }
+    
     //
     // Enable logging for debug builds
     //
@@ -107,9 +111,9 @@ NSString * const APNS_ID_KEY = @"APNS_ID_KEY";
     // Initialize the Zendesk SDK
     //
     
-    [[ZDKConfig instance] initializeWithAppId:@"e5dd7520b178e21212f5cc2751a28f4b5a7dc76698dc79bd"
-                                   zendeskUrl:@"https://rememberthedate.zendesk.com"
-                                     clientId:@"client_for_rtd_jwt_endpoint"];
+    [[ZDKConfig instance] initializeWithAppId:APP_ID
+                                   zendeskUrl:ZENDESK_URL
+                                     clientId:CLIENT_ID];
     
     //
     // Style the SDK
@@ -122,18 +126,23 @@ NSString * const APNS_ID_KEY = @"APNS_ID_KEY";
     //
     [ZDCChat configure:^(ZDCConfig *defaults) {
 
-        defaults.accountKey = @"2qNzXIeOGKD0LbLOWgAclb72G3LLfOHK";
+        defaults.accountKey                         = @"476NiNORvNGOc4WSDE87u8zKNUvtYxBx";
         defaults.preChatDataRequirements.department = ZDCPreChatDataOptional;
-        defaults.preChatDataRequirements.message = ZDCPreChatDataOptional;
+        defaults.preChatDataRequirements.message    = ZDCPreChatDataOptional;
     }];
     
     //
     //  The rest of the Mobile SDK code can be found in ZenHelpViewController.m
     //
+    [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
     
     return YES;
 }
 
+- (void)chatEvent:(id)event
+{
+    NSLog(@"Event: %@, event class: %@", event, [event class]);
+}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 

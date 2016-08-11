@@ -11,8 +11,6 @@
 #import "ScreenMeetManager.h"
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 
-#import "GGUtil.h"
-
 @interface SMSettingsViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) UIView            *containerView;
@@ -113,7 +111,7 @@
     }
 
     self.navigationItem.hidesBackButton       = YES;
-    self.navigationItem.leftBarButtonItem     = [GGUtil createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed)];
+    self.navigationItem.leftBarButtonItem     = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed)];
 
     self.roomPassword                         = @"";
     self.roomNameLabel.text                   = [[ScreenMeet sharedInstance] getRoomName];

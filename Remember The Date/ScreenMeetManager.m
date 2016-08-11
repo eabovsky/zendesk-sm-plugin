@@ -8,13 +8,8 @@
 
 #import "ScreenMeetManager.h"
 #import "AppDelegate.h"
-#import "ACTouchRecognizer.h"
 #import "SMSettingsViewController.h"
 #import "SMAccountViewController.h"
-
-#import "GGUIManager.h"
-#import "GGThemedNavigationController.h"
-#import "KYDrawerController.h"
 
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 
@@ -87,6 +82,17 @@ static ScreenMeetManager *manager = nil;
 }
 
 #pragma mark - Private Methods
+
++ (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action
+{
+    UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tempButton setFrame:CGRectMake(0, 0, 24.0f, 24.0f)];
+    [tempButton setImage:[[UIImage imageNamed:@"close_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [tempButton setTintColor:[UIColor whiteColor]];
+    [tempButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:tempButton];
+    return button;
+}
 
 - (void)initiateScreenMeetinProd:(BOOL)inProd
 {
@@ -224,12 +230,12 @@ static ScreenMeetManager *manager = nil;
         
         UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            GGThemedNavigationController *navVC = [[GGThemedNavigationController alloc] initWithRootViewController:[[SMSettingsViewController alloc] init]];
+            UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:[[SMSettingsViewController alloc] init]];
             
             
-            [[GGUIManager sharedManager] presentViewController:navVC animated:YES completion:^{
-                
-            }];
+//            [[GGUIManager sharedManager] presentViewController:navVC animated:YES completion:^{
+//                
+//            }];
         }];
         
         [alert addAction:settingsAction];
@@ -293,13 +299,7 @@ static ScreenMeetManager *manager = nil;
     
     [alert addAction:exitAction];
     
-    id rootVC = nil;
-    if ([self.appDelegate.window.rootViewController isKindOfClass:[KYDrawerController class]]) {
-        KYDrawerController *aController = (KYDrawerController *)self.appDelegate.window.rootViewController;
-        rootVC = aController.mainViewController;
-    } else {
-        rootVC = self.appDelegate.window.rootViewController;
-    }
+    id rootVC = self.appDelegate.window.rootViewController;
     
     [rootVC presentViewController:alert animated:YES completion:^{
         

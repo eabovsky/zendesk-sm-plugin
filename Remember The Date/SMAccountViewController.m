@@ -11,8 +11,6 @@
 #import "ScreenMeetManager.h"
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 
-#import "GGUtil.h"
-
 @interface SMAccountViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIView            *containerView;
@@ -96,7 +94,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.hidesBackButton       = YES;
-    self.navigationItem.leftBarButtonItem     = [GGUtil createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed)];
+    self.navigationItem.leftBarButtonItem     = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed)];
     
     self.nameTextField.text = [[ScreenMeet sharedInstance] getUserName];
     self.emailTextField.text = [[ScreenMeet sharedInstance] getUserEmail];
