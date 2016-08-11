@@ -49,24 +49,8 @@ static ScreenMeetManager *manager = nil;
 {
     self = [super init];
     if (self) {
-//        ACTouchRecognizer *recognizer   = [[ACTouchRecognizer alloc] init];
-//        recognizer.cancelsTouchesInView = NO;
-//        recognizer.delegate             = self;
-//        
-//        [self.appDelegate.window addGestureRecognizer:recognizer];
-        
-//        UIScreenEdgePanGestureRecognizer *swipeRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUpGesture:)];
-//        swipeRecognizer.edges                             = UIRectEdgeBottom;
-//        swipeRecognizer.delegate                          = self;
-//        
-//        [self.appDelegate.window addGestureRecognizer:swipeRecognizer];
-        
-        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap)];
-        doubleTapGestureRecognizer.numberOfTapsRequired    = 2;
-        doubleTapGestureRecognizer.cancelsTouchesInView    = NO;
-        
-        [self.appDelegate.window addGestureRecognizer:doubleTapGestureRecognizer];
-        
+        self.isProduction = NO;
+        [self initiateScreenMeetinProd:NO];
     }
     return self;
 }
@@ -101,11 +85,6 @@ static ScreenMeetManager *manager = nil;
     } else {
         [ScreenMeet initSharedInstance:@"19ef50c67e8648f08dfc4702f992159d" environment:EnvironmentTypeSANDBOX];
     }
-}
-
-- (void)handleSwipeUpGesture:(UIScreenEdgePanGestureRecognizer *)gesture
-{
-    NSLog(@"SWIPE UP!!");
 }
 
 - (void)handleDoubleTap
@@ -338,6 +317,11 @@ static ScreenMeetManager *manager = nil;
             [self showDefaultError];
         }
     }];
+}
+
+- (void)loginWithToken:(NSString *)token callback:(void (^)(enum CallStatus status))callback
+{
+    [[ScreenMeet sharedInstance] authenticate:token callback:callback];
 }
 
 - (void)loginWithUsername:(NSString *)username andPassword:(NSString *)password

@@ -15,6 +15,8 @@
 #import <ZendeskSDK/ZendeskSDK.h>
 #import <ZDCChat/ZDCChat.h>
 
+#import "ScreenMeetManager.h"
+
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 @interface MessageViewController ()
@@ -776,28 +778,79 @@
 - (void)chatEvent:(id)event
 {
     NSLog(@"Event: %@, event class: %@", event, [event class]);
-    ZDCChatEvent *zMessage = [[ZDCChat instance].session.dataSource lastChatMessage];
+    ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource lastChatMessage];
     
-    if (zMessage.verified) {
+    if (chatEvent.verified) {
         
         Message *message = [Message new];
         
-        if (zMessage.type == ZDCChatEventTypeAgentMessage) {
-            message.username = [NSString stringWithFormat:@"(Agent) %@",  zMessage.displayName];
+        if (chatEvent.type == ZDCChatEventTypeAgentMessage) {
+            message.username = [NSString stringWithFormat:@"(Agent) %@",  chatEvent.displayName];
         } else {
-            message.username = zMessage.displayName;
+            message.username = chatEvent.displayName;
         }
         
         
-        if ([zMessage.message containsString:@"requestScreenShare"]) {
+        if ([chatEvent.message containsString:@"requestScreenShare"]) {
             message.text     = @"requested a screen share...";
+            
+            [self showRequestAlertforMessage:chatEvent];
         } else {
-            message.text     = zMessage.message;
+            message.text     = chatEvent.message;
         }
         
         
         [self insertMessageToUI:message];
     }
+}
+
+- (void)showRequestAlertforMessage:(ZDCChatEvent *)event
+{
+    UIAlertController *requestAlert = [UIAlertController alertControllerWithTitle:@"Screen Share" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                       [requestAlert dismissViewControllerAnimated:NO completion:nil];
+                                   }];
+    
+    UIAlertAction *shareAction = [UIAlertAction
+                                 actionWithTitle:NSLocalizedString(@"Share", @"Share action")
+                                 style:UIAlertActionStyleDestructive
+                                 handler:^(UIAlertAction *action)
+                                 {
+                                     NSLog(@"Share action");
+                                     
+                                     NSString *token = [[event.message componentsSeparatedByString:@"|"] lastObject];
+                                     [[ScreenMeetManager sharedManager] loginWithToken:token callback:^(enum CallStatus status) {
+                                         if (status == CallStatusSUCCESS) {
+                                             NSLog(@"login with token was successful...");
+                                             NSLog(@"will now start screen sharing...");
+                                             [[ScreenMeet sharedInstance] startStream:^(enum CallStatus status) {
+                                                 if (status == CallStatusSUCCESS) {
+                                                     NSLog(@"screen sharing now started...");
+                                                     // trigger UI and states for screen sharing
+                                                     
+                                                     Message *message = [Message new];
+                                                     message.username = [ZDCChat instance].session.visitorInfo.name;
+                                                     message.text     = @"Screen shared.";
+                                                     
+                                                     [[ZDCChat instance].session sendChatMessage:message.text];
+                                                     
+                                                     [[[UIAlertView alloc] initWithTitle:@"" message:@"Screen share started" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                                                 }
+                                             }];
+                                         }
+                                     }];
+                                 }];
+    
+    [requestAlert addAction:cancelAction];
+    [requestAlert addAction:shareAction];
+    
+    [self presentViewController:requestAlert animated:YES completion:nil];
 }
 
 @end
