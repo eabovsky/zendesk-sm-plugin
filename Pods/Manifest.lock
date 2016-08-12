@@ -1,12 +1,15 @@
 PODS:
+  - MBProgressHUD (1.0.0)
   - SlackTextViewController (1.9.4)
 
 DEPENDENCIES:
+  - MBProgressHUD (~> 1.0)
   - SlackTextViewController
 
 SPEC CHECKSUMS:
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   SlackTextViewController: d490f354dba963bc469a6b9ce3213978eaed67a5
 
-PODFILE CHECKSUM: 7bfefceef69ff4b7ad2e57f31d356211d345291c
+PODFILE CHECKSUM: c7f863c11e0b7fbac846a22fd5c216622aa8fa97
 
 COCOAPODS: 1.0.1
