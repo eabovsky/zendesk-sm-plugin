@@ -7,15 +7,20 @@
 //
 
 @class UIBarButtonItem;
+@class MessageViewController;
 
 #import <Foundation/Foundation.h>
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 
 @interface ScreenMeetManager : NSObject
 
+@property (strong, nonatomic) MessageViewController *mVC;
+
 + (ScreenMeetManager *)sharedManager;
 
 + (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action;
+
++ (void)presentViewController:(id)viewController animated:(BOOL)flag completion:(void (^)(void))completion;
 
 - (void)showDefaultError;
 - (void)loginWithToken:(NSString *)token;

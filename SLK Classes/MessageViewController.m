@@ -22,6 +22,7 @@
 @interface MessageViewController ()
 
 @property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic, strong) NSMutableDictionary *eventIds;
 
 @property (nonatomic, strong) NSArray *users;
 @property (nonatomic, strong) NSArray *channels;
@@ -73,11 +74,6 @@
     // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
     [self registerClassForTypingIndicatorView:[TypingIndicatorView class]];
 #endif
-    
-    NSLog(@"Session config: %@", [[[ZDCChat instance] session] config]);
-    [[ZDCChat instance].session connect];
-    
-    [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
 }
 
 
@@ -92,11 +88,11 @@
     [self configureActionItems];
     
     // SLKTVC's configuration
-    self.bounces = YES;
-    self.shakeToClearEnabled = YES;
-    self.keyboardPanningEnabled = YES;
+    self.bounces                                = YES;
+    self.shakeToClearEnabled                    = YES;
+    self.keyboardPanningEnabled                 = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
-    self.inverted = YES;
+    self.inverted                               = YES;
     
     [self.leftButton setImage:[UIImage imageNamed:@"icn_upload"] forState:UIControlStateNormal];
     [self.leftButton setTintColor:[UIColor grayColor]];
@@ -104,9 +100,9 @@
     [self.rightButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
     
     self.textInputbar.autoHideRightButton = YES;
-    self.textInputbar.maxCharCount = 256;
-    self.textInputbar.counterStyle = SLKCounterStyleSplit;
-    self.textInputbar.counterPosition = SLKCounterPositionTop;
+    self.textInputbar.maxCharCount        = 256;
+    self.textInputbar.counterStyle        = SLKCounterStyleSplit;
+    self.textInputbar.counterPosition     = SLKCounterPositionTop;
     
     [self.textInputbar.editorTitle setTextColor:[UIColor darkGrayColor]];
     [self.textInputbar.editorLeftButton setTintColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
@@ -133,6 +129,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[ZDCChat instance].session connect];
+    
+    [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
+    
+    [self verifyEvents];
+    
+    self.navigationItem.leftBarButtonItem = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed:)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Chat" style:UIBarButtonItemStyleDone target:self action:@selector(endChatButtonWasPressed:)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -143,9 +149,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
-//    [[ZDCChat instance].overlay show];
 }
 
 
@@ -171,6 +174,8 @@
     self.channels = @[@"General", @"Random", @"iOS", @"Bugs", @"Sports", @"Android", @"UI", @"SSB"];
     self.emojis = @[@"-1", @"m", @"man", @"machine", @"block-a", @"block-b", @"bowtie", @"boar", @"boat", @"book", @"bookmark", @"neckbeard", @"metal", @"fu", @"feelsgood"];
     self.commands = @[@"msg", @"call", @"text", @"skype", @"kick", @"invite"];
+    
+    self.eventIds = [[NSMutableDictionary alloc] init];
 }
 
 - (void)configureActionItems
@@ -201,6 +206,22 @@
                                                                action:@selector(togglePIPWindow:)];
     
     self.navigationItem.rightBarButtonItems = @[arrowItem, pipItem, editItem, appendItem, typeItem];
+}
+
+#pragma mark - Private Methods
+
+- (void)closeButtonWasPressed:(UIBarButtonItem *)barButtonItem
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[ZDCChat instance].overlay show];
+    }];
+}
+
+- (void)endChatButtonWasPressed:(UIBarButtonItem *)barButtonItem
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[ZDCChat instance].session endChat];
+    }];
 }
 
 
@@ -791,9 +812,19 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
 }
 
 #pragma mark - ZDCChat Events
+
+- (void)verifyEvents
+{
+    NSMutableArray *chatLog = [[ZDCChat instance].session.dataSource livechatLog];
+    
+    for (ZDCChatEvent *chatEvent in chatLog) {
+        self.eventIds[chatEvent.eventId] = @1;
+    }
+}
 
 - (void)chatEvent:(id)event
 {
@@ -801,7 +832,7 @@
     
     // only show messages for events verified by the server
     // we can also add here timestamp filters
-    if (chatEvent.verified) {
+    if (chatEvent.verified && self.eventIds[chatEvent.eventId] == nil) {
         
         Message *message = [Message new];
         
@@ -856,6 +887,9 @@
                                          if (status == CallStatusSUCCESS) {
                                              NSLog(@"login with token was successful...");
                                              NSLog(@"will now start screen sharing...");
+                                             
+                                             [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor yellowColor]];
+                                             
                                              [[ScreenMeet sharedInstance] startStream:^(enum CallStatus status) {
                                                  if (status == CallStatusSUCCESS) {
                                                      NSLog(@"screen sharing now started...");
@@ -867,13 +901,18 @@
                                                      
                                                      [[ZDCChat instance].session sendChatMessage:message.text];
                                                      
+                                                     [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor redColor]];
+                                                     
                                                      [[[UIAlertView alloc] initWithTitle:@"" message:@"Screen share started" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
                                                  } else {
                                                      [[ScreenMeetManager sharedManager] showDefaultError];
+                                                     
+                                                     [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor clearColor]];
                                                  }
                                              }];
                                          } else {
                                              [[ScreenMeetManager sharedManager] showDefaultError];
+                                             [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor clearColor]];
                                          }
                                      }];
                                  }];

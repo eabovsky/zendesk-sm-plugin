@@ -13,10 +13,14 @@
 #import "SaveTheDateTabBarController.h"
 #import "MessageViewController.h"
 
+#import "ScreenMeetManager.h"
+
 
 @interface ZenHelpViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 
 @end
 
@@ -283,12 +287,12 @@
         }];
     }
 
-//    [ZDCChat startChatIn:self.navigationController withConfig:nil];
     // present as new modal using global pre-chat config and whatever visitor info has been persisted
 //    [ZDCChat startChat:nil];
-    MessageViewController *mVC = [[MessageViewController alloc] init];
     
-    [self showViewController:mVC sender:self];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[ScreenMeetManager sharedManager] mVC]] animated:YES completion:^{
+        
+    }];
 }
 
 -(NSString *) userEmail {
@@ -323,6 +327,12 @@
     
     SaveTheDateTabBarController * tabbarController = (SaveTheDateTabBarController*)self.tabBarController;
     [tabbarController showTabbar];
+    
+    if ([[ZDCChat instance].session connectionStatus] == ZDCConnectionStatusConnected) {
+        self.chatButton.enabled = NO;
+    } else {
+        self.chatButton.enabled = YES;
+    }
 }
 
 

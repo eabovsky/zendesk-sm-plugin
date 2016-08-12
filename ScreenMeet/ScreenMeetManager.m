@@ -12,6 +12,7 @@
 #import "SMAccountViewController.h"
 
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
+#import "MessageViewController.h"
 
 
 @interface ScreenMeetManager () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
@@ -65,7 +66,15 @@ static ScreenMeetManager *manager = nil;
     return _appDelegate;
 }
 
-#pragma mark - Private Methods
+- (MessageViewController *)mVC
+{
+    if (!_mVC) {
+        _mVC = [[MessageViewController alloc] init];
+    }
+    return _mVC;
+}
+
+#pragma mark - Class Methods
 
 + (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action
 {
@@ -77,6 +86,15 @@ static ScreenMeetManager *manager = nil;
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:tempButton];
     return button;
 }
+
++ (void)presentViewController:(id)viewController animated:(BOOL)flag completion:(void (^)(void))completion
+{
+    if (viewController) {
+        [[[UIApplication sharedApplication] delegate].window.rootViewController presentViewController:viewController animated:flag completion:completion];
+    }
+}
+
+#pragma mark - Private Methods
 
 - (void)initiateScreenMeetinProd:(BOOL)inProd
 {

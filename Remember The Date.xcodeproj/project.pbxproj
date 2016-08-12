@@ -79,6 +79,8 @@
 		4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705219E80B7300A46373 /* ZenHelpViewController.m */; };
 		4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */; };
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
+		702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */; };
+		702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */; };
 		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
 		70363A351D5C28C100852757 /* ScreenMeetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A2D1D5C28C100852757 /* ScreenMeetManager.m */; };
 		70363A361D5C28C100852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; };
@@ -232,6 +234,10 @@
 		4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveTheDateTabBarController.h; sourceTree = "<group>"; };
 		4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveTheDateTabBarController.m; sourceTree = "<group>"; };
 		4D294BED19EDED970070A30E /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		702834D91D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZDCChatOverlay+Swizzle.h"; sourceTree = "<group>"; };
+		702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZDCChatOverlay+Swizzle.m"; sourceTree = "<group>"; };
+		702834DD1D5DAE430065FC9B /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
+		702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
 		70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = "/Users/ade/Repositories/Work/ios/ScreenMeet-ZenDesk/Remember The Date/ScreenMeetSDK.framework"; sourceTree = "<absolute>"; };
 		70363A2C1D5C28C100852757 /* ScreenMeetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetManager.h; path = ScreenMeet/ScreenMeetManager.h; sourceTree = SOURCE_ROOT; };
 		70363A2D1D5C28C100852757 /* ScreenMeetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetManager.m; path = ScreenMeet/ScreenMeetManager.m; sourceTree = SOURCE_ROOT; };
@@ -402,6 +408,10 @@
 				4D24705219E80B7300A46373 /* ZenHelpViewController.m */,
 				4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */,
 				4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */,
+				702834D91D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.h */,
+				702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */,
+				702834DD1D5DAE430065FC9B /* NSObject+Swizzle.h */,
+				702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -798,6 +808,7 @@
 				70363A371D5C28C100852757 /* SMAccountViewController.m in Sources */,
 				704342121D5C4A84006859B9 /* MessageTextView.m in Sources */,
 				70363A351D5C28C100852757 /* ScreenMeetManager.m in Sources */,
+				702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */,
 				704342111D5C4A84006859B9 /* MessageTableViewCell.m in Sources */,
 				704342101D5C4A84006859B9 /* Message.m in Sources */,
 				4D246FAC19E7499600A46373 /* AppDelegate.m in Sources */,
@@ -812,6 +823,7 @@
 				704342131D5C4A84006859B9 /* MessageViewController.m in Sources */,
 				4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */,
 				4D24705019E80ACF00A46373 /* NewDateViewController.m in Sources */,
+				702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
