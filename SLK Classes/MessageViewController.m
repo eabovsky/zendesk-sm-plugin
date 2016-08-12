@@ -145,6 +145,7 @@
     [super viewWillDisappear:animated];
     
     [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
+//    [[ZDCChat instance].overlay show];
 }
 
 
@@ -434,7 +435,8 @@
     
     Message *message = [Message new];
     message.username = [ZDCChat instance].session.visitorInfo.name;
-    message.text = [self.textView.text copy];
+    message.text     = [self.textView.text copy];
+    message.isAgent  = NO;
 //    [self insertMessageToUI:message];
     
     [super didPressRightButton:sender];
@@ -658,19 +660,38 @@
         [cell addGestureRecognizer:longPress];
     }
     
-    Message *message = self.messages[indexPath.row];
-    
+    Message *message     = self.messages[indexPath.row];
+
     cell.titleLabel.text = message.username;
-    cell.bodyLabel.text = message.text;
-    
-    cell.indexPath = indexPath;
-    cell.usedForMessage = YES;
+    cell.bodyLabel.text  = message.text;
+
+    cell.indexPath       = indexPath;
+    cell.usedForMessage  = YES;
+    cell.isAgent         = message.isAgent;
     
     // Cells must inherit the table view's transform
     // This is very important, since the main table view may be inverted
     cell.transform = self.tableView.transform;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(MessageTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([tableView isEqual:self.tableView]) {
+        if (cell.isAgent) {
+            cell.titleLabel.textAlignment = NSTextAlignmentRight;
+            cell.bodyLabel.textAlignment  = NSTextAlignmentRight;
+            cell.thumbnailView.hidden     = YES;
+        } else {
+            cell.titleLabel.textAlignment = NSTextAlignmentLeft;
+            cell.bodyLabel.textAlignment  = NSTextAlignmentLeft;
+            cell.thumbnailView.hidden     = NO;
+        }
+    } else {
+        cell.titleLabel.textAlignment = NSTextAlignmentLeft;
+        cell.bodyLabel.textAlignment  = NSTextAlignmentLeft;
+    }
 }
 
 - (MessageTableViewCell *)autoCompletionCellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -786,8 +807,10 @@
         
         if (chatEvent.type == ZDCChatEventTypeAgentMessage) {
             message.username = [NSString stringWithFormat:@"(Agent) %@",  chatEvent.displayName];
+            message.isAgent  = YES;
         } else {
             message.username = chatEvent.displayName;
+            message.isAgent  = NO;
         }
         
         // Check message

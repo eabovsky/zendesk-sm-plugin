@@ -23,6 +23,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic) BOOL usedForMessage;
+@property (nonatomic) BOOL isAgent;
 
 + (CGFloat)defaultFontSize;
 

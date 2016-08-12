@@ -65,7 +65,6 @@
     
     self.titleLabel.text = @"";
     self.bodyLabel.text = @"";
-
 }
 
 #pragma mark - Getters
@@ -73,13 +72,13 @@
 - (UILabel *)titleLabel
 {
     if (!_titleLabel) {
-        _titleLabel = [UILabel new];
+        _titleLabel                                           = [UILabel new];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.userInteractionEnabled = NO;
-        _titleLabel.numberOfLines = 0;
-        _titleLabel.textColor = [UIColor grayColor];
-        _titleLabel.font = [UIFont boldSystemFontOfSize:[MessageTableViewCell defaultFontSize]];
+        _titleLabel.backgroundColor                           = [UIColor clearColor];
+        _titleLabel.userInteractionEnabled                    = NO;
+        _titleLabel.numberOfLines                             = 0;
+        _titleLabel.textColor                                 = [UIColor grayColor];
+        _titleLabel.font                                      = [UIFont boldSystemFontOfSize:[MessageTableViewCell defaultFontSize]];
     }
     return _titleLabel;
 }
@@ -87,13 +86,13 @@
 - (UILabel *)bodyLabel
 {
     if (!_bodyLabel) {
-        _bodyLabel = [UILabel new];
+        _bodyLabel                                           = [UILabel new];
         _bodyLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _bodyLabel.backgroundColor = [UIColor clearColor];
-        _bodyLabel.userInteractionEnabled = NO;
-        _bodyLabel.numberOfLines = 0;
-        _bodyLabel.textColor = [UIColor darkGrayColor];
-        _bodyLabel.font = [UIFont systemFontOfSize:[MessageTableViewCell defaultFontSize]];
+        _bodyLabel.backgroundColor                           = [UIColor clearColor];
+        _bodyLabel.userInteractionEnabled                    = NO;
+        _bodyLabel.numberOfLines                             = 0;
+        _bodyLabel.textColor                                 = [UIColor darkGrayColor];
+        _bodyLabel.font                                      = [UIFont systemFontOfSize:[MessageTableViewCell defaultFontSize]];
     }
     return _bodyLabel;
 }
@@ -101,13 +100,13 @@
 - (UIImageView *)thumbnailView
 {
     if (!_thumbnailView) {
-        _thumbnailView = [UIImageView new];
+        _thumbnailView                                           = [UIImageView new];
         _thumbnailView.translatesAutoresizingMaskIntoConstraints = NO;
-        _thumbnailView.userInteractionEnabled = NO;
-        _thumbnailView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-        
-        _thumbnailView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/2.0;
-        _thumbnailView.layer.masksToBounds = YES;
+        _thumbnailView.userInteractionEnabled                    = NO;
+        _thumbnailView.backgroundColor                           = [UIColor colorWithWhite:0.9 alpha:1.0];
+
+        _thumbnailView.layer.cornerRadius                        = kMessageTableViewCellAvatarHeight/2.0;
+        _thumbnailView.layer.masksToBounds                       = YES;
     }
     return _thumbnailView;
 }

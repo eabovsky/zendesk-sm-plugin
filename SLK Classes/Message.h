@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *text;
+@property (nonatomic, assign) BOOL      isAgent;
 
 @end

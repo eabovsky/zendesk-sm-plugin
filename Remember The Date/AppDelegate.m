@@ -132,6 +132,11 @@ NSString * const APNS_ID_KEY  = @"APNS_ID_KEY";
     //  The rest of the Mobile SDK code can be found in ZenHelpViewController.m
     //
     
+//    ZDCChatOverlay *overlay = [[ZDCChatOverlay alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 50.0f, 50.0f)];
+//    
+//    [self.window addSubview:overlay];
+//    [self.window bringSubviewToFront:overlay];
+    
     return YES;
 }
 
