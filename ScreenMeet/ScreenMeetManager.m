@@ -13,6 +13,7 @@
 
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 #import "MessageViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 
 @interface ScreenMeetManager () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
@@ -95,6 +96,23 @@ static ScreenMeetManager *manager = nil;
 }
 
 #pragma mark - Private Methods
+
+- (void)showHUDWithTitle:(NSString *)title
+{
+    if (!self.hud) {
+        self.hud = [MBProgressHUD showHUDAddedTo:self.appDelegate.window animated:YES];
+        self.hud.label.text = title;
+        self.hud.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.30f];
+    } else {
+        self.hud.label.text = title;
+    }
+}
+
+- (void)hideHUD
+{
+    [MBProgressHUD hideHUDForView:self.appDelegate.window animated:YES];
+    self.hud = nil;
+}
 
 - (void)initiateScreenMeetinProd:(BOOL)inProd
 {

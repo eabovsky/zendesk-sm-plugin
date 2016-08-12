@@ -882,11 +882,14 @@
                                      
                                      NSString *token = [[event.message componentsSeparatedByString:@"|"] lastObject];
                                      
+                                     [[ScreenMeetManager sharedManager] showHUDWithTitle:@"authenticating..."];
                                      // Authenticate with token
                                      [[ScreenMeetManager sharedManager] loginWithToken:token callback:^(enum CallStatus status) {
                                          if (status == CallStatusSUCCESS) {
                                              NSLog(@"login with token was successful...");
                                              NSLog(@"will now start screen sharing...");
+                                             
+                                             [[ScreenMeetManager sharedManager] showHUDWithTitle:@"starting stream..."];
                                              
                                              [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor yellowColor]];
                                              
@@ -894,6 +897,8 @@
                                                  if (status == CallStatusSUCCESS) {
                                                      NSLog(@"screen sharing now started...");
                                                      // trigger UI and states for screen sharing
+                                                     
+                                                     [[ScreenMeetManager sharedManager] hideHUD];
                                                      
                                                      Message *message = [Message new];
                                                      message.username = [ZDCChat instance].session.visitorInfo.name;
@@ -907,12 +912,15 @@
                                                  } else {
                                                      [[ScreenMeetManager sharedManager] showDefaultError];
                                                      
-                                                     [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor clearColor]];
+                                                     [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor whiteColor]];
+                                                     
+                                                     [[ScreenMeetManager sharedManager] hideHUD];
                                                  }
                                              }];
                                          } else {
                                              [[ScreenMeetManager sharedManager] showDefaultError];
-                                             [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor clearColor]];
+                                             [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor whiteColor]];
+                                             [[ScreenMeetManager sharedManager] hideHUD];
                                          }
                                      }];
                                  }];
