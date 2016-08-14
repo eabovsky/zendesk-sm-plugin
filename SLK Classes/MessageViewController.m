@@ -213,13 +213,16 @@
 - (void)closeButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[ZDCChat instance].overlay show];
+//        [[ZDCChat instance].overlay show];
+        [[ScreenMeetManager sharedManager].chatWidget showWidget];
+        
     }];
 }
 
 - (void)endChatButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:^{
+        [[ScreenMeetManager sharedManager].chatWidget showWidget];
         [[ZDCChat instance].session endChat];
     }];
 }

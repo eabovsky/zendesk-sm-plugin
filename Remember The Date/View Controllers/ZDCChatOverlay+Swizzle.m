@@ -24,7 +24,7 @@
 {
     NSLog(@"Overlay activate...");
     
-    [ScreenMeetManager presentViewController:[[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[ScreenMeetManager sharedManager] mVC]] animated:YES completion:^{
+    [ScreenMeetManager presentViewControllerFromWindowRootViewController:[[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[ScreenMeetManager sharedManager] mVC]] animated:YES completion:^{
         [[ZDCChat instance].overlay hide];
     }];
     

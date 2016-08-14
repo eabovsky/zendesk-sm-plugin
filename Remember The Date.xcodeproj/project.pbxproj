@@ -79,6 +79,7 @@
 		4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705219E80B7300A46373 /* ZenHelpViewController.m */; };
 		4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */; };
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
+		702183E01D60A5C800797B36 /* ScreenMeetChatWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */; };
 		702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */; };
 		702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */; };
 		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
@@ -234,6 +235,8 @@
 		4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveTheDateTabBarController.h; sourceTree = "<group>"; };
 		4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveTheDateTabBarController.m; sourceTree = "<group>"; };
 		4D294BED19EDED970070A30E /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		702183DE1D60A5C800797B36 /* ScreenMeetChatWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetChatWidget.h; path = ScreenMeet/ScreenMeetChatWidget.h; sourceTree = SOURCE_ROOT; };
+		702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetChatWidget.m; path = ScreenMeet/ScreenMeetChatWidget.m; sourceTree = SOURCE_ROOT; };
 		702834D91D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZDCChatOverlay+Swizzle.h"; sourceTree = "<group>"; };
 		702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZDCChatOverlay+Swizzle.m"; sourceTree = "<group>"; };
 		702834DD1D5DAE430065FC9B /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
@@ -513,18 +516,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7025113B1D599E0F0048F257 /* ScreenMeet Controllers */ = {
+		702183DC1D60A58900797B36 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				70363A2C1D5C28C100852757 /* ScreenMeetManager.h */,
-				70363A2D1D5C28C100852757 /* ScreenMeetManager.m */,
-				70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */,
 				70363A2F1D5C28C100852757 /* SMAccountViewController.h */,
 				70363A301D5C28C100852757 /* SMAccountViewController.m */,
 				70363A311D5C28C100852757 /* SMAccountViewController.xib */,
 				70363A321D5C28C100852757 /* SMSettingsViewController.h */,
 				70363A331D5C28C100852757 /* SMSettingsViewController.m */,
 				70363A341D5C28C100852757 /* SMSettingsViewController.xib */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		702183DD1D60A5B300797B36 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				702183DE1D60A5C800797B36 /* ScreenMeetChatWidget.h */,
+				702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		7025113B1D599E0F0048F257 /* ScreenMeet Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				702183DD1D60A5B300797B36 /* Views */,
+				702183DC1D60A58900797B36 /* View Controllers */,
+				70363A2C1D5C28C100852757 /* ScreenMeetManager.h */,
+				70363A2D1D5C28C100852757 /* ScreenMeetManager.m */,
+				70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */,
 			);
 			name = "ScreenMeet Controllers";
 			sourceTree = "<group>";
@@ -805,6 +826,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				702183E01D60A5C800797B36 /* ScreenMeetChatWidget.m in Sources */,
 				70363A371D5C28C100852757 /* SMAccountViewController.m in Sources */,
 				704342121D5C4A84006859B9 /* MessageTextView.m in Sources */,
 				70363A351D5C28C100852757 /* ScreenMeetManager.m in Sources */,

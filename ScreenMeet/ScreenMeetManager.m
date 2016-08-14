@@ -53,6 +53,8 @@ static ScreenMeetManager *manager = nil;
     if (self) {
         self.isProduction = NO;
         [self initiateScreenMeetinProd:NO];
+        
+        [self.appDelegate.window addSubview:self.chatWidget];
     }
     return self;
 }
@@ -75,6 +77,14 @@ static ScreenMeetManager *manager = nil;
     return _mVC;
 }
 
+- (ScreenMeetChatWidget *)chatWidget
+{
+    if (!_chatWidget) {
+        _chatWidget = [[ScreenMeetChatWidget alloc] initWithFrame:CGRectMake(10.0f, [UIScreen mainScreen].bounds.size.height - 100.0f, 40.0f, 40.0f)];
+    }
+    return _chatWidget;
+}
+
 #pragma mark - Class Methods
 
 + (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action
@@ -88,7 +98,7 @@ static ScreenMeetManager *manager = nil;
     return button;
 }
 
-+ (void)presentViewController:(id)viewController animated:(BOOL)flag completion:(void (^)(void))completion
++ (void)presentViewControllerFromWindowRootViewController:(id)viewController animated:(BOOL)flag completion:(void (^)(void))completion
 {
     if (viewController) {
         [[[UIApplication sharedApplication] delegate].window.rootViewController presentViewController:viewController animated:flag completion:completion];
@@ -96,23 +106,6 @@ static ScreenMeetManager *manager = nil;
 }
 
 #pragma mark - Private Methods
-
-- (void)showHUDWithTitle:(NSString *)title
-{
-    if (!self.hud) {
-        self.hud = [MBProgressHUD showHUDAddedTo:self.appDelegate.window animated:YES];
-        self.hud.label.text = title;
-        self.hud.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.30f];
-    } else {
-        self.hud.label.text = title;
-    }
-}
-
-- (void)hideHUD
-{
-    [MBProgressHUD hideHUDForView:self.appDelegate.window animated:YES];
-    self.hud = nil;
-}
 
 - (void)initiateScreenMeetinProd:(BOOL)inProd
 {
@@ -322,6 +315,30 @@ static ScreenMeetManager *manager = nil;
 }
 
 #pragma mark - Public Methods
+
+- (void)showChatWidget
+{
+    if (self.chatWidget) {
+        [self.appDelegate.window bringSubviewToFront:self.chatWidget];
+    }
+}
+
+- (void)showHUDWithTitle:(NSString *)title
+{
+    if (!self.hud) {
+        self.hud = [MBProgressHUD showHUDAddedTo:self.appDelegate.window animated:YES];
+        self.hud.label.text = title;
+        self.hud.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.30f];
+    } else {
+        self.hud.label.text = title;
+    }
+}
+
+- (void)hideHUD
+{
+    [MBProgressHUD hideHUDForView:self.appDelegate.window animated:YES];
+    self.hud = nil;
+}
 
 - (void)showWelcomeDialog
 {

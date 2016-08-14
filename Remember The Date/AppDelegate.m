@@ -12,6 +12,8 @@
 #import <ZendeskSDK/ZDKSupportView.h>
 #import <ZDCChat/ZDCChat.h>
 
+#import "ScreenMeetManager.h"
+
 #define RED_COLOR [UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:1.0f]
 #define ORANGE_COLOR [UIColor colorWithRed:253.0f/255.f green:144.0f/255.0f blue:38.0f/255.0f alpha:1.0f]
 #define ORANGE_COLOR_40 [UIColor colorWithRed:253.0f/255.f green:144.0f/255.0f blue:38.0f/255.0f alpha:0.4f]
@@ -131,6 +133,7 @@ NSString * const APNS_ID_KEY  = @"APNS_ID_KEY";
     //
     //  The rest of the Mobile SDK code can be found in ZenHelpViewController.m
     //
+    [ScreenMeetManager sharedManager];
     
     return YES;
 }

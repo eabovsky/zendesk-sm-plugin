@@ -13,17 +13,25 @@
 #import <Foundation/Foundation.h>
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 
+#import "ScreenMeetChatWidget.h"
+
 @interface ScreenMeetManager : NSObject
 
+@property (strong, nonatomic) ScreenMeetChatWidget  *chatWidget;
 @property (strong, nonatomic) MessageViewController *mVC;
-@property (strong, nonatomic) MBProgressHUD *hud;
+@property (strong, nonatomic) MBProgressHUD         *hud;
+
+// Class Methods
 
 + (ScreenMeetManager *)sharedManager;
 
 + (UIBarButtonItem *)createCloseButtonItemWithTarget:(id)target forSelector:(SEL)action;
 
-+ (void)presentViewController:(id)viewController animated:(BOOL)flag completion:(void (^)(void))completion;
++ (void)presentViewControllerFromWindowRootViewController:(id)viewController animated:(BOOL)flag completion:(void (^)(void))completion;
 
+// Public Methods
+
+- (void)showChatWidget;
 - (void)showHUDWithTitle:(NSString *)title;
 - (void)hideHUD;
 

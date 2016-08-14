@@ -9,6 +9,8 @@
 #import "DateTableViewController.h"
 #import "NewDateViewController.h"
 
+#import "ScreenMeetManager.h"
+
 @interface DateTableViewController ()<UIAlertViewDelegate>
 @property (nonatomic, strong)   NSArray     *notificationsArray;
 @property (nonatomic, strong)   NSDateFormatter *formatter;
@@ -41,6 +43,8 @@
         self.emptyView.frame    = self.view.frame;
         [self.view bringSubviewToFront:self.emptyView];
     }
+    
+    [[ScreenMeetManager sharedManager] showChatWidget];
 }
 
 - (void)viewDidAppear:(BOOL)animated
