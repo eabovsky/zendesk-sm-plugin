@@ -91,7 +91,8 @@ static ScreenMeetManager *manager = nil;
 {
     UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [tempButton setFrame:CGRectMake(0, 0, 24.0f, 24.0f)];
-    [tempButton setImage:[[UIImage imageNamed:@"close_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+//    [tempButton setImage:[[UIImage imageNamed:@"close_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [tempButton setTitle:@"<" forState:UIControlStateNormal];
     [tempButton setTintColor:[UIColor whiteColor]];
     [tempButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:tempButton];

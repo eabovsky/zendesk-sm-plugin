@@ -250,7 +250,7 @@
     self.navigationItem.rightBarButtonItems = nil;
     
     if ([[ScreenMeetManager sharedManager] isStreaming]) {
-        UIBarButtonItem *stopStream = [[UIBarButtonItem alloc] initWithTitle:@"Stop Screen Share" style:UIBarButtonItemStyleDone target:self action:@selector(stopStreamButtonWasPressed:)];
+        UIBarButtonItem *stopStream = [[UIBarButtonItem alloc] initWithTitle:@"Stop Sharing Screen" style:UIBarButtonItemStyleDone target:self action:@selector(stopStreamButtonWasPressed:)];
         UIBarButtonItem *endChat = [[UIBarButtonItem alloc] initWithTitle:@"End Chat" style:UIBarButtonItemStyleDone target:self action:@selector(endChatButtonWasPressed:)];
         
         self.navigationItem.rightBarButtonItems = @[endChat, stopStream];
