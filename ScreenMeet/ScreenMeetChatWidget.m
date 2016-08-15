@@ -13,7 +13,7 @@
 
 #define kDefaultFrame CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)
 
-@interface ScreenMeetChatWidget ()
+@interface ScreenMeetChatWidget () <ScreenMeetToastDelegate>
 
 @property (strong, nonatomic) UIButton *actionButton;
 
@@ -88,6 +88,9 @@
     [self.actionButton addTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:self.actionButton];
+    
+    // initialize the message queue
+    self.messageQueue = [[NSMutableArray alloc] init];
 }
 
 - (void)dragMoving:(UIControl *)control withEvent:(UIEvent *)event
@@ -105,6 +108,28 @@
     }
 }
 
+- (void)processMessageQueue:(ScreenMeetToast *)message
+{
+    [self.messageQueue addObject:message];
+    
+    
+    [self.messageQueue enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj) {
+            ScreenMeetToast *aToast = obj;
+            
+            CGRect frame = aToast.frame;
+            
+            frame.origin.y = 44.0f + (self.messageQueue.count - idx) * 30.0f;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIView animateWithDuration:0.25f animations:^{
+                    aToast.frame = frame;
+                }];
+            });
+        }
+    }];
+}
+
 #pragma mark - Public Methods
 
 - (void)showWidget
@@ -117,8 +142,20 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished) {
-            [self addStackableToastMessage:@"A sample toast!"];
+            [self delayLine:0 andMaxCount:10];
         }];
+    }
+}
+
+- (void)delayLine:(NSInteger)iteration andMaxCount:(NSInteger)maxCount
+{
+    if (iteration < maxCount) {
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self addStackableToastMessage:[NSString stringWithFormat:@"A sample toast:%ld", iteration+1]];
+            [self delayLine:(iteration+1) andMaxCount:maxCount];
+        });
     }
 }
 
@@ -149,8 +186,19 @@
 - (void)addStackableToastMessage:(NSString *)message
 {
     ScreenMeetToast *aToast = [[ScreenMeetToast alloc] initWithMessage:message];
+    aToast.delegate         = self;
+    aToast.index            = self.messageQueue.count - 1;
     
-    [aToast showToastToView:self.superview];
+    [self processMessageQueue:aToast];
+    
+    [aToast showToastToView:self.superview from:self];
+}
+
+#pragma mark - ScreenMeetToast Delegate
+
+- (void)SMToastWasRemovedFromView:(ScreenMeetToast *)screenMeetToast
+{
+    [self.messageQueue removeObject:screenMeetToast];
 }
 
 @end

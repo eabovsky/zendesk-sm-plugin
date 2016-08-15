@@ -23,6 +23,8 @@
 
 @implementation ScreenMeetToast
 
+@synthesize delegate = __delegate;
+
 - (instancetype)initWithMessage:(NSString *)message andFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -88,7 +90,7 @@
     self.alpha                          = 0.0f;
 
     self.backgroundColor                = [UIColor clearColor];
-    self.layer.cornerRadius             = 5.0f;
+    self.layer.cornerRadius             = 10.0f;
     self.clipsToBounds                  = YES;
 
     self.backgroundView                 = [[UIView alloc] initWithFrame:self.bounds];
@@ -112,6 +114,12 @@
         self.alpha = 0.0f;
     } completion:^(BOOL finished) {
         if (finished) {
+            // trigger delegate
+            if ([self.delegate respondsToSelector:@selector(SMToastWasRemovedFromView:)]) {
+                [self.delegate SMToastWasRemovedFromView:self];
+            }
+            
+            // remove self
             [self removeFromSuperview];
         }
     }];
@@ -119,7 +127,7 @@
 
 #pragma mark - Public Methods
 
-- (void)showToastToView:(UIView *)view
+- (void)showToastToView:(UIView *)view from:(UIView *)sourceView
 {
     [view addSubview:self];
     

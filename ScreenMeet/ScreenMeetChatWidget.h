@@ -10,6 +10,8 @@
 
 @interface ScreenMeetChatWidget : UIView
 
+@property (strong, nonatomic) NSMutableArray *messageQueue;
+
 - (void)showWidget;
 - (void)hideWidget;
 
