@@ -65,6 +65,7 @@
 
 - (void)commonInit
 {
+    // widget properties
     self.userInteractionEnabled = YES;
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.borderColor      = [UIColor darkGrayColor].CGColor;
@@ -79,11 +80,12 @@
     }
     
     // add recognizers
-    
     self.actionButton = [[UIButton alloc] initWithFrame:frame];
     
     [self.actionButton setTitle:@"•••" forState:UIControlStateNormal];
     [self.actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    // listener events for the drag
     [self.actionButton addTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.actionButton addTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -95,16 +97,22 @@
 
 - (void)dragMoving:(UIControl *)control withEvent:(UIEvent *)event
 {
+    // set flag to eliminate false positives
     self.wasDragged = YES;
+    
+    // calculate the position for the touch event and adjust the current center
     self.center = [[[event allTouches] anyObject] locationInView:self.superview];
 }
 
 - (void)actionButtonWasPressed:(UIButton *)button
 {
-    if (!self.wasDragged) {
-        [self activateChat];
-    } else {
+    if (self.wasDragged) {
+        // don't trigger since it was a false positive
+        // the message came from an event from drag
+        // reset flag
         self.wasDragged = NO;
+    } else {
+        [self activateChat];
     }
 }
 
@@ -119,7 +127,8 @@
             
             CGRect frame = aToast.frame;
             
-            frame.origin.y = 44.0f + (self.messageQueue.count - idx) * 30.0f;
+            frame.origin.y = 44.0f // reference, can be changed depending on the queue position
+                                + (self.messageQueue.count - idx) * 30.0f; // calculation of the position
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.25f animations:^{
@@ -136,7 +145,7 @@
 {
     if (self.hidden) {
         // just to make sure
-        self.alpha = 0.0f;
+        self.alpha  = 0.0f;
         self.hidden = NO;
         
         [UIView animateWithDuration:0.25f animations:^{
@@ -189,8 +198,11 @@
     aToast.delegate         = self;
     aToast.index            = self.messageQueue.count - 1;
     
+    // process the message queue
     [self processMessageQueue:aToast];
     
+    // show to a view with a reference
+    // the reference will be used for the custom UI
     [aToast showToastToView:self.superview from:self];
 }
 
@@ -198,6 +210,7 @@
 
 - (void)SMToastWasRemovedFromView:(ScreenMeetToast *)screenMeetToast
 {
+    // remove the object from the queue
     [self.messageQueue removeObject:screenMeetToast];
 }
 
