@@ -123,8 +123,9 @@
             ScreenMeetToast *aToast = obj;
             
             CGRect frame   = aToast.frame;
-            frame.origin.y = 44.0f // reference, can be changed depending on the queue position
-                                + (self.messageQueue.count - idx) * 30.0f; // calculation of the position
+            
+            frame.origin.y = self.frame.origin.y // reference, can be changed depending on the queue position
+                                + (self.messageQueue.count - idx - 1) * 30.0f; // calculation of the position
             
             // perform the animation back in the main queue
             // this will cause a crash if not performed this way since we are using enumaration blocks
@@ -190,7 +191,6 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished) {
-            // for testing purposes
 //            [self delayLine:0 andMaxCount:10];
         }];
     }
@@ -239,14 +239,13 @@
 {
     ScreenMeetToast *aToast = [[ScreenMeetToast alloc] initWithMessage:message];
     aToast.delegate         = self;
-    aToast.index            = self.messageQueue.count - 1;
-    
-    // process the message queue
-    [self processMessageQueue:aToast];
     
     // show to a view with a reference
     // the reference will be used for the custom UI
     [aToast showToastToView:self.superview from:self];
+    
+    // process the message queue
+    [self processMessageQueue:aToast];
 }
 
 #pragma mark - ScreenMeetToast Delegate

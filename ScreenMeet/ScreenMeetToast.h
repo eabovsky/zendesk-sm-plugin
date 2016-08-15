@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSString  *message;
 @property (assign, nonatomic) CGFloat   fadeTime;
 @property (assign, nonatomic) CGFloat   displayTime;
-@property (assign, nonatomic) NSInteger index;
 
 - (instancetype)initWithMessage:(NSString *)message andFrame:(CGRect)frame;
 - (instancetype)initWithMessage:(NSString *)message;

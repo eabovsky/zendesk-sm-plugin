@@ -12,7 +12,7 @@
 #define kDefaultHeight      30.0f
 #define kDefaultWidth       ([UIScreen mainScreen].bounds.size.width - 20.0f)
 #define kDefaultFadeTime    1.0f
-#define kDefaultDisplayTime 2.0f
+#define kDefaultDisplayTime 3.0f
 
 @interface ScreenMeetToast ()
 
@@ -131,6 +131,25 @@
 
 - (void)showToastToView:(UIView *)view from:(UIView *)sourceView
 {
+    // acnhoring calculations
+    // to do: automatically calculate anchoring from position
+    
+    // set container view frame
+    CGRect frame          = self.frame;
+
+    frame.origin.y        = sourceView.frame.origin.y;
+    frame.origin.x        = sourceView.frame.origin.x + sourceView.frame.size.width + 10.0f;
+
+    frame.size.width      = [UIScreen mainScreen].bounds.size.width - frame.origin.x - 10.0f;
+
+    self.frame            = frame;
+
+    // set label frame
+    frame                 = self.toastLabel.frame;
+    frame.size.width      = self.frame.size.width - 20.0f;
+
+    self.toastLabel.frame = frame;
+    
     [view addSubview:self];
     
     [UIView animateWithDuration:self.fadeTime/2 animations:^{
