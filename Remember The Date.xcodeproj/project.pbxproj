@@ -79,6 +79,7 @@
 		4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705219E80B7300A46373 /* ZenHelpViewController.m */; };
 		4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */; };
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
+		702127091D61577F003F2369 /* ScreenMeetToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 702127081D61577F003F2369 /* ScreenMeetToast.m */; };
 		702183E01D60A5C800797B36 /* ScreenMeetChatWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */; };
 		702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */; };
 		702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */; };
@@ -235,6 +236,8 @@
 		4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveTheDateTabBarController.h; sourceTree = "<group>"; };
 		4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveTheDateTabBarController.m; sourceTree = "<group>"; };
 		4D294BED19EDED970070A30E /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		702127071D61577F003F2369 /* ScreenMeetToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetToast.h; path = ScreenMeet/ScreenMeetToast.h; sourceTree = SOURCE_ROOT; };
+		702127081D61577F003F2369 /* ScreenMeetToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetToast.m; path = ScreenMeet/ScreenMeetToast.m; sourceTree = SOURCE_ROOT; };
 		702183DE1D60A5C800797B36 /* ScreenMeetChatWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetChatWidget.h; path = ScreenMeet/ScreenMeetChatWidget.h; sourceTree = SOURCE_ROOT; };
 		702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetChatWidget.m; path = ScreenMeet/ScreenMeetChatWidget.m; sourceTree = SOURCE_ROOT; };
 		702834D91D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZDCChatOverlay+Swizzle.h"; sourceTree = "<group>"; };
@@ -534,6 +537,8 @@
 			children = (
 				702183DE1D60A5C800797B36 /* ScreenMeetChatWidget.h */,
 				702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */,
+				702127071D61577F003F2369 /* ScreenMeetToast.h */,
+				702127081D61577F003F2369 /* ScreenMeetToast.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -826,6 +831,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				702127091D61577F003F2369 /* ScreenMeetToast.m in Sources */,
 				702183E01D60A5C800797B36 /* ScreenMeetChatWidget.m in Sources */,
 				70363A371D5C28C100852757 /* SMAccountViewController.m in Sources */,
 				704342121D5C4A84006859B9 /* MessageTextView.m in Sources */,

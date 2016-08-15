@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ScreenMeetChatWidget.h"
-
+#import "ScreenMeetToast.h"
 #import "ScreenMeetManager.h"
 
 #define kDefaultFrame CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)
@@ -116,6 +116,8 @@
         
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+            [self addStackableToastMessage:@"A sample toast!"];
         }];
     }
 }
@@ -142,6 +144,13 @@
 - (void)endChat
 {
     [self showWidget];
+}
+
+- (void)addStackableToastMessage:(NSString *)message
+{
+    ScreenMeetToast *aToast = [[ScreenMeetToast alloc] initWithMessage:message];
+    
+    [aToast showToastToView:self.superview];
 }
 
 @end
