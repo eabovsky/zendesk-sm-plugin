@@ -12,10 +12,24 @@
 
 @property (strong, nonatomic) NSMutableArray *messageQueue;
 
+@property (assign, nonatomic) BOOL isLive;
+
+// to refresh UI
+- (void)updateUI;
+
+// set different UI
+- (void)showDefaultUI;
+- (void)showLiveUI;
+- (void)showStreamingUI;
+
+
 - (void)showWidget;
 - (void)hideWidget;
 
 - (void)activateChat;
 - (void)endChat;
+
+// add a message to be shown as a toast
+- (void)addStackableToastMessage:(NSString *)message;
 
 @end

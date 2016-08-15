@@ -133,12 +133,13 @@
     [[ZDCChat instance].session connect];
     
     [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
+    [ScreenMeetManager sharedManager].chatWidget.isLive = YES;
     
     [self verifyEvents];
     
     self.navigationItem.leftBarButtonItem = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed:)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Chat" style:UIBarButtonItemStyleDone target:self action:@selector(endChatButtonWasPressed:)];
+    [self processRightBarButtonItems];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -213,18 +214,50 @@
 - (void)closeButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:^{
-//        [[ZDCChat instance].overlay show];
         [[ScreenMeetManager sharedManager].chatWidget showWidget];
-        
     }];
 }
 
 - (void)endChatButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[ScreenMeetManager sharedManager].chatWidget showWidget];
+        [[ScreenMeetManager sharedManager] stopStream];
         [[ZDCChat instance].session endChat];
+        
+        [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+        
+        [[ScreenMeetManager sharedManager].chatWidget showWidget];
     }];
+}
+
+- (void)stopStreamButtonWasPressed:(UIBarButtonItem *)barButtonItem
+{
+    [[ScreenMeetManager sharedManager] stopStream];
+    [[ScreenMeetManager sharedManager].chatWidget updateUI];
+    
+    Message *message = [Message new];
+    message.username = [ZDCChat instance].session.visitorInfo.name;
+    message.text     = @"Screen sharing stopped.";
+    
+    [[ZDCChat instance].session sendChatMessage:message.text];
+    
+    [self processRightBarButtonItems];
+}
+
+- (void)processRightBarButtonItems
+{
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItems = nil;
+    
+    if ([[ScreenMeetManager sharedManager] isStreaming]) {
+        UIBarButtonItem *stopStream = [[UIBarButtonItem alloc] initWithTitle:@"Stop Screen Share" style:UIBarButtonItemStyleDone target:self action:@selector(stopStreamButtonWasPressed:)];
+        UIBarButtonItem *endChat = [[UIBarButtonItem alloc] initWithTitle:@"End Chat" style:UIBarButtonItemStyleDone target:self action:@selector(endChatButtonWasPressed:)];
+        
+        self.navigationItem.rightBarButtonItems = @[endChat, stopStream];
+    } else {
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Chat" style:UIBarButtonItemStyleDone target:self action:@selector(endChatButtonWasPressed:)];
+    }
 }
 
 
@@ -461,7 +494,6 @@
     message.username = [ZDCChat instance].session.visitorInfo.name;
     message.text     = [self.textView.text copy];
     message.isAgent  = NO;
-//    [self insertMessageToUI:message];
     
     [super didPressRightButton:sender];
     
@@ -835,7 +867,7 @@
     
     // only show messages for events verified by the server
     // we can also add here timestamp filters
-    if (chatEvent.verified && self.eventIds[chatEvent.eventId] == nil) {
+    if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
         
         Message *message = [Message new];
         
@@ -849,14 +881,25 @@
         
         // Check message
         
-        if ([chatEvent.message containsString:@"requestScreenShare"]) {
+        if ([[chatEvent.message lowercaseString] containsString:@"requestscreenshare"]) {
             message.text     = @"requested a screen share...";
+            
             [self showRequestAlertforMessage:chatEvent];
+            
+        } else if ([[chatEvent.message lowercaseString] containsString:@"stopscreenshare"]) {
+            message.text     = @"stopped the screen sharing...";
+            [self stopStreamButtonWasPressed:nil];
         } else {
             message.text     = chatEvent.message;
         }
         
         [self insertMessageToUI:message];
+        
+        if (self.isViewLoaded && self.view.window) {
+            // do nothing
+        } else {
+            [[ScreenMeetManager sharedManager].chatWidget addStackableToastMessage:[NSString stringWithFormat:@"%@: %@", message.username, message.text]];
+        }
     }
 }
 
@@ -886,6 +929,7 @@
                                      NSString *token = [[event.message componentsSeparatedByString:@"|"] lastObject];
                                      
                                      [[ScreenMeetManager sharedManager] showHUDWithTitle:@"authenticating..."];
+                                     
                                      // Authenticate with token
                                      [[ScreenMeetManager sharedManager] loginWithToken:token callback:^(enum CallStatus status) {
                                          if (status == CallStatusSUCCESS) {
@@ -894,7 +938,6 @@
                                              
                                              [[ScreenMeetManager sharedManager] showHUDWithTitle:@"starting stream..."];
                                              
-                                             [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor yellowColor]];
                                              
                                              [[ScreenMeet sharedInstance] startStream:^(enum CallStatus status) {
                                                  if (status == CallStatusSUCCESS) {
@@ -902,6 +945,7 @@
                                                      // trigger UI and states for screen sharing
                                                      
                                                      [[ScreenMeetManager sharedManager] hideHUD];
+                                                     [[ScreenMeetManager sharedManager].chatWidget showStreamingUI];
                                                      
                                                      Message *message = [Message new];
                                                      message.username = [ZDCChat instance].session.visitorInfo.name;
@@ -909,21 +953,15 @@
                                                      
                                                      [[ZDCChat instance].session sendChatMessage:message.text];
                                                      
-                                                     [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor redColor]];
+                                                     [self processRightBarButtonItems];
                                                      
                                                      [[[UIAlertView alloc] initWithTitle:@"" message:@"Screen share started" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
                                                  } else {
-                                                     [[ScreenMeetManager sharedManager] showDefaultError];
-                                                     
-                                                     [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor whiteColor]];
-                                                     
-                                                     [[ScreenMeetManager sharedManager] hideHUD];
+                                                     [self handleScreenShareError:status];
                                                  }
                                              }];
                                          } else {
-                                             [[ScreenMeetManager sharedManager] showDefaultError];
-                                             [[ZDCChatOverlay appearance] setOverlayTintColor:[UIColor whiteColor]];
-                                             [[ScreenMeetManager sharedManager] hideHUD];
+                                             [self handleScreenShareError:status];
                                          }
                                      }];
                                  }];
@@ -931,7 +969,30 @@
     [requestAlert addAction:cancelAction];
     [requestAlert addAction:shareAction];
     
-    [self presentViewController:requestAlert animated:YES completion:nil];
+    if (self.isViewLoaded && self.view.window) {
+        [self presentViewController:requestAlert animated:YES completion:nil];
+    } else {
+        [ScreenMeetManager presentViewControllerFromWindowRootViewController:requestAlert animated:YES completion:^{
+            
+        }];
+    }
 }
 
+- (void)handleScreenShareError:(CallStatus)status
+{
+    // can add different error handling here
+    [[ScreenMeetManager sharedManager] showDefaultError];
+    [[ScreenMeetManager sharedManager] hideHUD];
+    
+    [self sendScreenShareErrorMessage];
+}
+
+- (void)sendScreenShareErrorMessage
+{
+    Message *message = [Message new];
+    message.username = [ZDCChat instance].session.visitorInfo.name;
+    message.text     = @"There was a problem with sharing my screen.";
+    
+    [[ZDCChat instance].session sendChatMessage:message.text];
+}
 @end

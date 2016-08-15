@@ -23,6 +23,8 @@
 
 @implementation ScreenMeetChatWidget
 
+@synthesize messageQueue = _messageQueue;
+
 - (instancetype)init
 {
     self = [super init];
@@ -65,12 +67,6 @@
 
 - (void)commonInit
 {
-    // widget properties
-    self.userInteractionEnabled = YES;
-    self.backgroundColor        = [UIColor whiteColor];
-    self.layer.borderColor      = [UIColor darkGrayColor].CGColor;
-    self.layer.borderWidth      = 2.0f;
-    
     CGRect frame = kDefaultFrame;
     
     if (self.frame.size.height != 0.0f || self.frame.size.width != 0.0f) {
@@ -82,9 +78,6 @@
     // add recognizers
     self.actionButton = [[UIButton alloc] initWithFrame:frame];
     
-    [self.actionButton setTitle:@"•••" forState:UIControlStateNormal];
-    [self.actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
     // listener events for the drag
     [self.actionButton addTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.actionButton addTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -93,6 +86,9 @@
     
     // initialize the message queue
     self.messageQueue = [[NSMutableArray alloc] init];
+    
+    // set UI
+    [self showDefaultUI];
 }
 
 - (void)dragMoving:(UIControl *)control withEvent:(UIEvent *)event
@@ -119,17 +115,19 @@
 - (void)processMessageQueue:(ScreenMeetToast *)message
 {
     [self.messageQueue addObject:message];
-    
-    
+
     [self.messageQueue enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj) {
+            
+            // get the current object from the queue
             ScreenMeetToast *aToast = obj;
             
-            CGRect frame = aToast.frame;
-            
+            CGRect frame   = aToast.frame;
             frame.origin.y = 44.0f // reference, can be changed depending on the queue position
                                 + (self.messageQueue.count - idx) * 30.0f; // calculation of the position
             
+            // perform the animation back in the main queue
+            // this will cause a crash if not performed this way since we are using enumaration blocks
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.25f animations:^{
                     aToast.frame = frame;
@@ -141,6 +139,47 @@
 
 #pragma mark - Public Methods
 
+- (void)updateUI
+{
+    if ([[ScreenMeetManager sharedManager] isStreaming]) {
+        [self showStreamingUI];
+    } else if (self.isLive) {
+        [self showLiveUI];
+    } else {
+        [self showDefaultUI];
+    }
+}
+
+- (void)showDefaultUI
+{
+    [self.actionButton setTitle:@"•••" forState:UIControlStateNormal];
+    [self.actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    self.backgroundColor        = [UIColor whiteColor];
+    self.layer.borderColor      = [UIColor darkGrayColor].CGColor;
+    self.layer.borderWidth      = 2.0f;
+}
+
+- (void)showLiveUI
+{
+    [self.actionButton setTitle:@"L" forState:UIControlStateNormal];
+    [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    self.backgroundColor        = [UIColor greenColor];
+    self.layer.borderColor      = [UIColor whiteColor].CGColor;
+    self.layer.borderWidth      = 2.0f;
+}
+
+- (void)showStreamingUI
+{
+    [self.actionButton setTitle:@"S" forState:UIControlStateNormal];
+    [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    self.backgroundColor        = [UIColor redColor];
+    self.layer.borderColor      = [UIColor whiteColor].CGColor;
+    self.layer.borderWidth      = 2.0f;
+}
+
 - (void)showWidget
 {
     if (self.hidden) {
@@ -151,11 +190,15 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished) {
-            [self delayLine:0 andMaxCount:10];
+            // for testing purposes
+//            [self delayLine:0 andMaxCount:10];
         }];
     }
+    
+    [self updateUI];
 }
 
+// for testing purposes
 - (void)delayLine:(NSInteger)iteration andMaxCount:(NSInteger)maxCount
 {
     if (iteration < maxCount) {

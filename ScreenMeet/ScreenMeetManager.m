@@ -418,6 +418,19 @@ static ScreenMeetManager *manager = nil;
     NSLog(@"Stream resumed...");
 }
 
+- (BOOL)isStreaming
+{
+    switch ([[ScreenMeet sharedInstance] getStreamState]) {
+        case StreamStateTypeACTIVE:
+        case StreamStateTypePAUSED:
+            return YES;
+            break;
+        default:
+            return NO;
+            break;
+    }
+}
+
 #pragma mark - UIAlertView Delegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

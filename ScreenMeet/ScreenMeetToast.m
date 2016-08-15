@@ -101,8 +101,10 @@
 
     self.toastLabel                     = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 5.0f, self.frame.size.width - 20.0f, self.frame.size.height - 10.0f)];
     self.toastLabel.backgroundColor     = [UIColor clearColor];
-    self.toastLabel.numberOfLines       = 0;
+    self.toastLabel.numberOfLines       = 1;
+    self.toastLabel.lineBreakMode       = NSLineBreakByTruncatingTail;
     self.toastLabel.textColor           = [UIColor whiteColor];
+    self.toastLabel.font                = [UIFont systemFontOfSize:12.0f];
     self.toastLabel.text                = self.message;
     
     [self addSubview:self.toastLabel];

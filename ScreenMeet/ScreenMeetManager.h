@@ -42,4 +42,6 @@
 - (void)startStream:(void (^)(NSInteger status))callback;
 - (void)stopStream;
 
+- (BOOL)isStreaming;
+
 @end
