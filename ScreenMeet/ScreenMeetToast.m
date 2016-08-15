@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ScreenMeetToast.h"
 
-#define kDefaultHeight      30.0f
+#define kDefaultHeight      [UIScreen mainScreen].bounds.size.height
 #define kDefaultWidth       ([UIScreen mainScreen].bounds.size.width - 20.0f)
 #define kDefaultFadeTime    1.0f
 #define kDefaultDisplayTime 3.0f
@@ -95,13 +95,14 @@
 
     self.backgroundView                 = [[UIView alloc] initWithFrame:self.bounds];
     self.backgroundView.backgroundColor = [UIColor blackColor];
-    self.backgroundView.alpha           = 0.50f;
+    self.backgroundView.alpha           = 0.30f;
+    self.backgroundView.clipsToBounds   = YES;
 
     [self addSubview:self.backgroundView];
 
     self.toastLabel                     = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 5.0f, self.frame.size.width - 20.0f, self.frame.size.height - 10.0f)];
     self.toastLabel.backgroundColor     = [UIColor clearColor];
-    self.toastLabel.numberOfLines       = 1;
+    self.toastLabel.numberOfLines       = 0;
     self.toastLabel.lineBreakMode       = NSLineBreakByTruncatingTail;
     self.toastLabel.textColor           = [UIColor whiteColor];
     self.toastLabel.font                = [UIFont systemFontOfSize:12.0f];
@@ -135,20 +136,32 @@
     // to do: automatically calculate anchoring from position
     
     // set container view frame
-    CGRect frame          = self.frame;
+    CGRect frame              = self.frame;
 
-    frame.origin.y        = sourceView.frame.origin.y;
-    frame.origin.x        = sourceView.frame.origin.x + sourceView.frame.size.width + 10.0f;
+    frame.origin.y            = sourceView.frame.origin.y;
+    frame.origin.x            = sourceView.frame.origin.x + sourceView.frame.size.width + 10.0f;
 
-    frame.size.width      = [UIScreen mainScreen].bounds.size.width - frame.origin.x - 10.0f;
+    frame.size.width          = [UIScreen mainScreen].bounds.size.width - frame.origin.x - 10.0f;
 
-    self.frame            = frame;
+    // get the message frame from the calculated anchor point
+    CGRect messageFrame       = [self.message boundingRectWithSize:CGSizeMake(frame.size.width - 20.0f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.toastLabel.font } context:nil];
+
+    // adjust the current container frame with offsets (10.0f)
+    frame.size.height         = messageFrame.size.height + 10.0f;
+
+    self.frame                = frame;
+    
+    // set the background view frame
+    frame                     = self.backgroundView.frame;
+    frame.size                = self.frame.size;
+    
+    self.backgroundView.frame = frame;
 
     // set label frame
-    frame                 = self.toastLabel.frame;
-    frame.size.width      = self.frame.size.width - 20.0f;
+    frame                     = self.toastLabel.frame;
+    frame.size                = messageFrame.size;
 
-    self.toastLabel.frame = frame;
+    self.toastLabel.frame     = frame;
     
     [view addSubview:self];
     

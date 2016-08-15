@@ -116,16 +116,18 @@
 {
     [self.messageQueue addObject:message];
 
-    [self.messageQueue enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    __block CGFloat offset = 0.0f;
+    [self.messageQueue enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj) {
-            
             // get the current object from the queue
             ScreenMeetToast *aToast = obj;
             
             CGRect frame   = aToast.frame;
             
             frame.origin.y = self.frame.origin.y // reference, can be changed depending on the queue position
-                                + (self.messageQueue.count - idx - 1) * 30.0f; // calculation of the position
+                                + offset; // calculation of the position
+            
+            offset         += frame.size.height;
             
             // perform the animation back in the main queue
             // this will cause a crash if not performed this way since we are using enumaration blocks
