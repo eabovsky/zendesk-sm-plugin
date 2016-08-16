@@ -869,6 +869,10 @@
     // we can also add here timestamp filters
     if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
         
+        self.eventIds[chatEvent.eventId] = @1;
+        
+        NSLog(@"EVENT ID: %@", chatEvent.eventId);
+        
         Message *message = [Message new];
         
         if (chatEvent.type == ZDCChatEventTypeAgentMessage) {
