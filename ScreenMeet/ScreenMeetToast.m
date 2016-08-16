@@ -130,7 +130,7 @@
     self.clipsToBounds                    = YES;
 
     self.backgroundView                   = [[UIView alloc] initWithFrame:self.bounds];
-    self.backgroundView.backgroundColor   = [UIColor blackColor];
+    self.backgroundView.backgroundColor   = [UIColor clearColor];
     self.backgroundView.alpha             = 0.30f;
     self.backgroundView.clipsToBounds     = YES;
 

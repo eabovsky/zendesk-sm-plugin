@@ -12,7 +12,8 @@
 
 @interface ScreenMeetChatContainer () <ScreenMeetToastDelegate>
 
-@property (assign, nonatomic) CGFloat calculatedHeight;
+@property (assign, nonatomic) CGFloat     calculatedHeight;
+@property (strong, nonatomic) UIImageView *backgroundImageView;
 
 @end
 
@@ -45,20 +46,25 @@
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-}
-
 - (void)commonInit
 {
-    self.messageQueue                   = [[NSMutableArray alloc] init];
+    self.messageQueue              = [[NSMutableArray alloc] init];
+    
+    self.layer.cornerRadius        = 10.0f;
+    self.backgroundColor           = [UIColor clearColor];
+    self.hidden                    = YES;
+    self.alpha                     = 0.0f;
 
-    self.clipsToBounds                  = YES;
-    self.layer.cornerRadius             = 10.0f;
-    self.backgroundColor                = [UIColor clearColor];
-    self.hidden                         = YES;
-    self.alpha                          = 0.0f;
+    self.backgroundImageView       = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"chat_box"] resizableImageWithCapInsets:UIEdgeInsetsMake(18.0f, 18.0f, 18.0f, 18.0f)]];
+
+    CGRect frame                   = self.bounds;
+
+    frame.origin.x                 -= 8.0f;
+    frame.size.width               += 12.0f;
+
+    self.backgroundImageView.frame = frame;
+
+    [self addSubview:self.backgroundImageView];
 }
 
 #pragma mark - Private Methods
@@ -116,11 +122,15 @@
 
 - (void)updateHeight
 {
-    CGRect frame           = self.frame;
-    frame.size.height      = self.calculatedHeight;
+    CGRect frame        = self.frame;
+    frame.size.height   = self.calculatedHeight;
+
+    CGRect bgframe      = self.backgroundImageView.frame;
+    bgframe.size.height = self.calculatedHeight;
     
     [UIView animateWithDuration:0.25f animations:^{
         self.frame = frame;
+        self.backgroundImageView.frame = bgframe;
     }];
 }
 

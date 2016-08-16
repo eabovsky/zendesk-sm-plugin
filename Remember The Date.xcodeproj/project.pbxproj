@@ -85,6 +85,7 @@
 		7024B1D71D62E1D2009C95D1 /* icon_widget@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1D41D62E1D2009C95D1 /* icon_widget@2x.png */; };
 		7024B1D81D62E1D2009C95D1 /* icon_widget@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1D51D62E1D2009C95D1 /* icon_widget@3x.png */; };
 		7024B1DB1D62FCD7009C95D1 /* ScreenMeetChatContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024B1DA1D62FCD7009C95D1 /* ScreenMeetChatContainer.m */; };
+		7024B1DD1D635E93009C95D1 /* chat_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1DC1D635E93009C95D1 /* chat_box@2x.png */; };
 		702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */; };
 		702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */; };
 		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
@@ -249,6 +250,7 @@
 		7024B1D51D62E1D2009C95D1 /* icon_widget@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_widget@3x.png"; path = "ScreenMeet/Images/icon_widget@3x.png"; sourceTree = SOURCE_ROOT; };
 		7024B1D91D62FCD7009C95D1 /* ScreenMeetChatContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetChatContainer.h; path = ScreenMeet/ScreenMeetChatContainer.h; sourceTree = SOURCE_ROOT; };
 		7024B1DA1D62FCD7009C95D1 /* ScreenMeetChatContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetChatContainer.m; path = ScreenMeet/ScreenMeetChatContainer.m; sourceTree = SOURCE_ROOT; };
+		7024B1DC1D635E93009C95D1 /* chat_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat_box@2x.png"; path = "ScreenMeet/Images/chat_box@2x.png"; sourceTree = SOURCE_ROOT; };
 		702834D91D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZDCChatOverlay+Swizzle.h"; sourceTree = "<group>"; };
 		702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZDCChatOverlay+Swizzle.m"; sourceTree = "<group>"; };
 		702834DD1D5DAE430065FC9B /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				7024B1D31D62E1D2009C95D1 /* icon_widget.png */,
 				7024B1D41D62E1D2009C95D1 /* icon_widget@2x.png */,
 				7024B1D51D62E1D2009C95D1 /* icon_widget@3x.png */,
+				7024B1DC1D635E93009C95D1 /* chat_box@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				7024B1D71D62E1D2009C95D1 /* icon_widget@2x.png in Resources */,
 				4D24701B19E74EED00A46373 /* icoHome@2x.png in Resources */,
 				B869C9EB1A06DB55006CDC5C /* ZendeskSDKStrings.bundle in Resources */,
+				7024B1DD1D635E93009C95D1 /* chat_box@2x.png in Resources */,
 				B837E5E519EFDD0A00075019 /* btnOpenTickets@3x.png in Resources */,
 				4D24703619E74EED00A46373 /* icon50.png in Resources */,
 				4D24701019E74EED00A46373 /* Launchimage 6.png in Resources */,
