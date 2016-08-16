@@ -176,7 +176,7 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished) {
-            [self delayLine:0 andMaxCount:10];
+//            [self delayLine:0 andMaxCount:10];
         }];
 
         if (self.chatContainer) {

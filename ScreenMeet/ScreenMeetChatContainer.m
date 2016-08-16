@@ -71,10 +71,21 @@
 - (void)updateMessageQueueUI
 {
     if (self.messageQueue.count == 0) {
-        self.hidden = YES;
+        [UIView animateWithDuration:1.0f animations:^{
+            self.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                self.hidden = YES;
+            }
+        }];
     } else {
         
-        self.hidden            = NO;
+        self.hidden = NO;
+        
+        [UIView animateWithDuration:0.25f animations:^{
+            self.alpha = 1.0f;
+        }];
+        
         __block CGFloat offset = 0.0f;
         [self.messageQueue enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (obj) {
