@@ -10,8 +10,6 @@
 
 @interface ScreenMeetChatWidget : UIView
 
-@property (strong, nonatomic) NSMutableArray *messageQueue;
-
 @property (assign, nonatomic) BOOL isLive;
 
 // to refresh UI

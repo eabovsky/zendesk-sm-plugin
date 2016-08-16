@@ -16,7 +16,6 @@
 
 @interface ScreenMeetToast ()
 
-@property (strong, nonatomic) UIView  *backgroundView;
 @property (strong, nonatomic) UILabel *toastLabel;
 
 @end
@@ -77,6 +76,43 @@
     [super drawRect:rect];
 }
 
+#pragma mark - Class Methods
+
++ (id)roundCornersOnView:(id)view onTopLeft:(BOOL)tl topRight:(BOOL)tr bottomLeft:(BOOL)bl bottomRight:(BOOL)br radius:(float)radius
+{
+    if (tl || tr || bl || br) {
+        UIRectCorner corner = 0; //holds the corner
+        
+        //Determine which corner(s) should be changed
+        if (tl) {
+            corner = corner | UIRectCornerTopLeft;
+        }
+        
+        if (tr) {
+            corner = corner | UIRectCornerTopRight;
+        }
+        
+        if (bl) {
+            corner = corner | UIRectCornerBottomLeft;
+        }
+        
+        if (br) {
+            corner = corner | UIRectCornerBottomRight;
+        }
+        
+        UIView *roundedView     = view;
+        UIBezierPath *maskPath  = [UIBezierPath bezierPathWithRoundedRect:roundedView.bounds byRoundingCorners:corner cornerRadii:CGSizeMake(radius, radius)];
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.frame         = roundedView.bounds;
+        maskLayer.path          = maskPath.CGPath;
+        roundedView.layer.mask  = maskLayer;
+        
+        return roundedView;
+    } else {
+        return view;
+    }
+}
+
 #pragma mark - Private Methods
 
 - (void)commonInit
@@ -90,7 +126,6 @@
     self.alpha                          = 0.0f;
 
     self.backgroundColor                = [UIColor clearColor];
-    self.layer.cornerRadius             = 10.0f;
     self.clipsToBounds                  = YES;
 
     self.backgroundView                 = [[UIView alloc] initWithFrame:self.bounds];
@@ -99,7 +134,7 @@
     self.backgroundView.clipsToBounds   = YES;
 
     [self addSubview:self.backgroundView];
-
+    
     self.toastLabel                     = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 5.0f, self.frame.size.width - 20.0f, self.frame.size.height - 10.0f)];
     self.toastLabel.backgroundColor     = [UIColor clearColor];
     self.toastLabel.numberOfLines       = 0;
@@ -113,6 +148,10 @@
 
 - (void)fadeOut
 {
+    if ([self.delegate respondsToSelector:@selector(SMToastWillBeRemovedFromView:)]) {
+        [self.delegate SMToastWillBeRemovedFromView:self];
+    }
+    
     [UIView animateWithDuration:self.fadeTime animations:^{
         self.alpha = 0.0f;
     } completion:^(BOOL finished) {
@@ -132,23 +171,59 @@
 
 - (void)showToastToView:(UIView *)view from:(UIView *)sourceView
 {
+    [self showToastToView:view from:sourceView withRoundedCornersOnTopLeft:YES topRight:YES bottomLeft:YES bottomRight:YES radius:0.0f];
+}
+
+- (void)showToastToView:(UIView *)view from:(UIView *)sourceView withRoundedCornersOnTopLeft:(BOOL)tl topRight:(BOOL)tr bottomLeft:(BOOL)bl bottomRight:(BOOL)br radius:(float)radius
+{
+    UIRectCorner corner = 0; //holds the corner
+    
+    // Determine which corner(s) should be changed
+    if (tl) {
+        corner = corner | UIRectCornerTopLeft;
+    }
+    
+    if (tr) {
+        corner = corner | UIRectCornerTopRight;
+    }
+    
+    if (bl) {
+        corner = corner | UIRectCornerBottomLeft;
+    }
+    
+    if (br) {
+        corner = corner | UIRectCornerBottomRight;
+    }
+    
+    UIView *roundedView     = self;
+    UIBezierPath *maskPath  = [UIBezierPath bezierPathWithRoundedRect:roundedView.bounds byRoundingCorners:corner cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.frame         = roundedView.bounds;
+    maskLayer.path          = maskPath.CGPath;
+    roundedView.layer.mask  = maskLayer;
+    
     // acnhoring calculations
     // to do: automatically calculate anchoring from position
     
     // set container view frame
-    CGRect frame              = self.frame;
-
-    frame.origin.y            = sourceView.frame.origin.y;
-    frame.origin.x            = sourceView.frame.origin.x + sourceView.frame.size.width + 10.0f;
-
-    frame.size.width          = [UIScreen mainScreen].bounds.size.width - frame.origin.x - 10.0f;
-
+    CGRect frame = self.frame;
+    
+    if ([view isEqual:sourceView]) {
+        frame.origin.y   = 0.0f;
+        frame.origin.x   = 0.0f;
+        frame.size.width = view.frame.size.width;
+    } else {
+        frame.origin.y   = sourceView.frame.origin.y;
+        frame.origin.x   = sourceView.frame.origin.x + sourceView.frame.size.width + 10.0f;
+        frame.size.width = [UIScreen mainScreen].bounds.size.width - frame.origin.x - 10.0f;
+    }
+    
     // get the message frame from the calculated anchor point
     CGRect messageFrame       = [self.message boundingRectWithSize:CGSizeMake(frame.size.width - 20.0f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.toastLabel.font } context:nil];
-
+    
     // adjust the current container frame with offsets (10.0f)
     frame.size.height         = messageFrame.size.height + 10.0f;
-
+    
     self.frame                = frame;
     
     // set the background view frame
@@ -156,11 +231,11 @@
     frame.size                = self.frame.size;
     
     self.backgroundView.frame = frame;
-
+    
     // set label frame
     frame                     = self.toastLabel.frame;
     frame.size                = messageFrame.size;
-
+    
     self.toastLabel.frame     = frame;
     
     [view addSubview:self];

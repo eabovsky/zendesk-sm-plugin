@@ -9,22 +9,22 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ScreenMeetChatWidget.h"
 #import "ScreenMeetToast.h"
+#import "ScreenMeetChatContainer.h"
 #import "ScreenMeetManager.h"
 
 #define kDefaultFrame CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)
 
-@interface ScreenMeetChatWidget () <ScreenMeetToastDelegate>
+@interface ScreenMeetChatWidget ()
 
-@property (strong, nonatomic) UIButton    *actionButton;
-@property (strong, nonatomic) UIImageView *widgetImageView;
+@property (strong, nonatomic) UIButton                *actionButton;
+@property (strong, nonatomic) UIImageView             *widgetImageView;
+@property (strong, nonatomic) ScreenMeetChatContainer *chatContainer;
 
 @property (assign, nonatomic) BOOL wasDragged;
 
 @end
 
 @implementation ScreenMeetChatWidget
-
-@synthesize messageQueue = _messageQueue;
 
 - (instancetype)init
 {
@@ -90,9 +90,6 @@
     
     [self addSubview:self.actionButton];
     
-    // initialize the message queue
-    self.messageQueue = [[NSMutableArray alloc] init];
-    
     // set UI
     [self showDefaultUI];
 }
@@ -105,7 +102,13 @@
     // calculate the position for the touch event and adjust the current center
     // only allow vertical movement
     CGPoint movement = [[[event allTouches] anyObject] locationInView:self.superview];
-    self.center = CGPointMake(self.center.x, movement.y);
+    self.center      = CGPointMake(self.center.x, movement.y);
+    
+    if (self.chatContainer) {
+        CGRect frame             = self.chatContainer.frame;
+        frame.origin.y           = self.frame.origin.y;
+        self.chatContainer.frame = frame;
+    }
 }
 
 - (void)actionButtonWasPressed:(UIButton *)button
@@ -118,34 +121,6 @@
     } else {
         [self activateChat];
     }
-}
-
-- (void)processMessageQueue:(ScreenMeetToast *)message
-{
-    [self.messageQueue addObject:message];
-
-    __block CGFloat offset = 0.0f;
-    [self.messageQueue enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj) {
-            // get the current object from the queue
-            ScreenMeetToast *aToast = obj;
-            
-            CGRect frame   = aToast.frame;
-            
-            frame.origin.y = self.frame.origin.y // reference, can be changed depending on the queue position
-                                + offset; // calculation of the position
-            
-            offset         += frame.size.height;
-            
-            // perform the animation back in the main queue
-            // this will cause a crash if not performed this way since we are using enumaration blocks
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIView animateWithDuration:0.25f animations:^{
-                    aToast.frame = frame;
-                }];
-            });
-        }
-    }];
 }
 
 #pragma mark - Public Methods
@@ -201,8 +176,17 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished) {
-//            [self delayLine:0 andMaxCount:10];
+            [self delayLine:0 andMaxCount:10];
         }];
+
+        if (self.chatContainer) {
+            [self.superview bringSubviewToFront:self.chatContainer];
+        } else {
+            CGFloat originX           = self.frame.origin.x + self.frame.size.width + 10.0f;
+            self.chatContainer        = [[ScreenMeetChatContainer alloc] initWithFrame:CGRectMake(originX, self.frame.origin.y, [UIScreen mainScreen].bounds.size.width - originX - 10.0f, 30.0f)];
+            
+            [self.superview addSubview:self.chatContainer];
+        }
     }
     
     [self updateUI];
@@ -247,23 +231,7 @@
 
 - (void)addStackableToastMessage:(NSString *)message
 {
-    ScreenMeetToast *aToast = [[ScreenMeetToast alloc] initWithMessage:message];
-    aToast.delegate         = self;
-    
-    // show to a view with a reference
-    // the reference will be used for the custom UI
-    [aToast showToastToView:self.superview from:self];
-    
-    // process the message queue
-    [self processMessageQueue:aToast];
-}
-
-#pragma mark - ScreenMeetToast Delegate
-
-- (void)SMToastWasRemovedFromView:(ScreenMeetToast *)screenMeetToast
-{
-    // remove the object from the queue
-    [self.messageQueue removeObject:screenMeetToast];
+    [self.chatContainer addStackableToastMessage:message];
 }
 
 @end
