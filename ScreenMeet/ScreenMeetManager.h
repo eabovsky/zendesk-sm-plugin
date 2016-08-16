@@ -31,6 +31,8 @@
 
 // Public Methods
 
+- (BOOL)isChatWidgetInitialized;
+
 - (void)showChatWidget;
 - (void)showHUDWithTitle:(NSString *)title;
 - (void)hideHUD;

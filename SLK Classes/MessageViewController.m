@@ -214,6 +214,7 @@
 - (void)closeButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:^{
+        [[ScreenMeetManager sharedManager] showChatWidget];
         [[ScreenMeetManager sharedManager].chatWidget showWidget];
     }];
 }
@@ -225,8 +226,7 @@
         [[ZDCChat instance].session endChat];
         
         [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
-        
-        [[ScreenMeetManager sharedManager].chatWidget showWidget];
+        [[ScreenMeetManager sharedManager].chatWidget endChat];
     }];
 }
 

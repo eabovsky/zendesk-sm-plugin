@@ -16,6 +16,9 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 
 
+#define kChatWidgetTag 2001
+
+
 @interface ScreenMeetManager () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
 
 @property (assign, nonatomic) AppDelegate   *appDelegate;
@@ -81,6 +84,7 @@ static ScreenMeetManager *manager = nil;
 {
     if (!_chatWidget) {
         _chatWidget = [[ScreenMeetChatWidget alloc] initWithFrame:CGRectMake(10.0f, [UIScreen mainScreen].bounds.size.height - 100.0f, 40.0f, 40.0f)];
+        _chatWidget.tag = kChatWidgetTag;
     }
     return _chatWidget;
 }
@@ -317,6 +321,15 @@ static ScreenMeetManager *manager = nil;
 
 #pragma mark - Public Methods
 
+- (BOOL)isChatWidgetInitialized
+{
+    if ([self.appDelegate.window viewWithTag:kChatWidgetTag]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (void)showChatWidget
 {
     if (self.chatWidget) {
@@ -327,11 +340,11 @@ static ScreenMeetManager *manager = nil;
 - (void)showHUDWithTitle:(NSString *)title
 {
     if (!self.hud) {
-        self.hud = [MBProgressHUD showHUDAddedTo:self.appDelegate.window animated:YES];
-        self.hud.label.text = title;
+        self.hud                 = [MBProgressHUD showHUDAddedTo:self.appDelegate.window animated:YES];
+        self.hud.label.text      = title;
         self.hud.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.30f];
     } else {
-        self.hud.label.text = title;
+        self.hud.label.text      = title;
     }
 }
 

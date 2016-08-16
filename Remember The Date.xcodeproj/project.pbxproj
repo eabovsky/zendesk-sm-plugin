@@ -81,6 +81,9 @@
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
 		702127091D61577F003F2369 /* ScreenMeetToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 702127081D61577F003F2369 /* ScreenMeetToast.m */; };
 		702183E01D60A5C800797B36 /* ScreenMeetChatWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */; };
+		7024B1D61D62E1D2009C95D1 /* icon_widget.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1D31D62E1D2009C95D1 /* icon_widget.png */; };
+		7024B1D71D62E1D2009C95D1 /* icon_widget@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1D41D62E1D2009C95D1 /* icon_widget@2x.png */; };
+		7024B1D81D62E1D2009C95D1 /* icon_widget@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1D51D62E1D2009C95D1 /* icon_widget@3x.png */; };
 		702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */; };
 		702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */; };
 		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
@@ -240,6 +243,9 @@
 		702127081D61577F003F2369 /* ScreenMeetToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetToast.m; path = ScreenMeet/ScreenMeetToast.m; sourceTree = SOURCE_ROOT; };
 		702183DE1D60A5C800797B36 /* ScreenMeetChatWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetChatWidget.h; path = ScreenMeet/ScreenMeetChatWidget.h; sourceTree = SOURCE_ROOT; };
 		702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetChatWidget.m; path = ScreenMeet/ScreenMeetChatWidget.m; sourceTree = SOURCE_ROOT; };
+		7024B1D31D62E1D2009C95D1 /* icon_widget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_widget.png; path = ScreenMeet/Images/icon_widget.png; sourceTree = SOURCE_ROOT; };
+		7024B1D41D62E1D2009C95D1 /* icon_widget@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_widget@2x.png"; path = "ScreenMeet/Images/icon_widget@2x.png"; sourceTree = SOURCE_ROOT; };
+		7024B1D51D62E1D2009C95D1 /* icon_widget@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_widget@3x.png"; path = "ScreenMeet/Images/icon_widget@3x.png"; sourceTree = SOURCE_ROOT; };
 		702834D91D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZDCChatOverlay+Swizzle.h"; sourceTree = "<group>"; };
 		702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZDCChatOverlay+Swizzle.m"; sourceTree = "<group>"; };
 		702834DD1D5DAE430065FC9B /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
@@ -543,9 +549,20 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		7024B1D21D62E1B3009C95D1 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7024B1D31D62E1D2009C95D1 /* icon_widget.png */,
+				7024B1D41D62E1D2009C95D1 /* icon_widget@2x.png */,
+				7024B1D51D62E1D2009C95D1 /* icon_widget@3x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		7025113B1D599E0F0048F257 /* ScreenMeet Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7024B1D21D62E1B3009C95D1 /* Images */,
 				702183DD1D60A5B300797B36 /* Views */,
 				702183DC1D60A58900797B36 /* View Controllers */,
 				70363A2C1D5C28C100852757 /* ScreenMeetManager.h */,
@@ -711,11 +728,13 @@
 				B837E5DA19EFDD0A00075019 /* btnContactSupport.png in Resources */,
 				4D24702C19E74EED00A46373 /* icoAdd.png in Resources */,
 				4D246FBA19E7499600A46373 /* LaunchScreen.xib in Resources */,
+				7024B1D61D62E1D2009C95D1 /* icon_widget.png in Resources */,
 				B857427319F060450043B3F6 /* rma_error.png in Resources */,
 				B837E5E619EFDD0A00075019 /* helplanding.png in Resources */,
 				21B920AA1B3D3F8B00DF2F0B /* ZDCChatStrings.bundle in Resources */,
 				4D24702F19E74EED00A46373 /* emtpy.png in Resources */,
 				4D24703D19E74EED00A46373 /* icon@2x.png in Resources */,
+				7024B1D81D62E1D2009C95D1 /* icon_widget@3x.png in Resources */,
 				4D24703C19E74EED00A46373 /* icon100.png in Resources */,
 				4D24703A19E74EED00A46373 /* icon76.png in Resources */,
 				B8814D3019EECC3D0030D10B /* Localizable.strings in Resources */,
@@ -734,6 +753,7 @@
 				4D24702D19E74EED00A46373 /* emtpy@2x.png in Resources */,
 				4D24702719E74EED00A46373 /* icoAddActive@3x.png in Resources */,
 				4D24702519E74EED00A46373 /* icoClose@2x.png in Resources */,
+				7024B1D71D62E1D2009C95D1 /* icon_widget@2x.png in Resources */,
 				4D24701B19E74EED00A46373 /* icoHome@2x.png in Resources */,
 				B869C9EB1A06DB55006CDC5C /* ZendeskSDKStrings.bundle in Resources */,
 				B837E5E519EFDD0A00075019 /* btnOpenTickets@3x.png in Resources */,

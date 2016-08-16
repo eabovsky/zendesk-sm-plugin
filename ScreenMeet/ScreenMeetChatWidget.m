@@ -15,7 +15,8 @@
 
 @interface ScreenMeetChatWidget () <ScreenMeetToastDelegate>
 
-@property (strong, nonatomic) UIButton *actionButton;
+@property (strong, nonatomic) UIButton    *actionButton;
+@property (strong, nonatomic) UIImageView *widgetImageView;
 
 @property (assign, nonatomic) BOOL wasDragged;
 
@@ -75,7 +76,12 @@
         self.frame = frame;
     }
     
-    // add recognizers
+    self.widgetImageView             = [[UIImageView alloc] init];
+    self.widgetImageView.frame       = self.bounds;
+    self.widgetImageView.contentMode = UIViewContentModeCenter;
+
+    [self addSubview:self.widgetImageView];
+    
     self.actionButton = [[UIButton alloc] initWithFrame:frame];
     
     // listener events for the drag
@@ -97,7 +103,9 @@
     self.wasDragged = YES;
     
     // calculate the position for the touch event and adjust the current center
-    self.center = [[[event allTouches] anyObject] locationInView:self.superview];
+    // only allow vertical movement
+    CGPoint movement = [[[event allTouches] anyObject] locationInView:self.superview];
+    self.center = CGPointMake(self.center.x, movement.y);
 }
 
 - (void)actionButtonWasPressed:(UIButton *)button
@@ -158,6 +166,8 @@
     [self.actionButton setTitle:@"•••" forState:UIControlStateNormal];
     [self.actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
+    self.widgetImageView.image  = nil;
+    
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.borderColor      = [UIColor darkGrayColor].CGColor;
     self.layer.borderWidth      = 2.0f;
@@ -165,18 +175,16 @@
 
 - (void)showLiveUI
 {
-    [self.actionButton setTitle:@"L" forState:UIControlStateNormal];
-    [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    self.backgroundColor        = [UIColor greenColor];
-    self.layer.borderColor      = [UIColor whiteColor].CGColor;
-    self.layer.borderWidth      = 2.0f;
+    // same as default UI.
+    [self showDefaultUI];
 }
 
 - (void)showStreamingUI
 {
-    [self.actionButton setTitle:@"S" forState:UIControlStateNormal];
+    [self.actionButton setTitle:@"" forState:UIControlStateNormal];
     [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    self.widgetImageView.image  = [UIImage imageNamed:@"icon_widget"];
     
     self.backgroundColor        = [UIColor redColor];
     self.layer.borderColor      = [UIColor whiteColor].CGColor;
@@ -234,7 +242,7 @@
 
 - (void)endChat
 {
-    [self showWidget];
+    [self hideWidget];
 }
 
 - (void)addStackableToastMessage:(NSString *)message
