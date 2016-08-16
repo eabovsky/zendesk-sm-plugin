@@ -214,7 +214,7 @@
 - (void)closeButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[ScreenMeetManager sharedManager] showChatWidget];
+        [[ScreenMeetManager sharedManager] initializeChatWidget];
         [[ScreenMeetManager sharedManager].chatWidget showWidget];
     }];
 }
@@ -898,7 +898,7 @@
         if (self.isViewLoaded && self.view.window) {
             // do nothing
         } else {
-            [[ScreenMeetManager sharedManager].chatWidget addStackableToastMessage:[NSString stringWithFormat:@"%@: %@", message.username, message.text]];
+            [[ScreenMeetManager sharedManager].chatWidget addStackableToastMessage:[NSString stringWithFormat:@"%@: %@", chatEvent.displayName, message.text]];
         }
     }
 }

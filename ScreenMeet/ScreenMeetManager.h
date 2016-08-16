@@ -33,7 +33,7 @@
 
 - (BOOL)isChatWidgetInitialized;
 
-- (void)showChatWidget;
+- (void)initializeChatWidget;
 - (void)showHUDWithTitle:(NSString *)title;
 - (void)hideHUD;
 

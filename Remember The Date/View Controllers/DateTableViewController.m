@@ -43,8 +43,8 @@
         self.emptyView.frame    = self.view.frame;
         [self.view bringSubviewToFront:self.emptyView];
     }
-//#warning Remove after tests
-//    [[ScreenMeetManager sharedManager] showChatWidget];
+    
+    [[ScreenMeetManager sharedManager] initializeChatWidget];
 }
 
 - (void)viewDidAppear:(BOOL)animated

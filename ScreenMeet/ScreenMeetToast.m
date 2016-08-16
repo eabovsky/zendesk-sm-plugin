@@ -16,7 +16,8 @@
 
 @interface ScreenMeetToast ()
 
-@property (strong, nonatomic) UILabel *toastLabel;
+@property (strong, nonatomic) UILabel     *toastLabel;
+@property (strong, nonatomic) UIImageView *iconImageView;
 
 @end
 
@@ -121,27 +122,41 @@
         self.frame = CGRectMake(10.0f, 44.0f, kDefaultWidth, kDefaultHeight);
     }
 
-    self.fadeTime                       = kDefaultFadeTime;
-    self.displayTime                    = kDefaultDisplayTime;
-    self.alpha                          = 0.0f;
+    self.fadeTime                         = kDefaultFadeTime;
+    self.displayTime                      = kDefaultDisplayTime;
+    self.alpha                            = 0.0f;
 
-    self.backgroundColor                = [UIColor clearColor];
-    self.clipsToBounds                  = YES;
+    self.backgroundColor                  = [UIColor clearColor];
+    self.clipsToBounds                    = YES;
 
-    self.backgroundView                 = [[UIView alloc] initWithFrame:self.bounds];
-    self.backgroundView.backgroundColor = [UIColor blackColor];
-    self.backgroundView.alpha           = 0.30f;
-    self.backgroundView.clipsToBounds   = YES;
+    self.backgroundView                   = [[UIView alloc] initWithFrame:self.bounds];
+    self.backgroundView.backgroundColor   = [UIColor blackColor];
+    self.backgroundView.alpha             = 0.30f;
+    self.backgroundView.clipsToBounds     = YES;
 
     [self addSubview:self.backgroundView];
+
+    self.toastIcon                        = [UIImage imageNamed:@"user_icon"];
     
-    self.toastLabel                     = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 5.0f, self.frame.size.width - 20.0f, self.frame.size.height - 10.0f)];
-    self.toastLabel.backgroundColor     = [UIColor clearColor];
-    self.toastLabel.numberOfLines       = 0;
-    self.toastLabel.lineBreakMode       = NSLineBreakByTruncatingTail;
-    self.toastLabel.textColor           = [UIColor whiteColor];
-    self.toastLabel.font                = [UIFont systemFontOfSize:12.0f];
-    self.toastLabel.text                = self.message;
+    CGFloat iconWidth                     = 15.0f;
+
+    self.iconImageView                    = [[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5.0f, iconWidth, iconWidth)];
+    self.iconImageView.image              = self.toastIcon;
+
+    self.iconImageView.clipsToBounds      = YES;
+    self.iconImageView.layer.cornerRadius = self.iconImageView.frame.size.width/2;
+    self.iconImageView.layer.borderColor  = [UIColor whiteColor].CGColor;
+    self.iconImageView.layer.borderWidth  = 1.0f;
+    
+    [self addSubview:self.iconImageView];
+
+    self.toastLabel                       = [[UILabel alloc] initWithFrame:CGRectMake(25.0f, 5.0f, self.frame.size.width - 45.0f, self.frame.size.height - 10.0f)];
+    self.toastLabel.backgroundColor       = [UIColor clearColor];
+    self.toastLabel.numberOfLines         = 0;
+    self.toastLabel.lineBreakMode         = NSLineBreakByTruncatingTail;
+    self.toastLabel.textColor             = [UIColor whiteColor];
+    self.toastLabel.font                  = [UIFont systemFontOfSize:12.0f];
+    self.toastLabel.text                  = self.message;
     
     [self addSubview:self.toastLabel];
 }
@@ -219,7 +234,7 @@
     }
     
     // get the message frame from the calculated anchor point
-    CGRect messageFrame       = [self.message boundingRectWithSize:CGSizeMake(frame.size.width - 20.0f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.toastLabel.font } context:nil];
+    CGRect messageFrame       = [self.message boundingRectWithSize:CGSizeMake(frame.size.width - 45.0f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.toastLabel.font } context:nil];
     
     // adjust the current container frame with offsets (10.0f)
     frame.size.height         = messageFrame.size.height + 10.0f;

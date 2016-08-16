@@ -56,8 +56,6 @@ static ScreenMeetManager *manager = nil;
     if (self) {
         self.isProduction = NO;
         [self initiateScreenMeetinProd:NO];
-        
-        [self.appDelegate.window addSubview:self.chatWidget];
     }
     return self;
 }
@@ -330,11 +328,12 @@ static ScreenMeetManager *manager = nil;
     }
 }
 
-- (void)showChatWidget
+- (void)initializeChatWidget
 {
-    if (self.chatWidget) {
-        [self.appDelegate.window bringSubviewToFront:self.chatWidget];
+    if (![self isChatWidgetInitialized]) {
+        [self.appDelegate.window addSubview:self.chatWidget];
     }
+    [self.appDelegate.window bringSubviewToFront:self.chatWidget];
 }
 
 - (void)showHUDWithTitle:(NSString *)title

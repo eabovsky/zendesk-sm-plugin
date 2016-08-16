@@ -57,6 +57,8 @@
     self.clipsToBounds                  = YES;
     self.layer.cornerRadius             = 10.0f;
     self.backgroundColor                = [UIColor clearColor];
+    self.hidden                         = YES;
+    self.alpha                          = 0.0f;
 }
 
 #pragma mark - Private Methods

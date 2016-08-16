@@ -92,6 +92,9 @@
     
     // set UI
     [self showDefaultUI];
+    
+    self.alpha  = 0.0f;
+    self.hidden = YES;
 }
 
 - (void)dragMoving:(UIControl *)control withEvent:(UIEvent *)event
@@ -186,7 +189,9 @@
             self.chatContainer        = [[ScreenMeetChatContainer alloc] initWithFrame:CGRectMake(originX, self.frame.origin.y, [UIScreen mainScreen].bounds.size.width - originX - 10.0f, 30.0f)];
             
             [self.superview addSubview:self.chatContainer];
+            [self.superview bringSubviewToFront:self.chatContainer];
         }
+        
     }
     
     [self updateUI];
