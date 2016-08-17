@@ -922,11 +922,9 @@
         if ([[chatEvent.message lowercaseString] containsString:@"requestscreenshare"]) {
             message.text     = @"requested a screen share...";
             
-            NSLog(@"DIFF: %f", [[NSDate date] timeIntervalSince1970] - [chatEvent.timestamp floatValue]/1000);
-            NSLog(@"Time interval: %f", [[NSDate date] timeIntervalSince1970]);
-            
-            float threshold = 50;
-            float diff      = [[NSDate date] timeIntervalSince1970] - [chatEvent.timestamp doubleValue]/1000;
+            long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
+            long long diff         = milliseconds - [chatEvent.timestamp longLongValue];
+            long long threshold    = 1000;
             
             if (diff <= threshold) {
                 [self showRequestAlertforMessage:chatEvent];
