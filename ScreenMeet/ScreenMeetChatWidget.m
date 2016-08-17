@@ -12,7 +12,8 @@
 #import "ScreenMeetChatContainer.h"
 #import "ScreenMeetManager.h"
 
-#define kDefaultFrame CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)
+#define kDefaultFrame           CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)
+#define kDefaultFlipThreshold   0.75
 
 @interface ScreenMeetChatWidget ()
 
@@ -95,6 +96,8 @@
     
     self.alpha  = 0.0f;
     self.hidden = YES;
+    
+    self.willFlipContainer = self.frame.origin.y >= ([UIScreen mainScreen].bounds.size.height * kDefaultFlipThreshold);
 }
 
 - (void)dragMoving:(UIControl *)control withEvent:(UIEvent *)event
@@ -105,11 +108,24 @@
     // calculate the position for the touch event and adjust the current center
     // only allow vertical movement
     CGPoint movement = [[[event allTouches] anyObject] locationInView:self.superview];
-    self.center      = CGPointMake(self.center.x, movement.y);
+    
+    CGFloat threshold = self.frame.size.height;
+    
+    if (movement.y > threshold && movement.y < ([UIScreen mainScreen].bounds.size.height - threshold)) {
+        self.center = CGPointMake(self.center.x, movement.y);
+    }
+    
+    self.willFlipContainer = self.frame.origin.y >= [UIScreen mainScreen].bounds.size.height * kDefaultFlipThreshold;
     
     if (self.chatContainer) {
         CGRect frame             = self.chatContainer.frame;
-        frame.origin.y           = self.frame.origin.y;
+        
+        if (self.willFlipContainer) {
+            frame.origin.y           = self.frame.origin.y + self.frame.size.height - self.chatContainer.frame.size.height;
+        } else {
+            frame.origin.y           = self.frame.origin.y;
+        }
+    
         self.chatContainer.frame = frame;
     }
 }
@@ -179,19 +195,18 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished) {
-//            [self delayLine:0 andMaxCount:10];
+            [self delayLine:0 andMaxCount:10];
         }];
 
-        if (self.chatContainer) {
-            [self.superview bringSubviewToFront:self.chatContainer];
-        } else {
+        if (!self.chatContainer) {
             CGFloat originX           = self.frame.origin.x + self.frame.size.width + 10.0f;
-            self.chatContainer        = [[ScreenMeetChatContainer alloc] initWithFrame:CGRectMake(originX, self.frame.origin.y, [UIScreen mainScreen].bounds.size.width - originX - 10.0f, 30.0f)];
+            self.chatContainer        = [[ScreenMeetChatContainer alloc] initWithFrame:CGRectMake(originX, self.frame.origin.y, [UIScreen mainScreen].bounds.size.width - originX - 10.0f, 100.0f)];
             
             [self.superview addSubview:self.chatContainer];
-            [self.superview bringSubviewToFront:self.chatContainer];
         }
         
+        [self.superview bringSubviewToFront:self.chatContainer];
+        self.chatContainer.widget = self;
     }
     
     [self updateUI];

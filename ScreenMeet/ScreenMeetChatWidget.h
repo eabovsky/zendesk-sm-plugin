@@ -11,6 +11,7 @@
 @interface ScreenMeetChatWidget : UIView
 
 @property (assign, nonatomic) BOOL isLive;
+@property (assign, nonatomic) BOOL willFlipContainer;
 
 // to refresh UI
 - (void)updateUI;

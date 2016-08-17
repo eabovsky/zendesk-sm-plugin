@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ScreenMeetChatWidget.h"
 
 @interface ScreenMeetChatContainer : UIView
 
-@property (strong, nonatomic) NSMutableArray *messageQueue;
+@property (strong, nonatomic) NSMutableArray       *messageQueue;
+
+@property (weak, nonatomic) ScreenMeetChatWidget *widget;
 
 - (void)addStackableToastMessage:(NSString *)message;
 
