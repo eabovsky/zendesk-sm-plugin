@@ -717,13 +717,29 @@
     }
     
     Message *message     = self.messages[indexPath.row];
-
-    cell.titleLabel.text = message.username;
+    
+    Message *nextMessage = nil;
+    BOOL willHideTitle = NO;
+    if (indexPath.row + 1 < self.messages.count) {
+        nextMessage = self.messages[(indexPath.row + 1)];
+        
+        if ([nextMessage.username isEqualToString:message.username]) {
+            willHideTitle = YES;
+        }
+    }
+    
     cell.bodyLabel.text  = message.text;
 
     cell.indexPath       = indexPath;
     cell.usedForMessage  = YES;
     cell.isAgent         = message.isAgent;
+    cell.willHideTitle   = willHideTitle;
+    
+    if (willHideTitle) {
+        cell.titleLabel.text = @"";
+    } else {
+        cell.titleLabel.text = message.username;
+    }
     
     // Cells must inherit the table view's transform
     // This is very important, since the main table view may be inverted
@@ -736,14 +752,19 @@
 {
     if ([tableView isEqual:self.tableView]) {
         if (cell.isAgent) {
-            cell.titleLabel.textAlignment = NSTextAlignmentRight;
-            cell.bodyLabel.textAlignment  = NSTextAlignmentRight;
-            cell.thumbnailView.hidden     = YES;
+            cell.titleLabel.textAlignment           = NSTextAlignmentRight;
+            cell.bodyLabel.textAlignment            = NSTextAlignmentRight;
+            cell.thumbnailView.hidden               = YES;
+            cell.bodyBackgroundView.backgroundColor = [UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:0.50f];
         } else {
-            cell.titleLabel.textAlignment = NSTextAlignmentLeft;
-            cell.bodyLabel.textAlignment  = NSTextAlignmentLeft;
-            cell.thumbnailView.hidden     = NO;
+            cell.titleLabel.textAlignment           = NSTextAlignmentLeft;
+            cell.bodyLabel.textAlignment            = NSTextAlignmentLeft;
+            cell.thumbnailView.hidden               = NO || cell.willHideTitle;
+            cell.bodyBackgroundView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.50f];
         }
+        
+        cell.titleLabel.hidden    = cell.willHideTitle;
+        
     } else {
         cell.titleLabel.textAlignment = NSTextAlignmentLeft;
         cell.bodyLabel.textAlignment  = NSTextAlignmentLeft;
@@ -775,9 +796,19 @@
     if ([tableView isEqual:self.tableView]) {
         Message *message = self.messages[indexPath.row];
         
+        Message *nextMessage = nil;
+        BOOL willHideTitle = NO;
+        if (indexPath.row + 1 < self.messages.count) {
+            nextMessage = self.messages[(indexPath.row + 1)];
+            
+            if ([nextMessage.username isEqualToString:message.username]) {
+                willHideTitle = YES;
+            }
+        }
+        
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        paragraphStyle.alignment = NSTextAlignmentLeft;
+        paragraphStyle.lineBreakMode            = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment                = NSTextAlignmentLeft;
         
         CGFloat pointSize = [MessageTableViewCell defaultFontSize];
         
@@ -795,6 +826,11 @@
         }
         
         CGFloat height = CGRectGetHeight(titleBounds);
+        
+        if (willHideTitle) {
+            height = 0.0;
+        }
+        
         height += CGRectGetHeight(bodyBounds);
         height += 40.0;
         

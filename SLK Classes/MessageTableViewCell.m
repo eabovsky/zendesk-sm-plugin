@@ -9,6 +9,8 @@
 #import "MessageTableViewCell.h"
 #import "SLKUIConstants.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation MessageTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -27,27 +29,31 @@
 {
     [self.contentView addSubview:self.thumbnailView];
     [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.bodyBackgroundView];
     [self.contentView addSubview:self.bodyLabel];
 
     NSDictionary *views = @{@"thumbnailView": self.thumbnailView,
                             @"titleLabel": self.titleLabel,
                             @"bodyLabel": self.bodyLabel,
-                            };
+                            @"bodyBackgroundView": self.bodyBackgroundView};
     
     NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
-                              @"padding": @15,
+                              @"padding": @0,
                               @"right": @10,
-                              @"left": @5
+                              @"left": @10,
+                              @"rightOffset": @5,
+                              @"leftOffset": @5
                               };
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-rightOffset-[bodyBackgroundView(>=0)]-rightOffset-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
     
     if ([self.reuseIdentifier isEqualToString:MessengerCellIdentifier]) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
-    }
-    else {
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(>=0)]-leftOffset-[bodyBackgroundView(>=0@999)]-leftOffset-|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(>=0)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
+    } else {
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]|" options:0 metrics:metrics views:views]];
     }
 }
@@ -67,6 +73,11 @@
     self.bodyLabel.text = @"";
 }
 
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+}
+
 #pragma mark - Getters
 
 - (UILabel *)titleLabel
@@ -77,7 +88,7 @@
         _titleLabel.backgroundColor                           = [UIColor clearColor];
         _titleLabel.userInteractionEnabled                    = NO;
         _titleLabel.numberOfLines                             = 0;
-        _titleLabel.textColor                                 = [UIColor grayColor];
+        _titleLabel.textColor                                 = [UIColor darkGrayColor];
         _titleLabel.font                                      = [UIFont boldSystemFontOfSize:[MessageTableViewCell defaultFontSize]];
     }
     return _titleLabel;
@@ -91,10 +102,22 @@
         _bodyLabel.backgroundColor                           = [UIColor clearColor];
         _bodyLabel.userInteractionEnabled                    = NO;
         _bodyLabel.numberOfLines                             = 0;
-        _bodyLabel.textColor                                 = [UIColor darkGrayColor];
+        _bodyLabel.textColor                                 = [UIColor blackColor];
         _bodyLabel.font                                      = [UIFont systemFontOfSize:[MessageTableViewCell defaultFontSize]];
     }
     return _bodyLabel;
+}
+
+- (UIView *)bodyBackgroundView
+{
+    if (!_bodyBackgroundView) {
+        _bodyBackgroundView                                           = [UIView new];
+        _bodyBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+        _bodyBackgroundView.backgroundColor                           = [UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:0.50f];
+        _bodyBackgroundView.layer.cornerRadius                        = 5.0f;
+
+    }
+    return _bodyBackgroundView;
 }
 
 - (UIImageView *)thumbnailView
@@ -113,7 +136,7 @@
 
 + (CGFloat)defaultFontSize
 {
-    CGFloat pointSize = 16.0;
+    CGFloat pointSize = 13.0;
     
     NSString *contentSizeCategory = [[UIApplication sharedApplication] preferredContentSizeCategory];
     pointSize += SLKPointSizeDifferenceForCategory(contentSizeCategory);

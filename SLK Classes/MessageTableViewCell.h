@@ -8,22 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-static CGFloat kMessageTableViewCellMinimumHeight = 50.0;
-static CGFloat kMessageTableViewCellAvatarHeight = 30.0;
+static CGFloat kMessageTableViewCellMinimumHeight = 40.0;
+static CGFloat kMessageTableViewCellAvatarHeight  = 30.0;
 
-static NSString *MessengerCellIdentifier = @"MessengerCell";
-static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
+static NSString *MessengerCellIdentifier          = @"MessengerCell";
+static NSString *AutoCompletionCellIdentifier     = @"AutoCompletionCell";
 
 @interface MessageTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *bodyLabel;
+@property (nonatomic, strong) UIView  *bodyBackgroundView;
 @property (nonatomic, strong) UIImageView *thumbnailView;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic) BOOL usedForMessage;
 @property (nonatomic) BOOL isAgent;
+@property (nonatomic) BOOL willHideTitle;
 
 + (CGFloat)defaultFontSize;
 
