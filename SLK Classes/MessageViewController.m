@@ -755,16 +755,13 @@
             cell.titleLabel.textAlignment           = NSTextAlignmentRight;
             cell.bodyLabel.textAlignment            = NSTextAlignmentRight;
             cell.thumbnailView.hidden               = YES;
-            cell.bodyBackgroundView.backgroundColor = [UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:0.50f];
+            cell.bodyBackgroundView.backgroundColor = [UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:0.20f];
         } else {
             cell.titleLabel.textAlignment           = NSTextAlignmentLeft;
             cell.bodyLabel.textAlignment            = NSTextAlignmentLeft;
             cell.thumbnailView.hidden               = NO || cell.willHideTitle;
-            cell.bodyBackgroundView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.50f];
+            cell.bodyBackgroundView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.20f];
         }
-        
-        cell.titleLabel.hidden    = cell.willHideTitle;
-        
     } else {
         cell.titleLabel.textAlignment = NSTextAlignmentLeft;
         cell.bodyLabel.textAlignment  = NSTextAlignmentLeft;
@@ -832,13 +829,9 @@
         }
         
         height += CGRectGetHeight(bodyBounds);
-        height += 40.0;
+        height += 1.0;
         
-        if (height < kMessageTableViewCellMinimumHeight) {
-            height = kMessageTableViewCellMinimumHeight;
-        }
-        
-        return height;
+        return ceilf(height);
     }
     else {
         return kMessageTableViewCellMinimumHeight;

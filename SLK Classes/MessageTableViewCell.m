@@ -48,11 +48,15 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-rightOffset-[bodyBackgroundView(>=0)]-rightOffset-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-padding-[thumbnailView(tumbSize@750)]-(>=0)-|" options:0 metrics:metrics views:views]];
     
     if ([self.reuseIdentifier isEqualToString:MessengerCellIdentifier]) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(>=0)]-leftOffset-[bodyBackgroundView(>=0@999)]-leftOffset-|" options:0 metrics:metrics views:views]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(>=0)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
+        // vertical constraints
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-padding-[titleLabel(>=0@1000)]-(>=0)-|" options:0 metrics:metrics views:views]];
+        
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-padding-[titleLabel(>=0)]-padding-[bodyBackgroundView(>=0@750)]-padding-|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-padding-[titleLabel(>=0)]-padding-[bodyLabel(>=0@750)]-padding-|" options:0 metrics:metrics views:views]];
     } else {
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]|" options:0 metrics:metrics views:views]];
     }
@@ -62,15 +66,19 @@
 {
     [super prepareForReuse];
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    CGFloat pointSize = [MessageTableViewCell defaultFontSize];
-    
+    self.selectionStyle  = UITableViewCellSelectionStyleNone;
+
+    CGFloat pointSize    = [MessageTableViewCell defaultFontSize];
+
     self.titleLabel.font = [UIFont boldSystemFontOfSize:pointSize];
-    self.bodyLabel.font = [UIFont systemFontOfSize:pointSize];
-    
+    self.bodyLabel.font  = [UIFont systemFontOfSize:pointSize];
+
     self.titleLabel.text = @"";
-    self.bodyLabel.text = @"";
+    self.bodyLabel.text  = @"";
+    
+    if (!self.thumbnailView) {
+        [self configureSubviews];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
