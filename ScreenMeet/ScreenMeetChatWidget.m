@@ -23,7 +23,7 @@
 
 @property (assign, nonatomic) BOOL wasDragged;
 
-@property (assign, nonatomic) CGPoint prevCenter;
+@property (assign, nonatomic) CGFloat offset;
 
 @end
 
@@ -67,6 +67,9 @@
     [self.actionButton removeTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+
 }
 
 #pragma mark - Private Methods
@@ -94,6 +97,14 @@
     [self.actionButton addTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
     
     [self addSubview:self.actionButton];
     
@@ -267,6 +278,32 @@
     CGPoint center = self.center;
     center.y       = [UIScreen mainScreen].bounds.size.height/2;
     self.center    = center;
+}
+
+#pragma mark - Keyboard Notifications
+
+// Called when the UIKeyboardWillShowNotification is sent.
+- (void)keyboardWillShow:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize      = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGRect aRect       = [UIScreen mainScreen].bounds;
+    
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, self.frame.origin) ) {
+        
+        self.offset = kbSize.height;
+        self.center = CGPointMake(self.center.x, self.center.y - self.offset - self.frame.size.height/2);
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    if (self.offset > 0.0f) {
+        self.center = CGPointMake(self.center.x, self.center.y + self.offset + self.frame.size.height/2);
+        self.offset = 0.0f;
+    }
 }
 
 @end
