@@ -221,13 +221,62 @@
 
 - (void)endChatButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[ScreenMeetManager sharedManager] stopStream];
-        [[ZDCChat instance].session endChat];
+    NSDictionary *agents = [ZDCChat instance].session.dataSource.agents;
+    
+    NSString *message = @"Are you sure you wish to end this chat session";
+    NSString *postfix = @"";
+    
+    if (agents.count > 0) {
+        postfix = @" with ";
+        for (NSString *aKey in [agents allKeys]) {
+            ZDCChatAgent *anAgent = agents[aKey];
+            postfix = [postfix stringByAppendingFormat:@"%@, ", anAgent.displayName];
+        }
         
-        [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
-        [[ScreenMeetManager sharedManager].chatWidget endChat];
-    }];
+        if ([postfix length] > 0) {
+            postfix = [postfix substringToIndex:[postfix length] - 2];
+        } else {
+            //no characters to delete... attempting to do so will result in a crash
+        }
+    }
+    
+    UIAlertController *endChatAlert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@%@?", message, postfix] preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                       [endChatAlert dismissViewControllerAnimated:NO completion:nil];
+                                   }];
+    
+    UIAlertAction *shareAction = [UIAlertAction
+                                  actionWithTitle:NSLocalizedString(@"End Chat", @"Share action")
+                                  style:UIAlertActionStyleDestructive
+                                  handler:^(UIAlertAction *action)
+                                  {
+                                      NSLog(@"End Chat action");
+                                      
+                                      [self dismissViewControllerAnimated:YES completion:^{
+                                          [[ScreenMeetManager sharedManager] stopStream];
+                                          [[ZDCChat instance].session endChat];
+                                          
+                                          [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+                                          [[ScreenMeetManager sharedManager].chatWidget endChat];
+                                          
+                                          [self.eventIds removeAllObjects];
+                                          [self.messages removeAllObjects];
+                                          [self.tableView reloadData];
+                                      }];
+                                      
+                                  }];
+    
+    [endChatAlert addAction:cancelAction];
+    [endChatAlert addAction:shareAction];
+    
+    [self presentViewController:endChatAlert animated:YES completion:nil];
+
 }
 
 - (void)stopStreamButtonWasPressed:(UIBarButtonItem *)barButtonItem
