@@ -23,6 +23,8 @@
 
 @property (assign, nonatomic) BOOL wasDragged;
 
+@property (assign, nonatomic) CGPoint prevCenter;
+
 @end
 
 @implementation ScreenMeetChatWidget
@@ -63,6 +65,8 @@
 {
     [self.actionButton removeTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.actionButton removeTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 #pragma mark - Private Methods
@@ -88,6 +92,8 @@
     // listener events for the drag
     [self.actionButton addTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.actionButton addTarget:self action:@selector(actionButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [self addSubview:self.actionButton];
     
@@ -252,6 +258,15 @@
 - (void)addStackableToastMessage:(NSString *)message
 {
     [self.chatContainer addStackableToastMessage:message];
+}
+
+#pragma mark - Orientation Change
+
+- (void)deviceOrientationDidChange:(NSNotification *)notification {
+    // Obtaining the current device orientation
+    CGPoint center = self.center;
+    center.y       = [UIScreen mainScreen].bounds.size.height/2;
+    self.center    = center;
 }
 
 @end
