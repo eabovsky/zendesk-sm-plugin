@@ -241,7 +241,7 @@
             
             long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
             long long diff         = milliseconds - [chatEvent.timestamp longLongValue];
-            long long threshold    = 1000;
+            long long threshold    = 5000;
             
             if (diff <= threshold) {
                 [self showRequestAlertforMessage:chatEvent];
