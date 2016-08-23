@@ -27,23 +27,6 @@
 
 @implementation SMMessagesViewController
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -52,14 +35,14 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = avatarSize;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = avatarSize;
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightLight];
-//    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(5.0, 7.0, 5.0, 3.0);
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(5.0, 7.0, 5.0, 3.0);
     
     self.inputToolbar.contentView.leftBarButtonItem = nil;
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     
 //    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:0.20f]];
-    self.outgoingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
     
     self.messages = [NSMutableArray new];
@@ -82,15 +65,14 @@
     self.navigationItem.leftBarButtonItem = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed:)];
     
     [self processRightBarButtonItems];
+    
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Init Methods
-- (void)commonInit {}
 
 #pragma mark - Override
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date {

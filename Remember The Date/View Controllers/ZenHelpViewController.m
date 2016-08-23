@@ -148,44 +148,24 @@
 
 - (IBAction)contactSupport:(id)sender {
     
-//    if ([self setupIdentity]) {
-//        
-//        self.navigationController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-//        
-//        if([ZDKUIUtil isPad]) {
-//            
-//            self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-//            self.tabBarController.modalPresentationStyle = UIModalPresentationFormSheet;
-//            
-//        }
-//        
-//        [ZDKRequests presentRequestCreationWithViewController:(UIViewController*)self.tabBarController];
-//        
-//    }
-//    else {
-//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Wait a second..." message:@"You need to go in the profile screen and setup your email ..." delegate:self cancelButtonTitle:@"OK, doing it now :)" otherButtonTitles:nil];
-//        [alert show];
-//    }
-    
-    
-    NSString *visitorEmail = [self userEmail];
-    
-    if (visitorEmail) {
+    if ([self setupIdentity]) {
         
-        [ZDCChat updateVisitor:^(ZDCVisitorInfo *visitor) {
+        self.navigationController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        
+        if([ZDKUIUtil isPad]) {
             
-            visitor.name = [self userName];
-            visitor.email = [self userEmail];
-        }];
-    }
-    
-    // present as new modal using global pre-chat config and whatever visitor info has been persisted
-    //    [ZDCChat startChat:nil];
-    
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[ScreenMeetManager sharedManager] mVC]] animated:YES completion:^{
+            self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+            self.tabBarController.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+        }
         
-    }];
-
+        [ZDKRequests presentRequestCreationWithViewController:(UIViewController*)self.tabBarController];
+        
+    }
+    else {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Wait a second..." message:@"You need to go in the profile screen and setup your email ..." delegate:self cancelButtonTitle:@"OK, doing it now :)" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 //
