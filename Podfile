@@ -5,5 +5,6 @@ target 'Remember The Date' do
 
     pod 'SlackTextViewController'
     pod 'MBProgressHUD', '~> 1.0'
+    pod 'UIActivityIndicator-for-SDWebImage'
 
 end

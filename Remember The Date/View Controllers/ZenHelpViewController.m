@@ -148,24 +148,43 @@
 
 - (IBAction)contactSupport:(id)sender {
     
-    if ([self setupIdentity]) {
+//    if ([self setupIdentity]) {
+//        
+//        self.navigationController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+//        
+//        if([ZDKUIUtil isPad]) {
+//            
+//            self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+//            self.tabBarController.modalPresentationStyle = UIModalPresentationFormSheet;
+//            
+//        }
+//        
+//        [ZDKRequests presentRequestCreationWithViewController:(UIViewController*)self.tabBarController];
+//        
+//    }
+//    else {
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Wait a second..." message:@"You need to go in the profile screen and setup your email ..." delegate:self cancelButtonTitle:@"OK, doing it now :)" otherButtonTitles:nil];
+//        [alert show];
+//    }
+    
+    
+    NSString *visitorEmail = [self userEmail];
+    
+    if (visitorEmail) {
         
-        self.navigationController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        
-        if([ZDKUIUtil isPad]) {
+        [ZDCChat updateVisitor:^(ZDCVisitorInfo *visitor) {
             
-            self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-            self.tabBarController.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-        }
-        
-        [ZDKRequests presentRequestCreationWithViewController:(UIViewController*)self.tabBarController];
-        
+            visitor.name = [self userName];
+            visitor.email = [self userEmail];
+        }];
     }
-    else {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Wait a second..." message:@"You need to go in the profile screen and setup your email ..." delegate:self cancelButtonTitle:@"OK, doing it now :)" otherButtonTitles:nil];
-        [alert show];
-    }
+    
+    // present as new modal using global pre-chat config and whatever visitor info has been persisted
+    //    [ZDCChat startChat:nil];
+    
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[ScreenMeetManager sharedManager] mVC]] animated:YES completion:^{
+        
+    }];
 
 }
 
@@ -290,7 +309,7 @@
     // present as new modal using global pre-chat config and whatever visitor info has been persisted
 //    [ZDCChat startChat:nil];
     
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[ScreenMeetManager sharedManager] mVC]] animated:YES completion:^{
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[ScreenMeetManager sharedManager] messagesVC]] animated:YES completion:^{
         
     }];
 }

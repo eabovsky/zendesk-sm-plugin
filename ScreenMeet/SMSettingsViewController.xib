@@ -28,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ROOM SETTINGS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Q4-gM-69U">
-                    <rect key="frame" x="8" y="20" width="113.5" height="21"/>
+                    <rect key="frame" x="8" y="20" width="114" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="ymw-rn-koU"/>
                     </constraints>
@@ -80,7 +80,7 @@
                     </constraints>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ask for name when viewer joins" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVm-E5-dkI">
-                    <rect key="frame" x="8" y="117" width="240.5" height="21"/>
+                    <rect key="frame" x="8" y="117" width="241" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="R5N-ko-9eZ"/>
                     </constraints>

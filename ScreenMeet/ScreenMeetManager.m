@@ -7,13 +7,17 @@
 //
 
 #import "ScreenMeetManager.h"
+
 #import "AppDelegate.h"
 #import "SMSettingsViewController.h"
 #import "SMAccountViewController.h"
 
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
-#import "MessageViewController.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+
+#import "MessageViewController.h"
+#import "SMMessagesViewController.h"
+
 
 
 #define kChatWidgetTag 2001
@@ -76,6 +80,13 @@ static ScreenMeetManager *manager = nil;
         _mVC = [[MessageViewController alloc] init];
     }
     return _mVC;
+}
+
+- (SMMessagesViewController *)messagesVC {
+    if (!_messagesVC) {
+        _messagesVC = [[SMMessagesViewController alloc] init];
+    }
+    return _messagesVC;
 }
 
 - (ScreenMeetChatWidget *)chatWidget
