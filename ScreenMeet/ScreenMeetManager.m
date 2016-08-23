@@ -58,8 +58,8 @@ static ScreenMeetManager *manager = nil;
 {
     self = [super init];
     if (self) {
-        self.isProduction = NO;
-        [self initiateScreenMeetinProd:NO];
+        self.isProduction = YES;
+        [self initiateScreenMeetinProd:YES];
     }
     return self;
 }

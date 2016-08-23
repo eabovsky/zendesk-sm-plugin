@@ -11,6 +11,8 @@
 		21B920AA1B3D3F8B00DF2F0B /* ZDCChatStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 21B920A81B3D3F8B00DF2F0B /* ZDCChatStrings.bundle */; };
 		21B920AC1B3D3F9700DF2F0B /* ZDCChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B920AB1B3D3F9700DF2F0B /* ZDCChat.framework */; };
 		21B920AE1B3D3FBA00DF2F0B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B920AD1B3D3FBA00DF2F0B /* MobileCoreServices.framework */; };
+		4476C5C41D6CF94900A854B8 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4476C5C21D6CF93D00A854B8 /* ScreenMeetSDK.framework */; };
+		4476C5C51D6CF94900A854B8 /* ScreenMeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4476C5C21D6CF93D00A854B8 /* ScreenMeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D246FA919E7499600A46373 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D246FA819E7499600A46373 /* main.m */; };
 		4D246FAC19E7499600A46373 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D246FAB19E7499600A46373 /* AppDelegate.m */; };
 		4D246FB519E7499600A46373 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D246FB319E7499600A46373 /* Main.storyboard */; };
@@ -88,21 +90,16 @@
 		7024B1DD1D635E93009C95D1 /* chat_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1DC1D635E93009C95D1 /* chat_box@2x.png */; };
 		702834DB1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */; };
 		702834DF1D5DAE430065FC9B /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */; };
-		70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */; };
 		70363A351D5C28C100852757 /* ScreenMeetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A2D1D5C28C100852757 /* ScreenMeetManager.m */; };
-		70363A361D5C28C100852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; };
 		70363A371D5C28C100852757 /* SMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A301D5C28C100852757 /* SMAccountViewController.m */; };
 		70363A381D5C28C100852757 /* SMAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70363A311D5C28C100852757 /* SMAccountViewController.xib */; };
 		70363A391D5C28C100852757 /* SMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70363A331D5C28C100852757 /* SMSettingsViewController.m */; };
 		70363A3A1D5C28C100852757 /* SMSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70363A341D5C28C100852757 /* SMSettingsViewController.xib */; };
-		70363A3B1D5C28CA00852757 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; };
-		70363A3C1D5C28CA00852757 /* ScreenMeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		704342101D5C4A84006859B9 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 704342071D5C4A84006859B9 /* Message.m */; };
 		704342111D5C4A84006859B9 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 704342091D5C4A84006859B9 /* MessageTableViewCell.m */; };
 		704342121D5C4A84006859B9 /* MessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043420B1D5C4A84006859B9 /* MessageTextView.m */; };
 		704342131D5C4A84006859B9 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043420D1D5C4A84006859B9 /* MessageViewController.m */; };
 		704342141D5C4A84006859B9 /* TypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043420F1D5C4A84006859B9 /* TypingIndicatorView.m */; };
-		707832841D5B20950096A7C7 /* ScreenMeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707832821D5B20890096A7C7 /* ScreenMeetSDK.framework */; };
 		839C7AF51C070B4E007738AB /* ZendeskSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8ED8D691A03E7DF0070259D /* ZendeskSDK.framework */; };
 		83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */; };
 		83ECC7BD1BFC9BF000963E82 /* ZendeskProviderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */; };
@@ -196,7 +193,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				70363A3C1D5C28CA00852757 /* ScreenMeetSDK.framework in Embed Frameworks */,
+				4476C5C51D6CF94900A854B8 /* ScreenMeetSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,6 +206,7 @@
 		21B920A81B3D3F8B00DF2F0B /* ZDCChatStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZDCChatStrings.bundle; path = Framework/ZDCChatStrings.bundle; sourceTree = "<group>"; };
 		21B920AB1B3D3F9700DF2F0B /* ZDCChat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZDCChat.framework; path = "Remember The Date/Framework/ZDCChat.framework"; sourceTree = "<group>"; };
 		21B920AD1B3D3FBA00DF2F0B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		4476C5C21D6CF93D00A854B8 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ScreenMeetSDK.framework; sourceTree = "<group>"; };
 		4D246FA319E7499600A46373 /* Remember The Date.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Remember The Date.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D246FA719E7499600A46373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D246FA819E7499600A46373 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -302,10 +300,8 @@
 		702834DA1D5DADF80065FC9B /* ZDCChatOverlay+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZDCChatOverlay+Swizzle.m"; sourceTree = "<group>"; };
 		702834DD1D5DAE430065FC9B /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
 		702834DE1D5DAE430065FC9B /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
-		70363A191D5C1E2200852757 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = "/Users/ade/Repositories/Work/ios/ScreenMeet-ZenDesk/Remember The Date/ScreenMeetSDK.framework"; sourceTree = "<absolute>"; };
 		70363A2C1D5C28C100852757 /* ScreenMeetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetManager.h; path = ScreenMeet/ScreenMeetManager.h; sourceTree = SOURCE_ROOT; };
 		70363A2D1D5C28C100852757 /* ScreenMeetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetManager.m; path = ScreenMeet/ScreenMeetManager.m; sourceTree = SOURCE_ROOT; };
-		70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = ScreenMeet/ScreenMeetSDK.framework; sourceTree = SOURCE_ROOT; };
 		70363A2F1D5C28C100852757 /* SMAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMAccountViewController.h; path = ScreenMeet/SMAccountViewController.h; sourceTree = SOURCE_ROOT; };
 		70363A301D5C28C100852757 /* SMAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMAccountViewController.m; path = ScreenMeet/SMAccountViewController.m; sourceTree = SOURCE_ROOT; };
 		70363A311D5C28C100852757 /* SMAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SMAccountViewController.xib; path = ScreenMeet/SMAccountViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -322,7 +318,6 @@
 		7043420D1D5C4A84006859B9 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageViewController.m; path = "SLK Classes/MessageViewController.m"; sourceTree = SOURCE_ROOT; };
 		7043420E1D5C4A84006859B9 /* TypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TypingIndicatorView.h; path = "SLK Classes/TypingIndicatorView.h"; sourceTree = SOURCE_ROOT; };
 		7043420F1D5C4A84006859B9 /* TypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypingIndicatorView.m; path = "SLK Classes/TypingIndicatorView.m"; sourceTree = SOURCE_ROOT; };
-		707832821D5B20890096A7C7 /* ScreenMeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenMeetSDK.framework; path = "/Users/ade/Repositories/Work/ios/ScreenMeet-ZenDesk/Remember The Date/ScreenMeetSDK.framework"; sourceTree = "<absolute>"; };
 		83E06FE01ACEEED400A91D1F /* NSData+RememberTheDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+RememberTheDate.h"; path = "Categories/NSData+RememberTheDate.h"; sourceTree = "<group>"; };
 		83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+RememberTheDate.m"; path = "Categories/NSData+RememberTheDate.m"; sourceTree = "<group>"; };
 		83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZendeskProviderSDK.framework; path = "Remember The Date/Framework/ZendeskProviderSDK.framework"; sourceTree = "<group>"; };
@@ -454,13 +449,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70363A3B1D5C28CA00852757 /* ScreenMeetSDK.framework in Frameworks */,
-				70363A261D5C1E3A00852757 /* ScreenMeetSDK.framework in Frameworks */,
 				839C7AF51C070B4E007738AB /* ZendeskSDK.framework in Frameworks */,
-				707832841D5B20950096A7C7 /* ScreenMeetSDK.framework in Frameworks */,
+				4476C5C41D6CF94900A854B8 /* ScreenMeetSDK.framework in Frameworks */,
 				83ECC7BD1BFC9BF000963E82 /* ZendeskProviderSDK.framework in Frameworks */,
 				21B920AE1B3D3FBA00DF2F0B /* MobileCoreServices.framework in Frameworks */,
-				70363A361D5C28C100852757 /* ScreenMeetSDK.framework in Frameworks */,
 				21B920AC1B3D3F9700DF2F0B /* ZDCChat.framework in Frameworks */,
 				B8F46E3E19EEC94000E6D8EF /* SystemConfiguration.framework in Frameworks */,
 				A0FFCE8D63E718C2B0E2C504 /* libPods-Remember The Date.a in Frameworks */,
@@ -715,12 +707,12 @@
 		7025113B1D599E0F0048F257 /* ScreenMeet Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4476C5C21D6CF93D00A854B8 /* ScreenMeetSDK.framework */,
 				7024B1D21D62E1B3009C95D1 /* Images */,
 				702183DD1D60A5B300797B36 /* Views */,
 				702183DC1D60A58900797B36 /* View Controllers */,
 				70363A2C1D5C28C100852757 /* ScreenMeetManager.h */,
 				70363A2D1D5C28C100852757 /* ScreenMeetManager.m */,
-				70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */,
 				9533FEDC1D6C82C900D0607C /* SMCircularImageView.h */,
 				9533FEDD1D6C82C900D0607C /* SMCircularImageView.m */,
 			);
@@ -969,7 +961,7 @@
 				TargetAttributes = {
 					4D246FA219E7499600A46373 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = 689VA4CD22;
+						DevelopmentTeam = U3AQW9824Q;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1382,11 +1374,14 @@
 					The,
 					Date,
 					"$(PROJECT_DIR)/ScreenMeet",
+					"$(PROJECT_DIR)/Remember",
+					The,
+					Date,
 				);
 				INFOPLIST_FILE = "Remember The Date/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.mobilesdk.rememberthedate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.mobilesdk.rememberthedate.screenmeet.plugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1399,7 +1394,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1425,11 +1420,14 @@
 					The,
 					Date,
 					"$(PROJECT_DIR)/ScreenMeet",
+					"$(PROJECT_DIR)/Remember",
+					The,
+					Date,
 				);
 				INFOPLIST_FILE = "Remember The Date/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.mobilesdk.rememberthedate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.mobilesdk.rememberthedate.screenmeet.plugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
