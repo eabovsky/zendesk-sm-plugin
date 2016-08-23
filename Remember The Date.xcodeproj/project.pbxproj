@@ -106,6 +106,7 @@
 		839C7AF51C070B4E007738AB /* ZendeskSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8ED8D691A03E7DF0070259D /* ZendeskSDK.framework */; };
 		83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */; };
 		83ECC7BD1BFC9BF000963E82 /* ZendeskProviderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */; };
+		9533FEDE1D6C82C900D0607C /* SMCircularImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9533FEDD1D6C82C900D0607C /* SMCircularImageView.m */; };
 		9585C32C1D6B167B00ABBA42 /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9585C2C91D6B167B00ABBA42 /* JSQMessagesAssets.bundle */; };
 		9585C32E1D6B167B00ABBA42 /* NSBundle+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9585C2CE1D6B167B00ABBA42 /* NSBundle+JSQMessages.m */; };
 		9585C32F1D6B167B00ABBA42 /* NSString+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9585C2D01D6B167B00ABBA42 /* NSString+JSQMessages.m */; };
@@ -325,6 +326,8 @@
 		83E06FE01ACEEED400A91D1F /* NSData+RememberTheDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+RememberTheDate.h"; path = "Categories/NSData+RememberTheDate.h"; sourceTree = "<group>"; };
 		83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+RememberTheDate.m"; path = "Categories/NSData+RememberTheDate.m"; sourceTree = "<group>"; };
 		83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZendeskProviderSDK.framework; path = "Remember The Date/Framework/ZendeskProviderSDK.framework"; sourceTree = "<group>"; };
+		9533FEDC1D6C82C900D0607C /* SMCircularImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMCircularImageView.h; path = ScreenMeet/SMCircularImageView.h; sourceTree = SOURCE_ROOT; };
+		9533FEDD1D6C82C900D0607C /* SMCircularImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMCircularImageView.m; path = ScreenMeet/SMCircularImageView.m; sourceTree = SOURCE_ROOT; };
 		9585C2C91D6B167B00ABBA42 /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
 		9585C2CD1D6B167B00ABBA42 /* NSBundle+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+JSQMessages.h"; sourceTree = "<group>"; };
 		9585C2CE1D6B167B00ABBA42 /* NSBundle+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+JSQMessages.m"; sourceTree = "<group>"; };
@@ -718,6 +721,8 @@
 				70363A2C1D5C28C100852757 /* ScreenMeetManager.h */,
 				70363A2D1D5C28C100852757 /* ScreenMeetManager.m */,
 				70363A2E1D5C28C100852757 /* ScreenMeetSDK.framework */,
+				9533FEDC1D6C82C900D0607C /* SMCircularImageView.h */,
+				9533FEDD1D6C82C900D0607C /* SMCircularImageView.m */,
 			);
 			name = "ScreenMeet Controllers";
 			sourceTree = "<group>";
@@ -1206,6 +1211,7 @@
 				704342141D5C4A84006859B9 /* TypingIndicatorView.m in Sources */,
 				4D246FA919E7499600A46373 /* main.m in Sources */,
 				9585C34A1D6B167B00ABBA42 /* JSQMessagesCollectionView.m in Sources */,
+				9533FEDE1D6C82C900D0607C /* SMCircularImageView.m in Sources */,
 				9585C3581D6B167B00ABBA42 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
 				4D24704719E8099300A46373 /* DateTableViewController.m in Sources */,
 				9585C3411D6B167B00ABBA42 /* JSQAudioMediaItem.m in Sources */,

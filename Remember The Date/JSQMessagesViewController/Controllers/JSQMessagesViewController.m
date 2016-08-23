@@ -40,6 +40,7 @@
 #import "NSBundle+JSQMessages.h"
 
 #import <objc/runtime.h>
+#import <UIActivityIndicator-for-SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 
 // Fixes rdar://26295020
@@ -585,28 +586,34 @@ JSQMessagesKeyboardControllerDelegate>
         needsAvatar = NO;
     }
 
-    id<JSQMessageAvatarImageDataSource> avatarImageDataSource = nil;
+//    id<JSQMessageAvatarImageDataSource> avatarImageDataSource = nil;
+//    if (needsAvatar) {
+//        avatarImageDataSource = [collectionView.dataSource collectionView:collectionView avatarImageDataForItemAtIndexPath:indexPath];
+//        if (avatarImageDataSource != nil) {
+//
+//            UIImage *avatarImage = [avatarImageDataSource avatarImage];
+//            if (avatarImage == nil) {
+//                cell.avatarImageView.image = [avatarImageDataSource avatarPlaceholderImage];
+//                cell.avatarImageView.highlightedImage = nil;
+//            }
+//            else {
+//                cell.avatarImageView.image = avatarImage;
+//                cell.avatarImageView.highlightedImage = [avatarImageDataSource avatarHighlightedImage];
+//            }
+//        }
+//    }
+    
     if (needsAvatar) {
-        avatarImageDataSource = [collectionView.dataSource collectionView:collectionView avatarImageDataForItemAtIndexPath:indexPath];
-        if (avatarImageDataSource != nil) {
-
-            UIImage *avatarImage = [avatarImageDataSource avatarImage];
-            if (avatarImage == nil) {
-                cell.avatarImageView.image = [avatarImageDataSource avatarPlaceholderImage];
-                cell.avatarImageView.highlightedImage = nil;
-            }
-            else {
-                cell.avatarImageView.image = avatarImage;
-                cell.avatarImageView.highlightedImage = [avatarImageDataSource avatarHighlightedImage];
-            }
-        }
+        NSURL *avatarUrl = [collectionView.dataSource collectionView:collectionView avatarImageUrlForItemAtIndexPath:indexPath];
+        [cell.avatarImageView setImageWithURL:avatarUrl placeholderImage:[UIImage imageNamed:@"avatar_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
 
     cell.cellTopLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForCellTopLabelAtIndexPath:indexPath];
     cell.messageBubbleTopLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
     cell.cellBottomLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForCellBottomLabelAtIndexPath:indexPath];
 
-    CGFloat bubbleTopLabelInset = (avatarImageDataSource != nil) ? 40.0f : 15.0f;
+//    CGFloat bubbleTopLabelInset = (avatarImageDataSource != nil) ? 60.0f : 15.0f;
+    CGFloat bubbleTopLabelInset = 40.0f;
 
     if (isOutgoingMessage) {
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, bubbleTopLabelInset);

@@ -152,4 +152,6 @@
  */
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath;
 
+- (NSURL *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageUrlForItemAtIndexPath:(NSIndexPath *)indexPath;
+
 @end

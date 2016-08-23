@@ -110,19 +110,9 @@
 {
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
-    JSQMessage *currentMessage = self.messages[indexPath.item];
-
-    cell.avatarImageView.hidden = NO;
-    
-    if (self.messages.count > 0 && indexPath.item > 0) {
-        JSQMessage *prevMessage = self.messages[indexPath.item - 1];
-        if ([currentMessage.senderId isEqualToString:prevMessage.senderId]) {
-            cell.avatarImageView.hidden = YES;
-        }
-    }
+    cell.avatarImageView.hidden = [self isFirstMessage:indexPath] ? NO : YES;
     
     cell.textView.textColor              = [UIColor blackColor];
-    
     cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName : cell.textView.textColor,
                                          NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     return cell;
@@ -167,29 +157,31 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    JSQMessage *currentMessage = self.messages[indexPath.item];
-    if (indexPath.item - 1 > 0) {
-        JSQMessage *prevMessage = self.messages[indexPath.item - 1];
-        if ([currentMessage.senderId isEqualToString:prevMessage.senderId]) {
-            return 0.0;
-        }
-    }
-    
-    return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    return [self isFirstMessage:indexPath] ? kJSQMessagesCollectionViewCellLabelHeightDefault : 0.0;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    JSQMessage *currentMessage = self.messages[indexPath.item];
-    if (indexPath.item - 1 > 0) {
-        JSQMessage *prevMessage = self.messages[indexPath.item - 1];
-        if ([currentMessage.senderId isEqualToString:prevMessage.senderId]) {
-            return nil;
+    if ([self isFirstMessage:indexPath]) {
+        JSQMessage *message = self.messages[indexPath.item];
+        return [[NSAttributedString alloc] initWithString:message.senderDisplayName
+                                               attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+    }
+    
+    return nil;
+}
+
+- (NSURL *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageUrlForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([self isFirstMessage:indexPath]) {
+        JSQMessage *message = self.messages[indexPath.item];
+        if (![message.senderId isEqualToString:self.senderId]) {
+            ZDCChatAgent *agent = [[ZDCChat instance].session.dataSource agentForNickname:message.senderId];
+            return [NSURL URLWithString:agent.avatarURL];
         }
     }
     
-    return [[NSAttributedString alloc] initWithString:currentMessage.senderDisplayName
-                                           attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+    return nil;
 }
 
 #pragma mark - UITextView Delegate
@@ -450,6 +442,17 @@
     } else {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Chat" style:UIBarButtonItemStyleDone target:self action:@selector(endChatButtonWasPressed:)];
     }
+}
+
+- (BOOL)isFirstMessage:(NSIndexPath *)indexPath {
+    JSQMessage *currentMessage = self.messages[indexPath.item];
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *prevMessage = self.messages[indexPath.item - 1];
+        if ([currentMessage.senderId isEqualToString:prevMessage.senderId]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 
