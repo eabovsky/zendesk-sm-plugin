@@ -8,6 +8,12 @@
 
 #import "SMCircularImageView.h"
 
+@interface SMCircularImageView ()
+
+@property (assign, nonatomic) BOOL didLayoutSubviews;
+
+@end
+
 @implementation SMCircularImageView
 
 - (void)awakeFromNib {
@@ -62,11 +68,22 @@
 }
 
 - (void)commonInit {
+    
+    self.didLayoutSubviews = NO;
+    
     self.contentMode = UIViewContentModeScaleAspectFill;
     self.clipsToBounds = YES;
-    
-    [self addMaskToBounds:self.frame];
  
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (!self.didLayoutSubviews) {
+        self.didLayoutSubviews = YES;
+        
+        [self addMaskToBounds:self.frame];
+    }
 }
 
 - (void)addMaskToBounds:(CGRect)bounds {

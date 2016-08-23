@@ -52,7 +52,7 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = avatarSize;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = avatarSize;
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightLight];
-    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(5.0, 7.0, 5.0, 3.0);
+//    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(5.0, 7.0, 5.0, 3.0);
     
     self.inputToolbar.contentView.leftBarButtonItem = nil;
     
@@ -66,7 +66,7 @@
     self.eventIds = [NSMutableDictionary new];
     
     self.senderId          = @"screenmeet_customer_sender_id";
-    self.senderDisplayName = @"Mylene Bayan";
+    self.senderDisplayName = @"Visitor";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
