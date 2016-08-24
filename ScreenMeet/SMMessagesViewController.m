@@ -66,8 +66,6 @@
     self.navigationItem.leftBarButtonItem = [ScreenMeetManager createCloseButtonItemWithTarget:self forSelector:@selector(closeButtonWasPressed:)];
     
     [self processRightBarButtonItems];
-    
-    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

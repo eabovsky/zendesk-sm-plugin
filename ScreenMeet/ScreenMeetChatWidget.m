@@ -105,7 +105,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    
     [self addSubview:self.actionButton];
     
     // set UI
@@ -134,6 +133,11 @@
     
     self.willFlipContainer = self.frame.origin.y >= [UIScreen mainScreen].bounds.size.height * kDefaultFlipThreshold;
     
+    [self updateChatContainerFrame];
+}
+
+- (void)updateChatContainerFrame {
+    
     if (self.chatContainer) {
         CGRect frame             = self.chatContainer.frame;
         
@@ -142,7 +146,7 @@
         } else {
             frame.origin.y           = self.frame.origin.y;
         }
-    
+        
         self.chatContainer.frame = frame;
     }
 }
@@ -289,11 +293,15 @@
     CGSize kbSize      = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     CGRect aRect       = [UIScreen mainScreen].bounds;
     
-    aRect.size.height -= kbSize.height;
-    if (!CGRectContainsPoint(aRect, self.frame.origin) ) {
-        
-        self.offset = kbSize.height;
-        self.center = CGPointMake(self.center.x, self.center.y - self.offset - self.frame.size.height/2);
+    CGFloat widgetBottom = CGRectGetMaxY(self.frame);
+    CGFloat widgetBottomSpace = aRect.size.height - widgetBottom;
+    
+    if (widgetBottom > (aRect.size.height - kbSize.height)) {
+        // always set widget position a little higher then keyboard
+        self.offset           = kbSize.height - widgetBottomSpace;
+        self.center           = CGPointMake(self.center.x, self.center.y - self.offset - self.frame.size.height/2);
+
+        [self updateChatContainerFrame];
     }
 }
 
@@ -301,8 +309,10 @@
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     if (self.offset > 0.0f) {
-        self.center = CGPointMake(self.center.x, self.center.y + self.offset + self.frame.size.height/2);
-        self.offset = 0.0f;
+        self.center           = CGPointMake(self.center.x, self.center.y + self.offset + self.frame.size.height/2);
+        self.offset           = 0.0f;
+        
+        [self updateChatContainerFrame];
     }
 }
 
