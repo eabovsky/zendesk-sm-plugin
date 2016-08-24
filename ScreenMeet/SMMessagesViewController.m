@@ -15,6 +15,8 @@
 
 #import "ScreenMeetManager.h"
 
+#define AVATAR_SIZE 28.0
+
 @interface SMMessagesViewController ()
 
 @property (nonatomic, strong) NSMutableArray *messages;
@@ -30,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    CGSize avatarSize = CGSizeMake(28.0, 28.0);
+    CGSize avatarSize = CGSizeMake(AVATAR_SIZE, AVATAR_SIZE);
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = avatarSize;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = avatarSize;
@@ -41,8 +43,8 @@
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor colorWithRed:229.0/255.0 green:229.0/255.0 blue:233.0/255.0 alpha:1.0]];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:246.0/255.0 alpha:1.0]];
     
     self.messages = [NSMutableArray new];
     self.eventIds = [NSMutableDictionary new];
@@ -91,9 +93,16 @@
 {
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
-    cell.avatarImageView.hidden = [self isFirstMessage:indexPath] ? NO : YES;
+    cell.avatarImageView.hidden = [self isLeadMessage:indexPath] ? NO : YES;
     
-    cell.textView.textColor              = [UIColor blackColor];
+    JSQMessage *message = self.messages[indexPath.item];
+
+    if ([message.senderId isEqualToString:self.senderId]) {
+        cell.textView.textColor = [UIColor whiteColor];
+    } else {
+        cell.textView.textColor = [UIColor blackColor];
+    }
+    
     cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName : cell.textView.textColor,
                                          NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     return cell;
@@ -119,31 +128,32 @@
 {
     JSQMessage *message = self.messages[indexPath.item];
     
-    if ([message.senderId isEqualToString:self.senderId]) {
-        
-        // get and return user's avatar
-        
-    } else {
-        ZDCChatAgent *agent = [[ZDCChat instance].session.dataSource agentForNickname:message.senderId];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:agent.avatarURL]];
-        if (imageData) {
-            return [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageWithData:imageData]
-                                                       diameter:28.0];
+    if ([self isLeadMessage:indexPath]) {
+        if ([message.senderId isEqualToString:self.senderId]) {
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths firstObject];
+            NSString *getImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.png"];
+            UIImage *image = [UIImage imageWithContentsOfFile:getImagePath];
+            
+            if (image != nil){
+                return [JSQMessagesAvatarImageFactory avatarImageWithImage:image
+                                                                  diameter:AVATAR_SIZE];;
+            }
         }
     }
     
-    return [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"avatar_placeholder"]
-                                                               diameter:28.0];;
+    return nil;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    return [self isFirstMessage:indexPath] ? kJSQMessagesCollectionViewCellLabelHeightDefault : 0.0;
+    return [self isLeadMessage:indexPath] ? kJSQMessagesCollectionViewCellLabelHeightDefault : 0.0;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([self isFirstMessage:indexPath]) {
+    if ([self isLeadMessage:indexPath]) {
         JSQMessage *message = self.messages[indexPath.item];
         return [[NSAttributedString alloc] initWithString:message.senderDisplayName
                                                attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
@@ -154,7 +164,7 @@
 
 - (NSURL *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageUrlForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([self isFirstMessage:indexPath]) {
+    if ([self isLeadMessage:indexPath]) {
         JSQMessage *message = self.messages[indexPath.item];
         if (![message.senderId isEqualToString:self.senderId]) {
             ZDCChatAgent *agent = [[ZDCChat instance].session.dataSource agentForNickname:message.senderId];
@@ -427,7 +437,7 @@
     }
 }
 
-- (BOOL)isFirstMessage:(NSIndexPath *)indexPath {
+- (BOOL)isLeadMessage:(NSIndexPath *)indexPath {
     JSQMessage *currentMessage = self.messages[indexPath.item];
     if (indexPath.item - 1 > 0) {
         JSQMessage *prevMessage = self.messages[indexPath.item - 1];

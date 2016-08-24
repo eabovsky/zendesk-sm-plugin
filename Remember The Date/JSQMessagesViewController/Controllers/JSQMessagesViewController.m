@@ -586,26 +586,24 @@ JSQMessagesKeyboardControllerDelegate>
         needsAvatar = NO;
     }
 
-//    id<JSQMessageAvatarImageDataSource> avatarImageDataSource = nil;
-//    if (needsAvatar) {
-//        avatarImageDataSource = [collectionView.dataSource collectionView:collectionView avatarImageDataForItemAtIndexPath:indexPath];
-//        if (avatarImageDataSource != nil) {
-//
-//            UIImage *avatarImage = [avatarImageDataSource avatarImage];
-//            if (avatarImage == nil) {
-//                cell.avatarImageView.image = [avatarImageDataSource avatarPlaceholderImage];
-//                cell.avatarImageView.highlightedImage = nil;
-//            }
-//            else {
-//                cell.avatarImageView.image = avatarImage;
-//                cell.avatarImageView.highlightedImage = [avatarImageDataSource avatarHighlightedImage];
-//            }
-//        }
-//    }
-    
+    id<JSQMessageAvatarImageDataSource> avatarImageDataSource = nil;
     if (needsAvatar) {
-        NSURL *avatarUrl = [collectionView.dataSource collectionView:collectionView avatarImageUrlForItemAtIndexPath:indexPath];
-        [cell.avatarImageView setImageWithURL:avatarUrl placeholderImage:[UIImage imageNamed:@"avatar_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        avatarImageDataSource = [collectionView.dataSource collectionView:collectionView avatarImageDataForItemAtIndexPath:indexPath];
+        if (avatarImageDataSource != nil) {
+
+            UIImage *avatarImage = [avatarImageDataSource avatarImage];
+            if (avatarImage == nil) {
+                cell.avatarImageView.image = [avatarImageDataSource avatarPlaceholderImage];
+                cell.avatarImageView.highlightedImage = nil;
+            }
+            else {
+                cell.avatarImageView.image = avatarImage;
+                cell.avatarImageView.highlightedImage = [avatarImageDataSource avatarHighlightedImage];
+            }
+        } else {
+            NSURL *avatarUrl = [collectionView.dataSource collectionView:collectionView avatarImageUrlForItemAtIndexPath:indexPath];
+            [cell.avatarImageView setImageWithURL:avatarUrl placeholderImage:[UIImage imageNamed:@"avatar_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        }
     }
 
     cell.cellTopLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForCellTopLabelAtIndexPath:indexPath];
