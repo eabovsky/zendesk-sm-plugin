@@ -389,6 +389,7 @@
                                   handler:^(UIAlertAction *action)
                                   {
                                       NSLog(@"End Chat action");
+                                      [self.inputToolbar.contentView.textView resignFirstResponder];
                                       
                                       [self dismissViewControllerAnimated:YES completion:^{
                                           [[ScreenMeetManager sharedManager] stopStream];
