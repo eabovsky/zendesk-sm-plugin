@@ -41,7 +41,6 @@
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     
-//    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor colorWithRed:232.0f/255.f green:42.0f/255.0f blue:42.0f/255.0f alpha:0.20f]];
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.20f]];
     
@@ -336,6 +335,8 @@
 
 - (void)closeButtonWasPressed:(UIBarButtonItem *)barButtonItem
 {
+    [self.inputToolbar.contentView.textView resignFirstResponder];
+    
     [self dismissViewControllerAnimated:YES completion:^{
         [[ScreenMeetManager sharedManager] initializeChatWidget];
         [[ScreenMeetManager sharedManager].chatWidget showWidget];
