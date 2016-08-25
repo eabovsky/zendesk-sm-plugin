@@ -25,6 +25,8 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
+@property (assign, nonatomic) BOOL isAvatarLoaded;
+
 @end
 
 @implementation SMMessagesViewController
@@ -57,6 +59,8 @@
     
     [super viewWillAppear:animated];
     
+    self.isAvatarLoaded = NO;
+    
     [[ZDCChat instance].session connect];
     
     [[ZDCChat instance].session removeObserverForTimeoutEvents:self];
@@ -64,6 +68,9 @@
     
     [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
     [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
+    
+    [[ZDCChat instance].session.dataSource removeObserverForAgentEvents:self];
+    [[ZDCChat instance].session.dataSource addObserver:self forAgentEvents:@selector(agentEvent:)];
     
     [ScreenMeetManager sharedManager].chatWidget.isLive = YES;
     
@@ -172,6 +179,7 @@
         JSQMessage *message = self.messages[indexPath.item];
         if (![message.senderId isEqualToString:self.senderId]) {
             ZDCChatAgent *agent = [[ZDCChat instance].session.dataSource agentForNickname:message.senderId];
+            NSLog(@"Delegate AvatarURL: %@", agent.avatarURL);
             return [NSURL URLWithString:agent.avatarURL];
         }
     }
@@ -207,6 +215,7 @@
     // only show messages for events verified by the server
     // we can also add here timestamp filters
     
+    NSLog(@"Chat Event Type: %lu", (unsigned long)chatEvent.type);
     
     if (chatEvent.type == ZDCChatEventTypeMemberLeave) {
         if ([[ZDCChat instance].session status] != ZDCChatSessionStatusInactive) {
@@ -262,7 +271,7 @@
     }
 }
 
-- (void)timeoutEvent:(NSNotificationCenter *)notification {
+- (void)timeoutEvent:(NSNotification *)notification {
     /* When a chat times out, you won't be able to send messages. The chat returns to the uninitialized state. You can start a new chat or inform the user the chat has ended but you cannot reconnect to the timed out chat. */
     
     UIAlertController *timeoutAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Your session has timed out. Ending chat." preferredStyle:UIAlertControllerStyleAlert];
@@ -276,6 +285,25 @@
         [ScreenMeetManager presentViewControllerFromWindowRootViewController:timeoutAlert animated:YES completion:^{
             
         }];
+    }
+}
+
+- (void)agentEvent:(NSNotification *)notification {
+    /* Fix for ticket #38 "[ZD] Main chat clean-up round 3 - avatars and styling" wherein avatar does not load when resuming active chat from app relaunch.
+     
+     Bug Reason: Agent info is still not available even if chatEvent: is already receiving chat logs.
+     
+     [[ZDCChat instance].session.dataSource agentForNickname:message.senderId] from collectionView:avatarImageUrlForItemAtIndexPath: dataSource returns initially returns nil.
+     
+     Solution: Force reload the table view once agent info becomes available.
+     
+     NOTE: agentEvent: triggers multiple times as it handles even agent typing event.  A flag has been set to avoid multiple calls to [self.collectionView reloadData]
+     */
+    
+    NSDictionary *agents = [ZDCChat instance].session.dataSource.agents;
+    if (agents.count > 0 && !self.isAvatarLoaded) {
+        [self.collectionView reloadData];
+        self.isAvatarLoaded = YES;
     }
 }
 
