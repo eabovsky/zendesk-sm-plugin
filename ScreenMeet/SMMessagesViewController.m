@@ -58,7 +58,13 @@
     [super viewWillAppear:animated];
     
     [[ZDCChat instance].session connect];
+    
+    [[ZDCChat instance].session removeObserverForTimeoutEvents:self];
+    [[ZDCChat instance].session addObserver:self forTimeoutEvents:@selector(timeoutEvent:)];
+    
+    [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
     [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
+    
     [ScreenMeetManager sharedManager].chatWidget.isLive = YES;
     
     [self verifyEvents];
@@ -194,7 +200,7 @@
     }
 }
 
-- (void)chatEvent:(id)event
+- (void)chatEvent:(NSNotification *)notification
 {
     
     ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource lastChatMessage];
@@ -208,7 +214,6 @@
         NSString *senderId = @"";
         
         if (chatEvent.type == ZDCChatEventTypeAgentMessage) {
-#warning TODO: Extend JSQMessage and add other needed info (agentId, avatarImage, etc.).
             senderId          = chatEvent.nickname;
         } else {
             senderId          = self.senderId;
@@ -249,6 +254,18 @@
             [[ScreenMeetManager sharedManager].chatWidget addStackableToastMessage:[NSString stringWithFormat:@"%@: %@", chatEvent.displayName, message.text]];
         }
     }
+}
+
+- (void)timeoutEvent:(NSNotificationCenter *)notification {
+    /* When a chat times out, you won't be able to send messages. The chat returns to the uninitialized state. You can start a new chat or inform the user the chat has ended but you cannot reconnect to the timed out chat. */
+    
+    UIAlertController *timeoutAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Your session has timed out. Ending chat." preferredStyle:UIAlertControllerStyleAlert];
+    
+    [timeoutAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self endChatAndDismiss];
+    }]];
+    
+    [self presentViewController:timeoutAlert animated:YES completion:nil];
 }
 
 - (void)showRequestAlertforMessage:(ZDCChatEvent *)event
@@ -389,20 +406,7 @@
                                   handler:^(UIAlertAction *action)
                                   {
                                       NSLog(@"End Chat action");
-                                      [self.inputToolbar.contentView.textView resignFirstResponder];
-                                      
-                                      [self dismissViewControllerAnimated:YES completion:^{
-                                          [[ScreenMeetManager sharedManager] stopStream];
-                                          [[ZDCChat instance].session endChat];
-                                          
-                                          [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
-                                          [[ScreenMeetManager sharedManager].chatWidget endChat];
-                                          
-                                          [self.eventIds removeAllObjects];
-                                          [self.messages removeAllObjects];
-                                          [self.collectionView reloadData];
-                                      }];
-                                      
+                                      [self endChatAndDismiss];
                                   }];
     
     [endChatAlert addAction:cancelAction];
@@ -445,6 +449,22 @@
         }
     }
     return YES;
+}
+
+- (void)endChatAndDismiss {
+    [self.inputToolbar.contentView.textView resignFirstResponder];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[ScreenMeetManager sharedManager] stopStream];
+        [[ZDCChat instance].session endChat];
+        
+        [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+        [[ScreenMeetManager sharedManager].chatWidget endChat];
+        
+        [self.eventIds removeAllObjects];
+        [self.messages removeAllObjects];
+        [self.collectionView reloadData];
+    }];
 }
 
 
