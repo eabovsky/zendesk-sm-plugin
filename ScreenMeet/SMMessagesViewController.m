@@ -202,12 +202,18 @@
 
 - (void)chatEvent:(NSNotification *)notification
 {
-    
-    ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource lastChatMessage];
+    ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource livechatLog].lastObject;
     
     // only show messages for events verified by the server
     // we can also add here timestamp filters
-    if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
+    
+    
+    if (chatEvent.type == ZDCChatEventTypeMemberLeave) {
+        if ([[ZDCChat instance].session status] != ZDCChatSessionStatusInactive) {
+            [self endChatAndDismiss];
+        }
+        
+    } else if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
         
         self.eventIds[chatEvent.eventId] = @1;
         
@@ -261,11 +267,16 @@
     
     UIAlertController *timeoutAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Your session has timed out. Ending chat." preferredStyle:UIAlertControllerStyleAlert];
     
-    [timeoutAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self endChatAndDismiss];
-    }]];
-    
-    [self presentViewController:timeoutAlert animated:YES completion:nil];
+    if (self.isViewLoaded && self.view.window) {
+        [timeoutAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self endChatAndDismiss];
+        }]];
+        [self presentViewController:timeoutAlert animated:YES completion:nil];
+    } else {
+        [ScreenMeetManager presentViewControllerFromWindowRootViewController:timeoutAlert animated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)showRequestAlertforMessage:(ZDCChatEvent *)event
@@ -452,10 +463,15 @@
 }
 
 - (void)endChatAndDismiss {
-    [self.inputToolbar.contentView.textView resignFirstResponder];
+    if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar.contentView.textView resignFirstResponder];
+    }
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[ScreenMeetManager sharedManager] stopStream];
+    void (^EndChatBlock) (void) = ^(void) {
+        if ([ScreenMeetManager sharedManager].isStreaming) {
+            [[ScreenMeetManager sharedManager] stopStream];
+        }
+
         [[ZDCChat instance].session endChat];
         
         [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
@@ -464,7 +480,15 @@
         [self.eventIds removeAllObjects];
         [self.messages removeAllObjects];
         [self.collectionView reloadData];
-    }];
+    };
+    
+    if (self.isViewLoaded && self.view.window) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            EndChatBlock();
+        }];
+    } else {
+        EndChatBlock();
+    }
 }
 
 
