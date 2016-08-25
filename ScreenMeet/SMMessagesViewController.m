@@ -219,7 +219,22 @@
     
     if (chatEvent.type == ZDCChatEventTypeMemberLeave) {
         if ([[ZDCChat instance].session status] != ZDCChatSessionStatusInactive) {
-            [self endChatAndDismiss];
+            
+            [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+            [[ScreenMeetManager sharedManager].chatWidget endChat];
+            
+            UIAlertController *endChatAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:[NSString stringWithFormat:@"%@ ended the chat.", chatEvent.displayName] preferredStyle:UIAlertControllerStyleAlert];
+            [endChatAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self endChatAndDismiss];
+            }]];
+            
+            if (self.isViewLoaded && self.view.window) {
+                [self presentViewController:endChatAlert animated:YES completion:nil];
+            } else {
+                [ScreenMeetManager presentViewControllerFromWindowRootViewController:endChatAlert animated:YES completion:^{
+                    
+                }];
+            }
         }
         
     } else if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
@@ -274,12 +289,15 @@
 - (void)timeoutEvent:(NSNotification *)notification {
     /* When a chat times out, you won't be able to send messages. The chat returns to the uninitialized state. You can start a new chat or inform the user the chat has ended but you cannot reconnect to the timed out chat. */
     
+    [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+    [[ScreenMeetManager sharedManager].chatWidget endChat];
+    
     UIAlertController *timeoutAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Your session has timed out. Ending chat." preferredStyle:UIAlertControllerStyleAlert];
+    [timeoutAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self endChatAndDismiss];
+    }]];
     
     if (self.isViewLoaded && self.view.window) {
-        [timeoutAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self endChatAndDismiss];
-        }]];
         [self presentViewController:timeoutAlert animated:YES completion:nil];
     } else {
         [ScreenMeetManager presentViewControllerFromWindowRootViewController:timeoutAlert animated:YES completion:^{
@@ -496,15 +514,17 @@
     }
     
     void (^EndChatBlock) (void) = ^(void) {
+        [[ZDCChat instance].session endChat];
+        
         if ([ScreenMeetManager sharedManager].isStreaming) {
             [[ScreenMeetManager sharedManager] stopStream];
         }
-
-        [[ZDCChat instance].session endChat];
         
-        [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
-        [[ScreenMeetManager sharedManager].chatWidget endChat];
-        
+        if ([ScreenMeetManager sharedManager].chatWidget.isActive) {
+            [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+            [[ScreenMeetManager sharedManager].chatWidget endChat];
+        }
+    
         [self.eventIds removeAllObjects];
         [self.messages removeAllObjects];
         [self.collectionView reloadData];
