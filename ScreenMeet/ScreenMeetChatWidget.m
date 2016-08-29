@@ -25,6 +25,8 @@
 
 @property (assign, nonatomic) CGFloat offset;
 
+@property (assign, nonatomic) BOOL isActive;
+
 @end
 
 @implementation ScreenMeetChatWidget
@@ -228,6 +230,7 @@
         
         [self.superview bringSubviewToFront:self.chatContainer];
         self.chatContainer.widget = self;
+        self.isActive = YES;
     }
     
     [self updateUI];
@@ -254,6 +257,8 @@
             self.alpha = 0.0f;
         } completion:^(BOOL finished) {
             self.hidden = YES;
+            
+            self.isActive = NO;
         }];
     }
 }

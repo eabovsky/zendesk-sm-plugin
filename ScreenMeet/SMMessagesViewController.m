@@ -25,6 +25,8 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
+@property (assign, nonatomic) BOOL isAvatarLoaded;
+
 @end
 
 @implementation SMMessagesViewController
@@ -57,8 +59,19 @@
     
     [super viewWillAppear:animated];
     
+    self.isAvatarLoaded = NO;
+    
     [[ZDCChat instance].session connect];
+    
+    [[ZDCChat instance].session removeObserverForTimeoutEvents:self];
+    [[ZDCChat instance].session addObserver:self forTimeoutEvents:@selector(timeoutEvent:)];
+    
+    [[ZDCChat instance].session.dataSource removeObserverForChatLogEvents:self];
     [[ZDCChat instance].session.dataSource addObserver:self forChatLogEvents:@selector(chatEvent:)];
+    
+    [[ZDCChat instance].session.dataSource removeObserverForAgentEvents:self];
+    [[ZDCChat instance].session.dataSource addObserver:self forAgentEvents:@selector(agentEvent:)];
+    
     [ScreenMeetManager sharedManager].chatWidget.isLive = YES;
     
     [self verifyEvents];
@@ -166,6 +179,7 @@
         JSQMessage *message = self.messages[indexPath.item];
         if (![message.senderId isEqualToString:self.senderId]) {
             ZDCChatAgent *agent = [[ZDCChat instance].session.dataSource agentForNickname:message.senderId];
+            NSLog(@"Delegate AvatarURL: %@", agent.avatarURL);
             return [NSURL URLWithString:agent.avatarURL];
         }
     }
@@ -194,21 +208,42 @@
     }
 }
 
-- (void)chatEvent:(id)event
+- (void)chatEvent:(NSNotification *)notification
 {
-    
-    ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource lastChatMessage];
+    ZDCChatEvent *chatEvent = [[ZDCChat instance].session.dataSource livechatLog].lastObject;
     
     // only show messages for events verified by the server
     // we can also add here timestamp filters
-    if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
+    
+    NSLog(@"Chat Event Type: %lu", (unsigned long)chatEvent.type);
+    
+    if (chatEvent.type == ZDCChatEventTypeMemberLeave) {
+        if ([[ZDCChat instance].session status] != ZDCChatSessionStatusInactive) {
+            
+            [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+            [[ScreenMeetManager sharedManager].chatWidget endChat];
+            
+            UIAlertController *endChatAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:[NSString stringWithFormat:@"%@ ended the chat.", chatEvent.displayName] preferredStyle:UIAlertControllerStyleAlert];
+            [endChatAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self endChatAndDismiss];
+            }]];
+            
+            if (self.isViewLoaded && self.view.window) {
+                [self presentViewController:endChatAlert animated:YES completion:nil];
+            } else {
+                [ScreenMeetManager presentViewControllerFromWindowRootViewController:endChatAlert animated:YES completion:^{
+                    
+                }];
+            }
+        }
+        
+    } else if (chatEvent.verified && ![self.eventIds[chatEvent.eventId] boolValue]) {
         
         self.eventIds[chatEvent.eventId] = @1;
         
         NSString *senderId = @"";
         
         if (chatEvent.type == ZDCChatEventTypeAgentMessage) {
-#warning TODO: Extend JSQMessage and add other needed info (agentId, avatarImage, etc.).
             senderId          = chatEvent.nickname;
         } else {
             senderId          = self.senderId;
@@ -248,6 +283,45 @@
         } else {
             [[ScreenMeetManager sharedManager].chatWidget addStackableToastMessage:[NSString stringWithFormat:@"%@: %@", chatEvent.displayName, message.text]];
         }
+    }
+}
+
+- (void)timeoutEvent:(NSNotification *)notification {
+    /* When a chat times out, you won't be able to send messages. The chat returns to the uninitialized state. You can start a new chat or inform the user the chat has ended but you cannot reconnect to the timed out chat. */
+    
+    [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+    [[ScreenMeetManager sharedManager].chatWidget endChat];
+    
+    UIAlertController *timeoutAlert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Your session has timed out. Ending chat." preferredStyle:UIAlertControllerStyleAlert];
+    [timeoutAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self endChatAndDismiss];
+    }]];
+    
+    if (self.isViewLoaded && self.view.window) {
+        [self presentViewController:timeoutAlert animated:YES completion:nil];
+    } else {
+        [ScreenMeetManager presentViewControllerFromWindowRootViewController:timeoutAlert animated:YES completion:^{
+            
+        }];
+    }
+}
+
+- (void)agentEvent:(NSNotification *)notification {
+    /* Fix for ticket #38 "[ZD] Main chat clean-up round 3 - avatars and styling" wherein avatar does not load when resuming active chat from app relaunch.
+     
+     Bug Reason: Agent info is still not available even if chatEvent: is already receiving chat logs.
+     
+     [[ZDCChat instance].session.dataSource agentForNickname:message.senderId] from collectionView:avatarImageUrlForItemAtIndexPath: dataSource returns initially returns nil.
+     
+     Solution: Force reload the table view once agent info becomes available.
+     
+     NOTE: agentEvent: triggers multiple times as it handles even agent typing event.  A flag has been set to avoid multiple calls to [self.collectionView reloadData]
+     */
+    
+    NSDictionary *agents = [ZDCChat instance].session.dataSource.agents;
+    if (agents.count > 0 && !self.isAvatarLoaded) {
+        [self.collectionView reloadData];
+        self.isAvatarLoaded = YES;
     }
 }
 
@@ -389,19 +463,7 @@
                                   handler:^(UIAlertAction *action)
                                   {
                                       NSLog(@"End Chat action");
-                                      
-                                      [self dismissViewControllerAnimated:YES completion:^{
-                                          [[ScreenMeetManager sharedManager] stopStream];
-                                          [[ZDCChat instance].session endChat];
-                                          
-                                          [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
-                                          [[ScreenMeetManager sharedManager].chatWidget endChat];
-                                          
-                                          [self.eventIds removeAllObjects];
-                                          [self.messages removeAllObjects];
-                                          [self.collectionView reloadData];
-                                      }];
-                                      
+                                      [self endChatAndDismiss];
                                   }];
     
     [endChatAlert addAction:cancelAction];
@@ -444,6 +506,37 @@
         }
     }
     return YES;
+}
+
+- (void)endChatAndDismiss {
+    if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar.contentView.textView resignFirstResponder];
+    }
+    
+    void (^EndChatBlock) (void) = ^(void) {
+        [[ZDCChat instance].session endChat];
+        
+        if ([ScreenMeetManager sharedManager].isStreaming) {
+            [[ScreenMeetManager sharedManager] stopStream];
+        }
+        
+        if ([ScreenMeetManager sharedManager].chatWidget.isActive) {
+            [ScreenMeetManager sharedManager].chatWidget.isLive = NO;
+            [[ScreenMeetManager sharedManager].chatWidget endChat];
+        }
+    
+        [self.eventIds removeAllObjects];
+        [self.messages removeAllObjects];
+        [self.collectionView reloadData];
+    };
+    
+    if (self.isViewLoaded && self.view.window) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            EndChatBlock();
+        }];
+    } else {
+        EndChatBlock();
+    }
 }
 
 

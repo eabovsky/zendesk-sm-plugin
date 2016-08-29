@@ -12,6 +12,7 @@
 
 @property (assign, nonatomic) BOOL isLive;
 @property (assign, nonatomic) BOOL willFlipContainer;
+@property (assign, nonatomic, readonly) BOOL isActive;
 
 // to refresh UI
 - (void)updateUI;
