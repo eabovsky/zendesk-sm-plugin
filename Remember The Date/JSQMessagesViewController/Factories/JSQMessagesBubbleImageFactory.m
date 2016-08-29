@@ -55,7 +55,7 @@
 
 - (instancetype)init
 {
-    return [self initWithBubbleImage:[UIImage jsq_bubbleCompactTaillessImage] capInsets:UIEdgeInsetsZero];
+    return [self initWithBubbleImage:[UIImage jsq_bubbleCompactImage] capInsets:UIEdgeInsetsZero];
 }
 
 #pragma mark - Public

@@ -84,7 +84,7 @@ static ScreenMeetManager *manager = nil;
 
 - (SMMessagesViewController *)messagesVC {
     if (!_messagesVC) {
-        _messagesVC = [[SMMessagesViewController alloc] init];
+        _messagesVC = [SMMessagesViewController messagesViewController];
     }
     return _messagesVC;
 }

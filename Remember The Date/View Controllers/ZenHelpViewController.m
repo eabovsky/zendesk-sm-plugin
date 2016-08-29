@@ -91,8 +91,6 @@
             requestCreationConfig.additionalRequestInfo =
             [NSString stringWithFormat:@"%@-------------\nSent from %@.", requestCreationConfig.contentSeperator, appName];
         }
-            
-        
     }];
 }
 
