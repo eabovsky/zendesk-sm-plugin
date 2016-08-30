@@ -3,8 +3,8 @@ platform :ios, '8.0'
 
 target 'Remember The Date' do
 
-    pod 'SlackTextViewController'
-    pod 'MBProgressHUD', '~> 1.0'
-    pod 'UIActivityIndicator-for-SDWebImage'
+    pod 'MBProgressHUD', '1.0'
+    pod 'UIActivityIndicator-for-SDWebImage', '1.2'
+    pod 'JSQSystemSoundPlayer', '4.4.0'
 
 end

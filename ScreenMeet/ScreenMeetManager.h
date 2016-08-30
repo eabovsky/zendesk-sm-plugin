@@ -7,7 +7,6 @@
 //
 
 @class UIBarButtonItem;
-@class MessageViewController;
 @class SMMessagesViewController;
 @class MBProgressHUD;
 
@@ -19,7 +18,6 @@
 @interface ScreenMeetManager : NSObject
 
 @property (strong, nonatomic) ScreenMeetChatWidget     *chatWidget;
-@property (strong, nonatomic) MessageViewController    *mVC;
 @property (strong, nonatomic) SMMessagesViewController *messagesVC;
 @property (strong, nonatomic) MBProgressHUD            *hud;
 

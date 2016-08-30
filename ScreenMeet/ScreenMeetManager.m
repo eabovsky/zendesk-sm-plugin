@@ -15,7 +15,6 @@
 #import <ScreenMeetSDK/ScreenMeetSDK-Swift.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 
-#import "MessageViewController.h"
 #import "SMMessagesViewController.h"
 
 
@@ -72,14 +71,6 @@ static ScreenMeetManager *manager = nil;
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     return _appDelegate;
-}
-
-- (MessageViewController *)mVC
-{
-    if (!_mVC) {
-        _mVC = [[MessageViewController alloc] init];
-    }
-    return _mVC;
 }
 
 - (SMMessagesViewController *)messagesVC {
