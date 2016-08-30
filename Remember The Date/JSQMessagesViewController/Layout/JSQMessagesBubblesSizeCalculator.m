@@ -56,7 +56,7 @@
     if (self) {
         _cache = cache;
         //_minimumBubbleWidth = minimumBubbleWidth;
-        _minimumBubbleWidth = 20.0;
+        _minimumBubbleWidth = 20.0f;
         _usesFixedWidthBubbles = usesFixedWidthBubbles;
         _layoutWidthForFixedWidthBubbles = 0.0f;
 

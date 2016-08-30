@@ -102,6 +102,7 @@
 		83E06FE21ACEEED400A91D1F /* NSData+RememberTheDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E06FE11ACEEED400A91D1F /* NSData+RememberTheDate.m */; };
 		83ECC7BD1BFC9BF000963E82 /* ZendeskProviderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */; };
 		950C86BA1D75749A00FE5503 /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 950C86B91D75749A00FE5503 /* JSQSystemSoundPlayer+JSQMessages.m */; };
+		950C86BC1D757A0500FE5503 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 950C86BB1D757A0500FE5503 /* LICENSE */; };
 		9533FEDE1D6C82C900D0607C /* SMCircularImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9533FEDD1D6C82C900D0607C /* SMCircularImageView.m */; };
 		9585C32C1D6B167B00ABBA42 /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9585C2C91D6B167B00ABBA42 /* JSQMessagesAssets.bundle */; };
 		9585C32E1D6B167B00ABBA42 /* NSBundle+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9585C2CE1D6B167B00ABBA42 /* NSBundle+JSQMessages.m */; };
@@ -314,6 +315,7 @@
 		83E233E71BFB931700B032B1 /* ZendeskProviderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZendeskProviderSDK.framework; path = "Remember The Date/Framework/ZendeskProviderSDK.framework"; sourceTree = "<group>"; };
 		950C86B81D75749A00FE5503 /* JSQSystemSoundPlayer+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQSystemSoundPlayer+JSQMessages.h"; sourceTree = "<group>"; };
 		950C86B91D75749A00FE5503 /* JSQSystemSoundPlayer+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQSystemSoundPlayer+JSQMessages.m"; sourceTree = "<group>"; };
+		950C86BB1D757A0500FE5503 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9533FEDC1D6C82C900D0607C /* SMCircularImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMCircularImageView.h; path = ScreenMeet/SMCircularImageView.h; sourceTree = SOURCE_ROOT; };
 		9533FEDD1D6C82C900D0607C /* SMCircularImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMCircularImageView.m; path = ScreenMeet/SMCircularImageView.m; sourceTree = SOURCE_ROOT; };
 		9585C2C91D6B167B00ABBA42 /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -726,6 +728,7 @@
 		9585C2C71D6B167B00ABBA42 /* JSQMessagesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				950C86BB1D757A0500FE5503 /* LICENSE */,
 				9585C2C81D6B167B00ABBA42 /* Assets */,
 				9585C2CA1D6B167B00ABBA42 /* Categories */,
 				9585C2D91D6B167B00ABBA42 /* Controllers */,
@@ -1000,6 +1003,7 @@
 				4D24701119E74EED00A46373 /* icoUser@3x.png in Resources */,
 				4D24704419E74EED00A46373 /* icon1024.png in Resources */,
 				4D24703719E74EED00A46373 /* icon.png in Resources */,
+				950C86BC1D757A0500FE5503 /* LICENSE in Resources */,
 				9585C32C1D6B167B00ABBA42 /* JSQMessagesAssets.bundle in Resources */,
 				4D24701219E74EED00A46373 /* Launchimage 6 Plus.png in Resources */,
 				4D24701319E74EED00A46373 /* icoUser@2x.png in Resources */,

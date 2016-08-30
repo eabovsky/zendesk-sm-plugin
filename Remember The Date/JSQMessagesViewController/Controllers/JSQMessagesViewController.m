@@ -611,7 +611,7 @@ JSQMessagesKeyboardControllerDelegate>
     cell.cellBottomLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForCellBottomLabelAtIndexPath:indexPath];
 
 //    CGFloat bubbleTopLabelInset = (avatarImageDataSource != nil) ? 60.0f : 15.0f;
-    CGFloat bubbleTopLabelInset = 40.0f;
+    CGFloat bubbleTopLabelInset = needsAvatar ? 40.0f : 15.0f;;
 
     if (isOutgoingMessage) {
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, bubbleTopLabelInset);
