@@ -79,6 +79,7 @@
 		4D24705319E80B7300A46373 /* ZenHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705219E80B7300A46373 /* ZenHelpViewController.m */; };
 		4D24705619E8111100A46373 /* SaveTheDateTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */; };
 		4D294BEE19EDED970070A30E /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D294BED19EDED970070A30E /* EmptyView.xib */; };
+		700F60A91D76ABC400ED7A68 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 700F60A81D76ABC400ED7A68 /* README.md */; };
 		702127091D61577F003F2369 /* ScreenMeetToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 702127081D61577F003F2369 /* ScreenMeetToast.m */; };
 		702183E01D60A5C800797B36 /* ScreenMeetChatWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 702183DF1D60A5C800797B36 /* ScreenMeetChatWidget.m */; };
 		7024B1D61D62E1D2009C95D1 /* icon_widget.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024B1D31D62E1D2009C95D1 /* icon_widget.png */; };
@@ -285,6 +286,7 @@
 		4D24705419E8111100A46373 /* SaveTheDateTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveTheDateTabBarController.h; sourceTree = "<group>"; };
 		4D24705519E8111100A46373 /* SaveTheDateTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveTheDateTabBarController.m; sourceTree = "<group>"; };
 		4D294BED19EDED970070A30E /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		700F60A81D76ABC400ED7A68 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		702127071D61577F003F2369 /* ScreenMeetToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetToast.h; path = ScreenMeet/ScreenMeetToast.h; sourceTree = SOURCE_ROOT; };
 		702127081D61577F003F2369 /* ScreenMeetToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenMeetToast.m; path = ScreenMeet/ScreenMeetToast.m; sourceTree = SOURCE_ROOT; };
 		702183DE1D60A5C800797B36 /* ScreenMeetChatWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMeetChatWidget.h; path = ScreenMeet/ScreenMeetChatWidget.h; sourceTree = SOURCE_ROOT; };
@@ -719,6 +721,7 @@
 		70FE83111D757EA100054355 /* JSQMessagesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				700F60A81D76ABC400ED7A68 /* README.md */,
 				70FE83121D757EA100054355 /* Assets */,
 				70FE83141D757EA100054355 /* Categories */,
 				70FE83231D757EA100054355 /* Controllers */,
@@ -1168,6 +1171,7 @@
 				70FE837C1D757EA100054355 /* UIDevice+JSQMessages.m in Sources */,
 				70FE83781D757EA100054355 /* JSQSystemSoundPlayer+JSQMessages.m in Sources */,
 				70FE83841D757EA100054355 /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
+				700F60A91D76ABC400ED7A68 /* README.md in Sources */,
 				4D246FAC19E7499600A46373 /* AppDelegate.m in Sources */,
 				70FE83831D757EA100054355 /* JSQMessagesBubbleImageFactory.m in Sources */,
 				4D24704A19E809CE00A46373 /* CreateProfileTableViewController.m in Sources */,
