@@ -259,6 +259,7 @@ public class ScreenMeet: NSObject {
      */
     public func getRoomUrl() -> String! {
         if (!isUserLoggedIn()) { print("Error: User must be authenticated"); return nil}
+        if (BackendClient.inviteText == nil) { return nil }
         return BackendClient.inviteText["url"] as! String!
     }
     
@@ -276,7 +277,11 @@ public class ScreenMeet: NSObject {
     }
     
     public func setMeetingConfig(config: MeetingConfig, callback: (status: CallStatus) -> Void) {
-        socketService.setConfig(config, callback: callback)
+        socketService.setConfig(config, callback: { status in
+            dispatch_async(dispatch_get_main_queue()) {
+                callback(status: status)
+            }
+        })
     }
     
     public func getMeetingConfig() -> MeetingConfig {
@@ -316,6 +321,15 @@ public class ScreenMeet: NSObject {
      */
     public func setStreamImage(image: UIImage!) {
         socketService.screenshoter.setImageToStream(image)
+    }
+
+    public func useFullScreenAsStreamSource() {
+        setStreamSource(nil)
+        setStreamImage(nil)
+    }
+
+    public func isFullScreenUsedAsStreamSource() -> Bool {
+        return (socketService.screenshoter.getCurrentView() == nil) && (socketService.screenshoter.imageToStreamShare == nil)
     }
     
     /**

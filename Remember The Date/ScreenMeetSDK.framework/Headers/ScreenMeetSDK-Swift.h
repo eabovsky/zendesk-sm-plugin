@@ -414,6 +414,8 @@ SWIFT_CLASS("_TtC13ScreenMeetSDK10ScreenMeet")
 ///
 /// <ul><li>Parameters:</li><li>source: UIImage that will be used to share</li></ul>
 - (void)setStreamImage:(UIImage * _Null_unspecified)image;
+- (void)useFullScreenAsStreamSource;
+- (BOOL)isFullScreenUsedAsStreamSource;
 
 /// Pause the active stream. Keeps the meeting open but stops the capturing/streaming.
 - (void)pauseStream;
@@ -482,6 +484,18 @@ SWIFT_CLASS("_TtC13ScreenMeetSDK16ScreenMeetViewer")
 /// The delay, in seconds, of how long it’s taking the user’s stream to reach the viewer
 @property (nonatomic, readonly) double latency;
 - (nonnull instancetype)initWithId:(NSString * _Nonnull)id name:(NSString * _Nonnull)name latency:(double)latency OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC13ScreenMeetSDK12Screenshoter")
+@interface Screenshoter : NSObject
+@property (nonatomic) BOOL doRenderInContext;
+- (void)clearTiles;
+- (NSDictionary * _Null_unspecified)sendScreenShot;
+- (UIImage * _Nonnull)doScreenShot:(CGFloat)scale useImageProcessor:(BOOL)useImageProcessor;
+- (void)setCurrentView:(UIView * _Null_unspecified)view;
+- (UIView * _Null_unspecified)getCurrentView;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
@@ -745,6 +759,7 @@ SWIFT_CLASS("_TtC13ScreenMeetSDK13SocketService")
 @property (nonatomic) double lastScreenshotTime;
 @property (nonatomic) double lastLatencyCheckTime;
 @property (nonatomic) BOOL isPaused;
+@property (nonatomic, readonly, strong) Screenshoter * _Nonnull screenshoter;
 @property (nonatomic, strong) MeetingConfig * _Nonnull streamConfig;
 - (void)finishSocketInitializing;
 - (void)setConfig:(MeetingConfig * _Nonnull)config callback:(void (^ _Nonnull)(enum CallStatus status))callback;
